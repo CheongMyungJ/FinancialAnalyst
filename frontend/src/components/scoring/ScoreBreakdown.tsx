@@ -87,6 +87,22 @@ const scoreDescriptions = {
     operatingMargin: {
       description: '영업이익률은 매출액 대비 영업이익의 비율입니다.',
       criteria: '영업이익률 20% 이상: 8~10점, 10~20%: 5~7점, 5~10%: 3~5점, 5% 미만: 1~3점.'
+    },
+    debtRatio: {
+      description: '부채비율은 자기자본 대비 총부채의 비율입니다.',
+      criteria: '부채비율 50% 미만: 8~10점, 50~100%: 6~7점, 100~200%: 4~5점, 200% 이상: 1~3점.'
+    },
+    currentRatio: {
+      description: '유동비율은 유동자산을 유동부채로 나눈 비율로 단기 지급능력을 나타냅니다.',
+      criteria: '유동비율 200% 이상: 8~10점, 150~200%: 6~7점, 100~150%: 4~5점, 100% 미만: 1~3점.'
+    },
+    epsGrowth: {
+      description: 'EPS 성장률은 주당순이익의 전년 대비 성장률입니다.',
+      criteria: 'EPS 성장률 30% 이상: 8~10점, 10~30%: 6~7점, 0~10%: 4~5점, 마이너스: 1~3점.'
+    },
+    revenueGrowth: {
+      description: '매출 성장률은 매출액의 전년 대비 성장률입니다.',
+      criteria: '매출 성장률 20% 이상: 8~10점, 10~20%: 6~7점, 0~10%: 4~5점, 마이너스: 1~3점.'
     }
   },
   technical: {
@@ -105,6 +121,22 @@ const scoreDescriptions = {
     macd: {
       description: 'MACD는 단기/장기 이동평균의 차이로 추세를 파악합니다.',
       criteria: '골든크로스: 8~10점, MACD > 0: 5~7점, MACD < 0: 3~5점, 데드크로스: 1~3점.'
+    },
+    bollingerBand: {
+      description: '볼린저 밴드는 주가의 상대적 위치와 변동성을 나타냅니다.',
+      criteria: '하단밴드 근처: 7~9점 (매수 기회), 중간: 5~6점, 상단밴드 근처: 3~5점 (매도 고려).'
+    },
+    stochastic: {
+      description: '스토캐스틱은 일정 기간 내 가격 범위에서 현재가의 위치를 나타냅니다.',
+      criteria: '%K 20 미만: 7~9점 (과매도), %K 20~80: 5~6점, %K 80 이상: 3~5점 (과매수).'
+    },
+    adx: {
+      description: 'ADX는 추세의 강도를 나타내며, +DI/-DI는 방향을 나타냅니다.',
+      criteria: 'ADX 25 이상 + 상승추세: 8~10점, ADX 25 이상 + 하락추세: 2~4점, ADX 25 미만: 4~6점.'
+    },
+    divergence: {
+      description: '다이버전스는 가격과 지표의 괴리로 추세 반전 신호를 감지합니다.',
+      criteria: '상승 다이버전스: 8~10점, 없음: 5점, 하락 다이버전스: 1~3점.'
     }
   },
   news: {
@@ -115,6 +147,24 @@ const scoreDescriptions = {
     frequency: {
       description: '최근 뉴스와 공시의 발생 빈도입니다.',
       criteria: '일평균 0.5~2건: 7~9점, 2~5건: 5~6점, 5건 이상: 3~5점.'
+    },
+    disclosureImpact: {
+      description: '최근 공시의 유형별 영향도를 분석합니다.',
+      criteria: '긍정적 공시(실적, 배당): 8~10점, 중립적: 5~6점, 부정적 공시(유상증자): 1~4점.'
+    },
+    recency: {
+      description: '최근 뉴스의 신선도를 평가합니다.',
+      criteria: '24시간 이내 뉴스: 8~10점, 3일 이내: 6~7점, 7일 이내: 4~5점, 7일 이상: 1~3점.'
+    }
+  },
+  supplyDemand: {
+    foreignFlow: {
+      description: '외국인 투자자의 순매수/순매도 동향입니다.',
+      criteria: '연속 순매수 5일 이상: 8~10점, 순매수: 6~7점, 순매도: 3~5점, 연속 순매도: 1~3점.'
+    },
+    institutionFlow: {
+      description: '기관 투자자의 순매수/순매도 동향입니다.',
+      criteria: '연속 순매수 5일 이상: 8~10점, 순매수: 6~7점, 순매도: 3~5점, 연속 순매도: 1~3점.'
     }
   }
 }
@@ -124,7 +174,7 @@ export default function ScoreBreakdown({ scores }: ScoreBreakdownProps) {
     <div>
       {/* Category averages */}
       <h3 className="font-semibold text-slate-200 mb-3">카테고리별 점수</h3>
-      <div className="grid grid-cols-3 gap-4 mb-4">
+      <div className="grid grid-cols-4 gap-3 mb-4">
         <div className="text-center p-3 bg-slate-800/30 rounded-lg">
           <p className="text-2xl font-bold text-cyan-400">{scores.fundamental.average.toFixed(1)}</p>
           <p className="text-xs text-slate-500">기본적 분석</p>
@@ -136,6 +186,10 @@ export default function ScoreBreakdown({ scores }: ScoreBreakdownProps) {
         <div className="text-center p-3 bg-slate-800/30 rounded-lg">
           <p className="text-2xl font-bold text-blue-400">{scores.news.average.toFixed(1)}</p>
           <p className="text-xs text-slate-500">뉴스/공시</p>
+        </div>
+        <div className="text-center p-3 bg-slate-800/30 rounded-lg">
+          <p className="text-2xl font-bold text-amber-400">{scores.supplyDemand?.average?.toFixed(1) ?? '5.0'}</p>
+          <p className="text-xs text-slate-500">수급 분석</p>
         </div>
       </div>
 
@@ -169,6 +223,30 @@ export default function ScoreBreakdown({ scores }: ScoreBreakdownProps) {
         description={scoreDescriptions.fundamental.operatingMargin.description}
         criteria={scoreDescriptions.fundamental.operatingMargin.criteria}
       />
+      <ScoreRow
+        label="부채비율"
+        score={scores.fundamental.debtRatio}
+        description={scoreDescriptions.fundamental.debtRatio.description}
+        criteria={scoreDescriptions.fundamental.debtRatio.criteria}
+      />
+      <ScoreRow
+        label="유동비율"
+        score={scores.fundamental.currentRatio}
+        description={scoreDescriptions.fundamental.currentRatio.description}
+        criteria={scoreDescriptions.fundamental.currentRatio.criteria}
+      />
+      <ScoreRow
+        label="EPS 성장률"
+        score={scores.fundamental.epsGrowth}
+        description={scoreDescriptions.fundamental.epsGrowth.description}
+        criteria={scoreDescriptions.fundamental.epsGrowth.criteria}
+      />
+      <ScoreRow
+        label="매출 성장률"
+        score={scores.fundamental.revenueGrowth}
+        description={scoreDescriptions.fundamental.revenueGrowth.description}
+        criteria={scoreDescriptions.fundamental.revenueGrowth.criteria}
+      />
 
       {/* Technical */}
       <h4 className="text-xs font-medium text-slate-500 mb-2 mt-4 uppercase tracking-wider">기술적 분석</h4>
@@ -196,6 +274,30 @@ export default function ScoreBreakdown({ scores }: ScoreBreakdownProps) {
         description={scoreDescriptions.technical.macd.description}
         criteria={scoreDescriptions.technical.macd.criteria}
       />
+      <ScoreRow
+        label="볼린저 밴드"
+        score={scores.technical.bollingerBand}
+        description={scoreDescriptions.technical.bollingerBand.description}
+        criteria={scoreDescriptions.technical.bollingerBand.criteria}
+      />
+      <ScoreRow
+        label="스토캐스틱"
+        score={scores.technical.stochastic}
+        description={scoreDescriptions.technical.stochastic.description}
+        criteria={scoreDescriptions.technical.stochastic.criteria}
+      />
+      <ScoreRow
+        label="ADX (추세 강도)"
+        score={scores.technical.adx}
+        description={scoreDescriptions.technical.adx.description}
+        criteria={scoreDescriptions.technical.adx.criteria}
+      />
+      <ScoreRow
+        label="다이버전스"
+        score={scores.technical.divergence}
+        description={scoreDescriptions.technical.divergence.description}
+        criteria={scoreDescriptions.technical.divergence.criteria}
+      />
 
       {/* News */}
       <h4 className="text-xs font-medium text-slate-500 mb-2 mt-4 uppercase tracking-wider">뉴스/공시 분석</h4>
@@ -210,6 +312,33 @@ export default function ScoreBreakdown({ scores }: ScoreBreakdownProps) {
         score={scores.news.frequency}
         description={scoreDescriptions.news.frequency.description}
         criteria={scoreDescriptions.news.frequency.criteria}
+      />
+      <ScoreRow
+        label="공시 영향도"
+        score={scores.news.disclosureImpact}
+        description={scoreDescriptions.news.disclosureImpact.description}
+        criteria={scoreDescriptions.news.disclosureImpact.criteria}
+      />
+      <ScoreRow
+        label="뉴스 신선도"
+        score={scores.news.recency}
+        description={scoreDescriptions.news.recency.description}
+        criteria={scoreDescriptions.news.recency.criteria}
+      />
+
+      {/* Supply/Demand */}
+      <h4 className="text-xs font-medium text-slate-500 mb-2 mt-4 uppercase tracking-wider">수급 분석</h4>
+      <ScoreRow
+        label="외국인 수급"
+        score={scores.supplyDemand?.foreignFlow ?? 5}
+        description={scoreDescriptions.supplyDemand.foreignFlow.description}
+        criteria={scoreDescriptions.supplyDemand.foreignFlow.criteria}
+      />
+      <ScoreRow
+        label="기관 수급"
+        score={scores.supplyDemand?.institutionFlow ?? 5}
+        description={scoreDescriptions.supplyDemand.institutionFlow.description}
+        criteria={scoreDescriptions.supplyDemand.institutionFlow.criteria}
       />
     </div>
   )

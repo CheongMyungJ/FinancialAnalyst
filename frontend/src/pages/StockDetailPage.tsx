@@ -226,6 +226,7 @@ export default function StockDetailPage() {
                 { label: '기본', value: scores.fundamental.average },
                 { label: '기술', value: scores.technical.average },
                 { label: '뉴스', value: scores.news.average },
+                { label: '수급', value: scores.supplyDemand?.average ?? 5 },
               ].map((item) => (
                 <div key={item.label}>
                   <div className="flex justify-between text-xs mb-0.5">
@@ -319,19 +320,17 @@ export default function StockDetailPage() {
                 { label: 'PBR', value: selectedStock.fundamentals.pbr?.toFixed(2) || 'N/A' },
                 { label: 'ROE', value: selectedStock.fundamentals.roe ? `${selectedStock.fundamentals.roe.toFixed(2)}%` : 'N/A' },
                 { label: '영업이익률', value: selectedStock.fundamentals.operatingMargin ? `${selectedStock.fundamentals.operatingMargin.toFixed(2)}%` : 'N/A' },
-                { label: 'EPS', value: selectedStock.fundamentals.eps?.toFixed(2) || 'N/A' },
-                {
-                  label: '시가총액',
-                  value: selectedStock.fundamentals.marketCap
-                    ? currency === 'KRW'
-                      ? `${(selectedStock.fundamentals.marketCap / 1e12).toFixed(1)}조`
-                      : `$${(selectedStock.fundamentals.marketCap / 1e9).toFixed(1)}B`
-                    : 'N/A'
-                },
+                { label: '부채비율', value: selectedStock.fundamentals.debtRatio ? `${selectedStock.fundamentals.debtRatio.toFixed(1)}%` : 'N/A' },
+                { label: '유동비율', value: selectedStock.fundamentals.currentRatio ? `${selectedStock.fundamentals.currentRatio.toFixed(1)}%` : 'N/A' },
+                { label: 'EPS 성장률', value: selectedStock.fundamentals.epsGrowth ? `${selectedStock.fundamentals.epsGrowth > 0 ? '+' : ''}${selectedStock.fundamentals.epsGrowth.toFixed(1)}%` : 'N/A', positive: selectedStock.fundamentals.epsGrowth && selectedStock.fundamentals.epsGrowth > 0 },
+                { label: '매출 성장률', value: selectedStock.fundamentals.revenueGrowth ? `${selectedStock.fundamentals.revenueGrowth > 0 ? '+' : ''}${selectedStock.fundamentals.revenueGrowth.toFixed(1)}%` : 'N/A', positive: selectedStock.fundamentals.revenueGrowth && selectedStock.fundamentals.revenueGrowth > 0 },
               ].map((item) => (
                 <div key={item.label} className="bg-slate-800/50 rounded-lg p-3">
                   <p className="text-xs text-slate-500">{item.label}</p>
-                  <p className="text-lg font-bold text-slate-200">{item.value}</p>
+                  <p className={cn(
+                    'text-lg font-bold',
+                    'positive' in item ? (item.positive ? 'text-emerald-400' : 'text-rose-400') : 'text-slate-200'
+                  )}>{item.value}</p>
                 </div>
               ))}
             </div>
@@ -361,6 +360,38 @@ export default function StockDetailPage() {
                 </p>
               </div>
               <div className="bg-slate-800/50 rounded-lg p-3">
+                <p className="text-xs text-slate-500">스토캐스틱 %K</p>
+                <p
+                  className={cn(
+                    'text-lg font-bold',
+                    selectedStock.technicals.stochasticK
+                      ? selectedStock.technicals.stochasticK > 80
+                        ? 'text-rose-400'
+                        : selectedStock.technicals.stochasticK < 20
+                        ? 'text-emerald-400'
+                        : 'text-slate-200'
+                      : 'text-slate-200'
+                  )}
+                >
+                  {selectedStock.technicals.stochasticK?.toFixed(1) || 'N/A'}
+                </p>
+              </div>
+              <div className="bg-slate-800/50 rounded-lg p-3">
+                <p className="text-xs text-slate-500">ADX (추세강도)</p>
+                <p
+                  className={cn(
+                    'text-lg font-bold',
+                    selectedStock.technicals.adx
+                      ? selectedStock.technicals.adx > 25
+                        ? 'text-cyan-400'
+                        : 'text-slate-200'
+                      : 'text-slate-200'
+                  )}
+                >
+                  {selectedStock.technicals.adx?.toFixed(1) || 'N/A'}
+                </p>
+              </div>
+              <div className="bg-slate-800/50 rounded-lg p-3">
                 <p className="text-xs text-slate-500">거래량 변화</p>
                 <p
                   className={cn(
@@ -377,7 +408,104 @@ export default function StockDetailPage() {
                     : 'N/A'}
                 </p>
               </div>
+              <div className="bg-slate-800/50 rounded-lg p-3">
+                <p className="text-xs text-slate-500">볼린저 밴드 %B</p>
+                <p className="text-lg font-bold text-slate-200">
+                  {selectedStock.technicals.bollingerPercentB?.toFixed(2) || 'N/A'}
+                </p>
+              </div>
+              <div className="bg-slate-800/50 rounded-lg p-3">
+                <p className="text-xs text-slate-500">다이버전스</p>
+                <p
+                  className={cn(
+                    'text-lg font-bold',
+                    selectedStock.technicals.rsiDivergence === 'bullish' || selectedStock.technicals.macdDivergence === 'bullish'
+                      ? 'text-emerald-400'
+                      : selectedStock.technicals.rsiDivergence === 'bearish' || selectedStock.technicals.macdDivergence === 'bearish'
+                      ? 'text-rose-400'
+                      : 'text-slate-200'
+                  )}
+                >
+                  {selectedStock.technicals.rsiDivergence === 'bullish' || selectedStock.technicals.macdDivergence === 'bullish'
+                    ? '상승'
+                    : selectedStock.technicals.rsiDivergence === 'bearish' || selectedStock.technicals.macdDivergence === 'bearish'
+                    ? '하락'
+                    : '없음'}
+                </p>
+              </div>
             </div>
+
+            {/* 수급 현황 */}
+            {selectedStock.supplyDemand && (
+              <>
+                <div className="border-t border-slate-800 my-4" />
+                <div className="flex items-center gap-2 mb-3">
+                  <TrendingUp className="h-4 w-4 text-amber-400" />
+                  <h4 className="font-medium text-slate-200">수급 현황</h4>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-slate-800/50 rounded-lg p-3">
+                    <p className="text-xs text-slate-500">외국인 순매수</p>
+                    <p
+                      className={cn(
+                        'text-lg font-bold',
+                        selectedStock.supplyDemand.foreignNetBuy
+                          ? selectedStock.supplyDemand.foreignNetBuy > 0
+                            ? 'text-emerald-400'
+                            : 'text-rose-400'
+                          : 'text-slate-200'
+                      )}
+                    >
+                      {selectedStock.supplyDemand.foreignNetBuy
+                        ? `${selectedStock.supplyDemand.foreignNetBuy > 0 ? '+' : ''}${selectedStock.supplyDemand.foreignNetBuy.toLocaleString()}억`
+                        : 'N/A'}
+                    </p>
+                  </div>
+                  <div className="bg-slate-800/50 rounded-lg p-3">
+                    <p className="text-xs text-slate-500">기관 순매수</p>
+                    <p
+                      className={cn(
+                        'text-lg font-bold',
+                        selectedStock.supplyDemand.institutionNetBuy
+                          ? selectedStock.supplyDemand.institutionNetBuy > 0
+                            ? 'text-emerald-400'
+                            : 'text-rose-400'
+                          : 'text-slate-200'
+                      )}
+                    >
+                      {selectedStock.supplyDemand.institutionNetBuy
+                        ? `${selectedStock.supplyDemand.institutionNetBuy > 0 ? '+' : ''}${selectedStock.supplyDemand.institutionNetBuy.toLocaleString()}억`
+                        : 'N/A'}
+                    </p>
+                  </div>
+                  <div className="bg-slate-800/50 rounded-lg p-3">
+                    <p className="text-xs text-slate-500">외국인 연속</p>
+                    <p
+                      className={cn(
+                        'text-lg font-bold',
+                        selectedStock.supplyDemand.foreignNetBuyDays
+                          ? selectedStock.supplyDemand.foreignNetBuyDays > 0
+                            ? 'text-emerald-400'
+                            : 'text-rose-400'
+                          : 'text-slate-200'
+                      )}
+                    >
+                      {selectedStock.supplyDemand.foreignNetBuyDays
+                        ? `${Math.abs(selectedStock.supplyDemand.foreignNetBuyDays)}일 ${selectedStock.supplyDemand.foreignNetBuyDays > 0 ? '순매수' : '순매도'}`
+                        : 'N/A'}
+                    </p>
+                  </div>
+                  <div className="bg-slate-800/50 rounded-lg p-3">
+                    <p className="text-xs text-slate-500">외국인 지분율</p>
+                    <p className="text-lg font-bold text-slate-200">
+                      {selectedStock.supplyDemand.foreignOwnership
+                        ? `${selectedStock.supplyDemand.foreignOwnership.toFixed(1)}%`
+                        : 'N/A'}
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
           </CardContent>
         </Card>
       </div>

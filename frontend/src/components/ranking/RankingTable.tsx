@@ -220,6 +220,16 @@ export default function RankingTable() {
       ),
       size: 60,
     },
+    {
+      accessorKey: 'supplyDemandScore',
+      header: () => <div className="text-center">수급</div>,
+      cell: ({ row }) => (
+        <div className="flex justify-center">
+          <ScoreBadge score={row.original.scores.supplyDemand?.average ?? 5} size="small" />
+        </div>
+      ),
+      size: 60,
+    },
   ]
 
   const table = useReactTable({
