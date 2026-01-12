@@ -39,6 +39,7 @@ export default function BacktestPage() {
   const [weights, setWeights] = useState<IndicatorWeights>(DEFAULT_WEIGHTS)
   const [evaluationPeriod, setEvaluationPeriod] = useState<number>(90) // 일
   const [rebalanceCycle, setRebalanceCycle] = useState<number>(7) // 일
+  const [topN, setTopN] = useState<number>(1) // 상위 N개 종목
 
   // 실행 상태
   const [loading, setLoading] = useState(false)
@@ -104,6 +105,7 @@ export default function BacktestPage() {
         evaluationPeriodDays: evaluationPeriod,
         rebalanceCycleDays: rebalanceCycle,
         initialCapital: 10000000, // 1천만원
+        topN,
       })
 
       setResult(backtestResult)
@@ -113,7 +115,7 @@ export default function BacktestPage() {
     } finally {
       setLoading(false)
     }
-  }, [list, weights, evaluationPeriod, rebalanceCycle])
+  }, [list, weights, evaluationPeriod, rebalanceCycle, topN])
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('ko-KR', {
@@ -215,7 +217,7 @@ export default function BacktestPage() {
               </Select>
             </FormControl>
 
-            <FormControl fullWidth sx={{ mb: 3 }}>
+            <FormControl fullWidth sx={{ mb: 2 }}>
               <InputLabel>리밸런싱 주기</InputLabel>
               <Select
                 value={rebalanceCycle}
@@ -226,6 +228,20 @@ export default function BacktestPage() {
                 <MenuItem value={7}>매주</MenuItem>
                 <MenuItem value={14}>2주</MenuItem>
                 <MenuItem value={30}>매월</MenuItem>
+              </Select>
+            </FormControl>
+
+            <FormControl fullWidth sx={{ mb: 3 }}>
+              <InputLabel>보유 종목 수</InputLabel>
+              <Select
+                value={topN}
+                label="보유 종목 수"
+                onChange={(e) => setTopN(e.target.value as number)}
+              >
+                <MenuItem value={1}>1개 (집중 투자)</MenuItem>
+                <MenuItem value={3}>3개</MenuItem>
+                <MenuItem value={5}>5개</MenuItem>
+                <MenuItem value={10}>10개</MenuItem>
               </Select>
             </FormControl>
 

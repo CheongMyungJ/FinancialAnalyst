@@ -45,6 +45,7 @@ export interface BacktestConfig {
   evaluationPeriodDays: number  // 평가 기간 (일)
   rebalanceCycleDays: number    // 리밸런싱 주기 (일)
   initialCapital: number
+  topN: number                  // 상위 N개 종목 보유
 }
 
 /**
@@ -65,13 +66,21 @@ function findClosestDateIndex(priceHistory: PriceData[], targetDate: string): nu
   return -1
 }
 
+interface Holding {
+  symbol: string
+  name: string
+  shares: number
+  buyPrice: number
+  buyDate: string
+}
+
 /**
  * 백테스트 실행
  */
 export function runBacktest(config: BacktestConfig): BacktestResult {
-  const { stocks, weights, evaluationPeriodDays, rebalanceCycleDays, initialCapital } = config
+  const { stocks, weights, evaluationPeriodDays, rebalanceCycleDays, initialCapital, topN = 1 } = config
 
-  console.log('[Backtest] Starting with', stocks.length, 'stocks')
+  console.log('[Backtest] Starting with', stocks.length, 'stocks, Top N:', topN)
   console.log('[Backtest] Evaluation period:', evaluationPeriodDays, 'days, Rebalance cycle:', rebalanceCycleDays, 'days')
 
   // 모든 종목의 공통 거래일만 사용
@@ -117,9 +126,30 @@ export function runBacktest(config: BacktestConfig): BacktestResult {
   // 시뮬레이션 실행
   const trades: Trade[] = []
   let cash = initialCapital
-  let currentHolding: { symbol: string; name: string; shares: number; buyPrice: number; buyDate: string } | null = null
+  let currentHoldings: Holding[] = []
   let portfolioValues: number[] = [initialCapital]
   const holdingPeriods: { symbol: string; name: string; days: number; return: number }[] = []
+
+  // 현재가 조회 헬퍼
+  const getCurrentPrice = (symbol: string, date: string): number | null => {
+    const stock = stocks.find(s => s.symbol === symbol)
+    if (!stock) return null
+    const idx = findClosestDateIndex(stock.priceHistory, date)
+    if (idx < 0) return null
+    return stock.priceHistory[idx].close
+  }
+
+  // 포트폴리오 총 가치 계산
+  const getPortfolioValue = (date: string): number => {
+    let value = cash
+    for (const holding of currentHoldings) {
+      const price = getCurrentPrice(holding.symbol, date)
+      if (price) {
+        value += holding.shares * price
+      }
+    }
+    return value
+  }
 
   for (const rebalanceDate of rebalanceDates) {
     // 각 종목의 점수 계산
@@ -147,136 +177,128 @@ export function runBacktest(config: BacktestConfig): BacktestResult {
       continue
     }
 
-    // 점수 기준 정렬하여 1위 찾기
+    // 점수 기준 정렬하여 상위 N개 선택
     stockScores.sort((a, b) => b.score - a.score)
-    const topStock = stockScores[0]
+    const targetStocks = stockScores.slice(0, Math.min(topN, stockScores.length))
+    const targetSymbols = new Set(targetStocks.map(s => s.symbol))
 
-    console.log('[Backtest]', rebalanceDate, 'Top stock:', topStock.name, 'Score:', topStock.score.toFixed(2))
+    console.log('[Backtest]', rebalanceDate, 'Top', topN, ':', targetStocks.map(s => s.name).join(', '))
 
-    // 현재 보유 종목과 비교
-    if (currentHolding) {
-      // 현재 보유 종목의 현재가 찾기
-      const holdingStock = stocks.find(s => s.symbol === currentHolding!.symbol)
-      const holdingPriceIdx = holdingStock ? findClosestDateIndex(holdingStock.priceHistory, rebalanceDate) : -1
-      const currentHoldingPrice = holdingPriceIdx >= 0
-        ? holdingStock!.priceHistory[holdingPriceIdx].close
-        : currentHolding.buyPrice
+    // 1. 상위 N에서 빠진 종목 매도
+    const holdingsToSell = currentHoldings.filter(h => !targetSymbols.has(h.symbol))
+    for (const holding of holdingsToSell) {
+      const sellPrice = getCurrentPrice(holding.symbol, rebalanceDate) || holding.buyPrice
+      const sellValue = holding.shares * sellPrice
 
-      if (currentHolding.symbol === topStock.symbol) {
-        // 같은 종목이면 HOLD
-        const currentValue = currentHolding.shares * currentHoldingPrice
-        trades.push({
-          date: rebalanceDate,
-          action: 'HOLD',
-          symbol: currentHolding.symbol,
-          name: currentHolding.name,
-          price: currentHoldingPrice,
-          score: topStock.score,
-          portfolioValue: currentValue,
-        })
-        portfolioValues.push(currentValue)
-      } else {
-        // 다른 종목이면 SELL 후 BUY
-        const actualSellPrice = currentHoldingPrice
-
-        const sellValue = currentHolding.shares * actualSellPrice
-
-        // 보유 기간 기록
-        const buyDateIdx = baseDates.indexOf(currentHolding.buyDate)
-        const sellDateIdx = baseDates.indexOf(rebalanceDate)
-        const holdDays = Math.max(1, sellDateIdx - buyDateIdx)
-        const holdReturn = ((actualSellPrice - currentHolding.buyPrice) / currentHolding.buyPrice) * 100
-
-        holdingPeriods.push({
-          symbol: currentHolding.symbol,
-          name: currentHolding.name,
-          days: holdDays,
-          return: holdReturn,
-        })
-
-        trades.push({
-          date: rebalanceDate,
-          action: 'SELL',
-          symbol: currentHolding.symbol,
-          name: currentHolding.name,
-          price: actualSellPrice,
-          score: 0,
-          portfolioValue: sellValue,
-        })
-
-        cash = sellValue
-
-        // 새 종목 매수
-        const shares = cash / topStock.price
-        trades.push({
-          date: rebalanceDate,
-          action: 'BUY',
-          symbol: topStock.symbol,
-          name: topStock.name,
-          price: topStock.price,
-          score: topStock.score,
-          portfolioValue: cash,
-        })
-
-        currentHolding = {
-          symbol: topStock.symbol,
-          name: topStock.name,
-          shares,
-          buyPrice: topStock.price,
-          buyDate: rebalanceDate,
-        }
-
-        portfolioValues.push(cash)
-      }
-    } else {
-      // 첫 매수
-      const shares = cash / topStock.price
-      trades.push({
-        date: rebalanceDate,
-        action: 'BUY',
-        symbol: topStock.symbol,
-        name: topStock.name,
-        price: topStock.price,
-        score: topStock.score,
-        portfolioValue: cash,
-      })
-
-      currentHolding = {
-        symbol: topStock.symbol,
-        name: topStock.name,
-        shares,
-        buyPrice: topStock.price,
-        buyDate: rebalanceDate,
-      }
-
-      portfolioValues.push(cash)
-    }
-  }
-
-  // 마지막 보유 종목 청산 가치 계산
-  let finalValue = cash
-  if (currentHolding) {
-    const holdingStock = stocks.find(s => s.symbol === currentHolding!.symbol)
-    if (holdingStock && holdingStock.priceHistory.length > 0) {
-      const lastPrice = holdingStock.priceHistory[holdingStock.priceHistory.length - 1].close
-      finalValue = currentHolding.shares * lastPrice
-
-      // 마지막 보유 기간도 기록
-      const buyDateIdx = baseDates.indexOf(currentHolding.buyDate)
-      const lastDateIdx = baseDates.length - 1
-      const holdDays = Math.max(1, lastDateIdx - buyDateIdx)
-      const holdReturn = ((lastPrice - currentHolding.buyPrice) / currentHolding.buyPrice) * 100
+      // 보유 기간 기록
+      const buyDateIdx = baseDates.indexOf(holding.buyDate)
+      const sellDateIdx = baseDates.indexOf(rebalanceDate)
+      const holdDays = Math.max(1, sellDateIdx - buyDateIdx)
+      const holdReturn = ((sellPrice - holding.buyPrice) / holding.buyPrice) * 100
 
       holdingPeriods.push({
-        symbol: currentHolding.symbol,
-        name: currentHolding.name,
+        symbol: holding.symbol,
+        name: holding.name,
         days: holdDays,
         return: holdReturn,
       })
+
+      trades.push({
+        date: rebalanceDate,
+        action: 'SELL',
+        symbol: holding.symbol,
+        name: holding.name,
+        price: sellPrice,
+        score: 0,
+        portfolioValue: sellValue,
+      })
+
+      cash += sellValue
     }
+
+    // 보유 목록에서 매도한 종목 제거
+    currentHoldings = currentHoldings.filter(h => targetSymbols.has(h.symbol))
+
+    // 2. 기존 보유 종목은 HOLD
+    for (const holding of currentHoldings) {
+      const currentPrice = getCurrentPrice(holding.symbol, rebalanceDate) || holding.buyPrice
+      const targetStock = targetStocks.find(s => s.symbol === holding.symbol)
+      trades.push({
+        date: rebalanceDate,
+        action: 'HOLD',
+        symbol: holding.symbol,
+        name: holding.name,
+        price: currentPrice,
+        score: targetStock?.score || 0,
+        portfolioValue: holding.shares * currentPrice,
+      })
+    }
+
+    // 3. 새로 진입할 종목 매수 (동일 비중)
+    const currentHoldingSymbols = new Set(currentHoldings.map(h => h.symbol))
+    const stocksToBuy = targetStocks.filter(s => !currentHoldingSymbols.has(s.symbol))
+
+    if (stocksToBuy.length > 0 && cash > 0) {
+      // 목표: 모든 보유 종목이 동일 비중이 되도록
+      // 현재 포트폴리오 가치 계산
+      const totalValue = getPortfolioValue(rebalanceDate)
+      const targetValuePerStock = totalValue / topN
+      const cashPerNewStock = cash / stocksToBuy.length
+
+      for (const stock of stocksToBuy) {
+        const buyAmount = Math.min(cashPerNewStock, targetValuePerStock)
+        if (buyAmount <= 0) continue
+
+        const shares = buyAmount / stock.price
+
+        trades.push({
+          date: rebalanceDate,
+          action: 'BUY',
+          symbol: stock.symbol,
+          name: stock.name,
+          price: stock.price,
+          score: stock.score,
+          portfolioValue: buyAmount,
+        })
+
+        currentHoldings.push({
+          symbol: stock.symbol,
+          name: stock.name,
+          shares,
+          buyPrice: stock.price,
+          buyDate: rebalanceDate,
+        })
+
+        cash -= buyAmount
+      }
+    }
+
+    portfolioValues.push(getPortfolioValue(rebalanceDate))
   }
 
-  console.log('[Backtest] Final value:', finalValue, 'Trades:', trades.length)
+  // 마지막 보유 종목들의 청산 가치 계산
+  let finalValue = cash
+  const lastDate = baseDates[baseDates.length - 1]
+
+  for (const holding of currentHoldings) {
+    const lastPrice = getCurrentPrice(holding.symbol, lastDate) || holding.buyPrice
+    finalValue += holding.shares * lastPrice
+
+    // 마지막 보유 기간도 기록
+    const buyDateIdx = baseDates.indexOf(holding.buyDate)
+    const lastDateIdx = baseDates.length - 1
+    const holdDays = Math.max(1, lastDateIdx - buyDateIdx)
+    const holdReturn = ((lastPrice - holding.buyPrice) / holding.buyPrice) * 100
+
+    holdingPeriods.push({
+      symbol: holding.symbol,
+      name: holding.name,
+      days: holdDays,
+      return: holdReturn,
+    })
+  }
+
+  console.log('[Backtest] Final value:', finalValue, 'Trades:', trades.length, 'Holdings:', currentHoldings.length)
 
   portfolioValues.push(finalValue)
 
