@@ -1,4 +1,5 @@
 export * from './fundamentalScoring'
 export * from './technicalScoring'
 export * from './newsScoring'
+export * from './supplyDemandScoring'
 export * from './totalScoring'

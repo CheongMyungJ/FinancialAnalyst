@@ -8,6 +8,8 @@ export interface WeightConfig {
     operatingMargin: number
     debtRatio: number
     currentRatio: number
+    epsGrowth: number
+    revenueGrowth: number
   }
 
   // 기술적 분석 항목별 가중치 (0-100)
@@ -17,6 +19,9 @@ export interface WeightConfig {
     volumeTrend: number
     macd: number
     bollingerBand: number
+    stochastic: number
+    adx: number
+    divergence: number
   }
 
   // 뉴스/공시 분석 항목별 가중치 (0-100)
@@ -27,30 +32,42 @@ export interface WeightConfig {
     recency: number
   }
 
+  // 수급 분석 항목별 가중치 (0-100)
+  supplyDemand: {
+    foreignFlow: number
+    institutionFlow: number
+  }
+
   // 카테고리별 가중치 (0-100)
   category: {
     fundamental: number
     technical: number
     news: number
+    supplyDemand: number
   }
 }
 
 // 기본 가중치 값
 export const DEFAULT_WEIGHTS: WeightConfig = {
   fundamental: {
-    per: 20,
-    pbr: 20,
-    roe: 20,
-    operatingMargin: 20,
+    per: 15,
+    pbr: 15,
+    roe: 15,
+    operatingMargin: 15,
     debtRatio: 10,
     currentRatio: 10,
+    epsGrowth: 10,
+    revenueGrowth: 10,
   },
   technical: {
-    maPosition: 20,
-    rsi: 20,
-    volumeTrend: 20,
-    macd: 20,
-    bollingerBand: 20,
+    maPosition: 15,
+    rsi: 15,
+    volumeTrend: 10,
+    macd: 15,
+    bollingerBand: 15,
+    stochastic: 10,
+    adx: 10,
+    divergence: 10,
   },
   news: {
     sentiment: 30,
@@ -58,10 +75,15 @@ export const DEFAULT_WEIGHTS: WeightConfig = {
     disclosureImpact: 20,
     recency: 20,
   },
+  supplyDemand: {
+    foreignFlow: 50,
+    institutionFlow: 50,
+  },
   category: {
-    fundamental: 40,
-    technical: 40,
-    news: 20,
+    fundamental: 35,
+    technical: 35,
+    news: 15,
+    supplyDemand: 15,
   },
 }
 
@@ -88,9 +110,10 @@ export const DEFAULT_PRESETS: WeightPreset[] = [
     weights: {
       ...DEFAULT_WEIGHTS,
       category: {
-        fundamental: 60,
+        fundamental: 50,
         technical: 25,
         news: 15,
+        supplyDemand: 10,
       },
     },
   },
@@ -101,9 +124,10 @@ export const DEFAULT_PRESETS: WeightPreset[] = [
     weights: {
       ...DEFAULT_WEIGHTS,
       category: {
-        fundamental: 25,
-        technical: 60,
+        fundamental: 20,
+        technical: 50,
         news: 15,
+        supplyDemand: 15,
       },
     },
   },
@@ -114,9 +138,24 @@ export const DEFAULT_PRESETS: WeightPreset[] = [
     weights: {
       ...DEFAULT_WEIGHTS,
       category: {
-        fundamental: 30,
-        technical: 30,
-        news: 40,
+        fundamental: 25,
+        technical: 25,
+        news: 35,
+        supplyDemand: 15,
+      },
+    },
+  },
+  {
+    id: 'supply-demand',
+    name: '수급 중심',
+    description: '외국인/기관 수급에 높은 가중치',
+    weights: {
+      ...DEFAULT_WEIGHTS,
+      category: {
+        fundamental: 25,
+        technical: 25,
+        news: 15,
+        supplyDemand: 35,
       },
     },
   },

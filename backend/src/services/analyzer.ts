@@ -6,7 +6,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import { fileURLToPath } from 'url'
-import type { Stock, PriceData, NewsData, StocksResponse } from '../types/index.js'
+import type { Stock, PriceData, NewsData, SupplyDemandData, StocksResponse } from '../types/index.js'
 import { ALL_STOCKS } from '../data/stockList.js'
 import { getStockQuote, getHistoricalPrices } from './yahooFinance.js'
 import { calculateAllTechnicalIndicators } from './technicalIndicators.js'
@@ -76,6 +76,21 @@ function generateSampleNewsData(symbol: string): NewsData {
 }
 
 /**
+ * 수급 데이터 생성 (임시 - API 없이 샘플 데이터)
+ */
+function generateSampleSupplyDemandData(symbol: string): SupplyDemandData {
+  const hash = symbol.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
+
+  return {
+    foreignNetBuy: (hash % 200) - 100,
+    institutionNetBuy: ((hash * 2) % 200) - 100,
+    foreignNetBuyDays: (hash % 10) - 5,
+    institutionNetBuyDays: ((hash * 3) % 10) - 5,
+    foreignOwnership: hash % 50,
+  }
+}
+
+/**
  * 단일 종목 분석 (시세만 - 메인 화면용)
  * 히스토리 데이터 없이 빠르게 분석
  */
@@ -87,7 +102,10 @@ async function analyzeStockQuoteOnly(stockInfo: typeof ALL_STOCKS[0]): Promise<S
     // 2. 뉴스 데이터 (샘플)
     const newsData = generateSampleNewsData(stockInfo.symbol)
 
-    // 3. 기본 기술적 지표 (히스토리 없이 기본값)
+    // 3. 수급 데이터 (샘플)
+    const supplyDemand = generateSampleSupplyDemandData(stockInfo.symbol)
+
+    // 4. 기본 기술적 지표 (히스토리 없이 기본값)
     const technicals = {
       ma20: quote.currentPrice,
       ma50: quote.currentPrice,
@@ -98,13 +116,26 @@ async function analyzeStockQuoteOnly(stockInfo: typeof ALL_STOCKS[0]): Promise<S
       histogram: 0,
       volumeAvg20: null,
       volumeChange: 0,
+      bollingerUpper: null,
+      bollingerMiddle: null,
+      bollingerLower: null,
+      bollingerWidth: null,
+      bollingerPercentB: null,
+      stochasticK: null,
+      stochasticD: null,
+      adx: null,
+      plusDI: null,
+      minusDI: null,
+      rsiDivergence: null,
+      macdDivergence: null,
     }
 
-    // 4. 점수 계산
+    // 5. 점수 계산
     const scores = calculateAllScores(
       quote.fundamentals,
       technicals,
       newsData,
+      supplyDemand,
       quote.currentPrice,
       quote.changePercent,
       stockInfo.sector
@@ -124,6 +155,7 @@ async function analyzeStockQuoteOnly(stockInfo: typeof ALL_STOCKS[0]): Promise<S
       fundamentals: quote.fundamentals,
       technicals,
       newsData,
+      supplyDemand,
       scores,
     }
 
@@ -151,11 +183,15 @@ async function analyzeStockFull(stockInfo: typeof ALL_STOCKS[0]): Promise<Stock 
     // 4. 뉴스 데이터 (샘플)
     const newsData = generateSampleNewsData(stockInfo.symbol)
 
-    // 5. 점수 계산
+    // 5. 수급 데이터 (샘플)
+    const supplyDemand = generateSampleSupplyDemandData(stockInfo.symbol)
+
+    // 6. 점수 계산
     const scores = calculateAllScores(
       quote.fundamentals,
       technicals,
       newsData,
+      supplyDemand,
       quote.currentPrice,
       quote.changePercent,
       stockInfo.sector
@@ -175,6 +211,7 @@ async function analyzeStockFull(stockInfo: typeof ALL_STOCKS[0]): Promise<Stock 
       fundamentals: quote.fundamentals,
       technicals,
       newsData,
+      supplyDemand,
       scores,
     }
 

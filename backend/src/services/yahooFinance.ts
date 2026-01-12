@@ -75,6 +75,10 @@ export async function getStockQuote(symbol: string, market: Market): Promise<{
       operatingMargin: generateSampleFundamental(symbol, 'operatingMargin'),
       eps: generateSampleFundamental(symbol, 'eps'),
       marketCap: generateSampleFundamental(symbol, 'marketCap'),
+      debtRatio: generateSampleFundamental(symbol, 'debtRatio'),
+      currentRatio: generateSampleFundamental(symbol, 'currentRatio'),
+      epsGrowth: generateSampleFundamental(symbol, 'epsGrowth'),
+      revenueGrowth: generateSampleFundamental(symbol, 'revenueGrowth'),
     },
   }
 }
@@ -99,6 +103,14 @@ function generateSampleFundamental(symbol: string, type: string): number | null 
       return (seed % 100) + 1
     case 'marketCap':
       return (seed % 500 + 50) * 1e9
+    case 'debtRatio':
+      return 30 + (seed % 200)
+    case 'currentRatio':
+      return 50 + (seed % 200)
+    case 'epsGrowth':
+      return -30 + (seed % 80)
+    case 'revenueGrowth':
+      return -20 + (seed % 60)
     default:
       return null
   }

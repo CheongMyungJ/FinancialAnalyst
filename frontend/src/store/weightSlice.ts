@@ -20,7 +20,7 @@ const initialState: WeightState = {
 }
 
 // 가중치 카테고리 타입
-type WeightCategory = 'fundamental' | 'technical' | 'news' | 'category'
+type WeightCategory = 'fundamental' | 'technical' | 'news' | 'supplyDemand' | 'category'
 
 const weightSlice = createSlice({
   name: 'weights',
@@ -47,7 +47,7 @@ const weightSlice = createSlice({
     setCategoryWeight: (
       state,
       action: PayloadAction<{
-        category: 'fundamental' | 'technical' | 'news'
+        category: 'fundamental' | 'technical' | 'news' | 'supplyDemand'
         value: number
       }>
     ) => {

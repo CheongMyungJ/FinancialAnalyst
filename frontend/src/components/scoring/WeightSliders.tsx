@@ -60,12 +60,12 @@ export default function WeightSliders() {
     setExpanded(expanded === panel ? null : panel)
   }
 
-  const handleCategoryChange = (category: 'fundamental' | 'technical' | 'news', value: number) => {
+  const handleCategoryChange = (category: 'fundamental' | 'technical' | 'news' | 'supplyDemand', value: number) => {
     dispatch(setCategoryWeight({ category, value }))
   }
 
   const handleWeightChange = (category: string, item: string, value: number) => {
-    dispatch(setWeight({ category: category as 'fundamental' | 'technical' | 'news', item, value }))
+    dispatch(setWeight({ category: category as 'fundamental' | 'technical' | 'news' | 'supplyDemand', item, value }))
   }
 
   const handlePresetChange = (presetId: string) => {
@@ -115,6 +115,11 @@ export default function WeightSliders() {
           value={config.category.news}
           onChange={(v) => handleCategoryChange('news', v)}
         />
+        <SliderItem
+          label="수급 분석"
+          value={config.category.supplyDemand}
+          onChange={(v) => handleCategoryChange('supplyDemand', v)}
+        />
       </AccordionItem>
 
       {/* Fundamental analysis weights */}
@@ -153,6 +158,16 @@ export default function WeightSliders() {
           value={config.fundamental.currentRatio}
           onChange={(v) => handleWeightChange('fundamental', 'currentRatio', v)}
         />
+        <SliderItem
+          label="EPS 성장률"
+          value={config.fundamental.epsGrowth}
+          onChange={(v) => handleWeightChange('fundamental', 'epsGrowth', v)}
+        />
+        <SliderItem
+          label="매출 성장률"
+          value={config.fundamental.revenueGrowth}
+          onChange={(v) => handleWeightChange('fundamental', 'revenueGrowth', v)}
+        />
       </AccordionItem>
 
       {/* Technical analysis weights */}
@@ -186,6 +201,21 @@ export default function WeightSliders() {
           value={config.technical.bollingerBand}
           onChange={(v) => handleWeightChange('technical', 'bollingerBand', v)}
         />
+        <SliderItem
+          label="스토캐스틱"
+          value={config.technical.stochastic}
+          onChange={(v) => handleWeightChange('technical', 'stochastic', v)}
+        />
+        <SliderItem
+          label="ADX (추세 강도)"
+          value={config.technical.adx}
+          onChange={(v) => handleWeightChange('technical', 'adx', v)}
+        />
+        <SliderItem
+          label="다이버전스"
+          value={config.technical.divergence}
+          onChange={(v) => handleWeightChange('technical', 'divergence', v)}
+        />
       </AccordionItem>
 
       {/* News weights */}
@@ -213,6 +243,24 @@ export default function WeightSliders() {
           label="뉴스 신선도"
           value={config.news.recency}
           onChange={(v) => handleWeightChange('news', 'recency', v)}
+        />
+      </AccordionItem>
+
+      {/* Supply/Demand weights */}
+      <AccordionItem
+        title="수급 분석 항목"
+        isExpanded={expanded === 'supplyDemand'}
+        onToggle={() => handleAccordionChange('supplyDemand')}
+      >
+        <SliderItem
+          label="외국인 수급"
+          value={config.supplyDemand.foreignFlow}
+          onChange={(v) => handleWeightChange('supplyDemand', 'foreignFlow', v)}
+        />
+        <SliderItem
+          label="기관 수급"
+          value={config.supplyDemand.institutionFlow}
+          onChange={(v) => handleWeightChange('supplyDemand', 'institutionFlow', v)}
         />
       </AccordionItem>
 

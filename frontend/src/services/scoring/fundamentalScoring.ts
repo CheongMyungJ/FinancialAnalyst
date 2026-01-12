@@ -189,6 +189,48 @@ export function calculateCurrentRatioScore(currentRatio: number | null): number 
 }
 
 /**
+ * EPS 성장률 점수 계산
+ * EPS 성장률 = (금기 EPS - 전기 EPS) / |전기 EPS| × 100
+ * 성장률이 높을수록 좋지만, 안정적인 성장이 더 가치 있음
+ */
+export function calculateEPSGrowthScore(epsGrowth: number | null): number {
+  if (epsGrowth === null) return 5
+
+  // 성장률이 높을수록 좋음
+  if (epsGrowth >= 50) return 10   // 고성장
+  if (epsGrowth >= 30) return 9    // 높은 성장
+  if (epsGrowth >= 20) return 8    // 양호한 성장
+  if (epsGrowth >= 15) return 7    // 안정적 성장
+  if (epsGrowth >= 10) return 6    // 평균 성장
+  if (epsGrowth >= 5) return 5     // 소폭 성장
+  if (epsGrowth >= 0) return 4     // 성장 정체
+  if (epsGrowth >= -10) return 3   // 소폭 감소
+  if (epsGrowth >= -20) return 2   // 감소
+  return 1                          // 큰 폭 감소
+}
+
+/**
+ * 매출 성장률 점수 계산
+ * 매출 성장률 = (금기 매출 - 전기 매출) / 전기 매출 × 100
+ * 지속적인 매출 성장은 기업 가치 증가의 기반
+ */
+export function calculateRevenueGrowthScore(revenueGrowth: number | null): number {
+  if (revenueGrowth === null) return 5
+
+  // 매출 성장률이 높을수록 좋음
+  if (revenueGrowth >= 40) return 10  // 고성장
+  if (revenueGrowth >= 25) return 9   // 높은 성장
+  if (revenueGrowth >= 15) return 8   // 양호한 성장
+  if (revenueGrowth >= 10) return 7   // 안정적 성장
+  if (revenueGrowth >= 5) return 6    // 평균 성장
+  if (revenueGrowth >= 0) return 5    // 성장 정체
+  if (revenueGrowth >= -5) return 4   // 소폭 감소
+  if (revenueGrowth >= -10) return 3  // 감소
+  if (revenueGrowth >= -20) return 2  // 큰 폭 감소
+  return 1                             // 급감
+}
+
+/**
  * 전체 기본적 분석 점수 계산
  */
 export function calculateFundamentalScores(
@@ -201,8 +243,10 @@ export function calculateFundamentalScores(
   const operatingMargin = calculateOperatingMarginScore(data.operatingMargin, sector)
   const debtRatio = calculateDebtRatioScore(data.debtRatio)
   const currentRatio = calculateCurrentRatioScore(data.currentRatio)
+  const epsGrowth = calculateEPSGrowthScore(data.epsGrowth)
+  const revenueGrowth = calculateRevenueGrowthScore(data.revenueGrowth)
 
-  const average = (per + pbr + roe + operatingMargin + debtRatio + currentRatio) / 6
+  const average = (per + pbr + roe + operatingMargin + debtRatio + currentRatio + epsGrowth + revenueGrowth) / 8
 
   return {
     per,
@@ -211,6 +255,8 @@ export function calculateFundamentalScores(
     operatingMargin,
     debtRatio,
     currentRatio,
+    epsGrowth,
+    revenueGrowth,
     average: Math.round(average * 10) / 10,
   }
 }

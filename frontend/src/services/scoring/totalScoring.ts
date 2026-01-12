@@ -1,6 +1,6 @@
 /**
  * 종합 점수 계산 모듈
- * 기본적, 기술적, 뉴스 분석 점수를 가중치에 따라 합산하여 종합 점수를 산출합니다.
+ * 기본적, 기술적, 뉴스, 수급 분석 점수를 가중치에 따라 합산하여 종합 점수를 산출합니다.
  */
 
 import type {
@@ -9,11 +9,13 @@ import type {
   FundamentalData,
   TechnicalData,
   NewsData,
+  SupplyDemandData,
   WeightConfig,
 } from '../../types'
 import { calculateFundamentalScores } from './fundamentalScoring'
 import { calculateTechnicalScores } from './technicalScoring'
 import { calculateNewsScores } from './newsScoring'
+import { calculateSupplyDemandScores } from './supplyDemandScoring'
 
 /**
  * 가중 평균 계산 헬퍼 함수
@@ -38,12 +40,12 @@ function weightedAverage(values: number[], weights: number[]): number {
  * 기본적 분석 점수 가중 평균 계산
  */
 export function calculateWeightedFundamentalScore(
-  scores: { per: number; pbr: number; roe: number; operatingMargin: number; debtRatio: number; currentRatio: number },
+  scores: { per: number; pbr: number; roe: number; operatingMargin: number; debtRatio: number; currentRatio: number; epsGrowth: number; revenueGrowth: number },
   weights: WeightConfig['fundamental']
 ): number {
   return weightedAverage(
-    [scores.per, scores.pbr, scores.roe, scores.operatingMargin, scores.debtRatio, scores.currentRatio],
-    [weights.per, weights.pbr, weights.roe, weights.operatingMargin, weights.debtRatio, weights.currentRatio]
+    [scores.per, scores.pbr, scores.roe, scores.operatingMargin, scores.debtRatio, scores.currentRatio, scores.epsGrowth, scores.revenueGrowth],
+    [weights.per, weights.pbr, weights.roe, weights.operatingMargin, weights.debtRatio, weights.currentRatio, weights.epsGrowth, weights.revenueGrowth]
   )
 }
 
@@ -51,12 +53,12 @@ export function calculateWeightedFundamentalScore(
  * 기술적 분석 점수 가중 평균 계산
  */
 export function calculateWeightedTechnicalScore(
-  scores: { maPosition: number; rsi: number; volumeTrend: number; macd: number; bollingerBand: number },
+  scores: { maPosition: number; rsi: number; volumeTrend: number; macd: number; bollingerBand: number; stochastic: number; adx: number; divergence: number },
   weights: WeightConfig['technical']
 ): number {
   return weightedAverage(
-    [scores.maPosition, scores.rsi, scores.volumeTrend, scores.macd, scores.bollingerBand],
-    [weights.maPosition, weights.rsi, weights.volumeTrend, weights.macd, weights.bollingerBand]
+    [scores.maPosition, scores.rsi, scores.volumeTrend, scores.macd, scores.bollingerBand, scores.stochastic, scores.adx, scores.divergence],
+    [weights.maPosition, weights.rsi, weights.volumeTrend, weights.macd, weights.bollingerBand, weights.stochastic, weights.adx, weights.divergence]
   )
 }
 
@@ -74,17 +76,31 @@ export function calculateWeightedNewsScore(
 }
 
 /**
+ * 수급 분석 점수 가중 평균 계산
+ */
+export function calculateWeightedSupplyDemandScore(
+  scores: { foreignFlow: number; institutionFlow: number },
+  weights: WeightConfig['supplyDemand']
+): number {
+  return weightedAverage(
+    [scores.foreignFlow, scores.institutionFlow],
+    [weights.foreignFlow, weights.institutionFlow]
+  )
+}
+
+/**
  * 종합 점수 계산
  */
 export function calculateTotalScore(
   fundamentalAvg: number,
   technicalAvg: number,
   newsAvg: number,
+  supplyDemandAvg: number,
   categoryWeights: WeightConfig['category']
 ): number {
   const total = weightedAverage(
-    [fundamentalAvg, technicalAvg, newsAvg],
-    [categoryWeights.fundamental, categoryWeights.technical, categoryWeights.news]
+    [fundamentalAvg, technicalAvg, newsAvg, supplyDemandAvg],
+    [categoryWeights.fundamental, categoryWeights.technical, categoryWeights.news, categoryWeights.supplyDemand]
   )
 
   return Math.round(total * 10) / 10
@@ -97,6 +113,7 @@ export function calculateAllScores(
   fundamentals: FundamentalData,
   technicals: TechnicalData,
   newsData: NewsData,
+  supplyDemand: SupplyDemandData,
   currentPrice: number,
   priceChange: number,
   sector?: string,
@@ -104,10 +121,11 @@ export function calculateAllScores(
 ): StockScores {
   // 기본 가중치 (제공되지 않은 경우)
   const defaultWeights: WeightConfig = {
-    fundamental: { per: 20, pbr: 20, roe: 20, operatingMargin: 20, debtRatio: 10, currentRatio: 10 },
-    technical: { maPosition: 20, rsi: 20, volumeTrend: 20, macd: 20, bollingerBand: 20 },
+    fundamental: { per: 15, pbr: 15, roe: 15, operatingMargin: 15, debtRatio: 10, currentRatio: 10, epsGrowth: 10, revenueGrowth: 10 },
+    technical: { maPosition: 15, rsi: 15, volumeTrend: 10, macd: 15, bollingerBand: 15, stochastic: 10, adx: 10, divergence: 10 },
     news: { sentiment: 30, frequency: 30, disclosureImpact: 20, recency: 20 },
-    category: { fundamental: 40, technical: 40, news: 20 },
+    supplyDemand: { foreignFlow: 50, institutionFlow: 50 },
+    category: { fundamental: 35, technical: 35, news: 15, supplyDemand: 15 },
   }
 
   const w = weights || defaultWeights
@@ -116,17 +134,20 @@ export function calculateAllScores(
   const fundamentalScores = calculateFundamentalScores(fundamentals, sector)
   const technicalScores = calculateTechnicalScores(technicals, currentPrice, priceChange)
   const newsScores = calculateNewsScores(newsData)
+  const supplyDemandScores = calculateSupplyDemandScores(supplyDemand)
 
   // 가중 평균으로 카테고리별 최종 점수 계산
   const fundamentalWeightedAvg = calculateWeightedFundamentalScore(fundamentalScores, w.fundamental)
   const technicalWeightedAvg = calculateWeightedTechnicalScore(technicalScores, w.technical)
   const newsWeightedAvg = calculateWeightedNewsScore(newsScores, w.news)
+  const supplyDemandWeightedAvg = calculateWeightedSupplyDemandScore(supplyDemandScores, w.supplyDemand)
 
   // 종합 점수 계산
   const total = calculateTotalScore(
     fundamentalWeightedAvg,
     technicalWeightedAvg,
     newsWeightedAvg,
+    supplyDemandWeightedAvg,
     w.category
   )
 
@@ -144,6 +165,10 @@ export function calculateAllScores(
       ...newsScores,
       average: Math.round(newsWeightedAvg * 10) / 10,
     },
+    supplyDemand: {
+      ...supplyDemandScores,
+      average: Math.round(supplyDemandWeightedAvg * 10) / 10,
+    },
   }
 }
 
@@ -159,6 +184,7 @@ export function recalculateScoresWithWeights(
       stock.fundamentals,
       stock.technicals,
       stock.newsData,
+      stock.supplyDemand,
       stock.currentPrice,
       stock.changePercent,
       stock.sector,
@@ -183,6 +209,7 @@ export function recalculateSingleStockScores(
     stock.fundamentals,
     stock.technicals,
     stock.newsData,
+    stock.supplyDemand,
     stock.currentPrice,
     stock.changePercent,
     stock.sector,

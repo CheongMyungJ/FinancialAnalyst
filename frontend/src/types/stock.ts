@@ -14,6 +14,8 @@ export interface FundamentalData {
   marketCap: number | null  // 시가총액
   debtRatio: number | null        // 부채비율 (%)
   currentRatio: number | null     // 유동비율 (%)
+  epsGrowth: number | null        // EPS 성장률 (%, YoY)
+  revenueGrowth: number | null    // 매출 성장률 (%, YoY)
 }
 
 // 기술적 분석 데이터
@@ -33,6 +35,16 @@ export interface TechnicalData {
   bollingerLower: number | null   // 하단 밴드
   bollingerWidth: number | null   // 밴드폭 (%)
   bollingerPercentB: number | null // %B (0-1, 현재가 위치)
+  // 스토캐스틱
+  stochasticK: number | null      // %K (Fast Stochastic)
+  stochasticD: number | null      // %D (Slow Stochastic)
+  // ADX (Average Directional Index)
+  adx: number | null              // ADX 값 (추세 강도)
+  plusDI: number | null           // +DI (상승 방향 지표)
+  minusDI: number | null          // -DI (하락 방향 지표)
+  // 다이버전스
+  rsiDivergence: 'bullish' | 'bearish' | null  // RSI 다이버전스
+  macdDivergence: 'bullish' | 'bearish' | null // MACD 다이버전스
 }
 
 // 뉴스/공시 데이터
@@ -42,6 +54,15 @@ export interface NewsData {
   sentimentScore: number | null  // AI 분석 감성 점수 (1-10)
   newsCount: number              // 최근 30일 뉴스 수
   disclosureCount: number        // 최근 30일 공시 수
+}
+
+// 수급 데이터
+export interface SupplyDemandData {
+  foreignNetBuy: number | null        // 외국인 순매수 (금액)
+  institutionNetBuy: number | null    // 기관 순매수 (금액)
+  foreignNetBuyDays: number | null    // 외국인 연속 순매수 일수 (음수면 순매도)
+  institutionNetBuyDays: number | null // 기관 연속 순매수 일수
+  foreignOwnership: number | null      // 외국인 지분율 (%)
 }
 
 // 뉴스 아이템
@@ -89,6 +110,7 @@ export interface Stock {
   fundamentals: FundamentalData
   technicals: TechnicalData
   newsData: NewsData
+  supplyDemand: SupplyDemandData
 
   // 점수
   scores: StockScores
@@ -100,6 +122,7 @@ export interface StockScores {
   fundamental: FundamentalScores
   technical: TechnicalScores
   news: NewsScores
+  supplyDemand: SupplyDemandScores
 }
 
 // 기본적 분석 점수
@@ -110,6 +133,8 @@ export interface FundamentalScores {
   operatingMargin: number // 영업이익률 점수 (1-10)
   debtRatio: number       // 부채비율 점수 (1-10)
   currentRatio: number    // 유동비율 점수 (1-10)
+  epsGrowth: number       // EPS 성장률 점수 (1-10)
+  revenueGrowth: number   // 매출 성장률 점수 (1-10)
   average: number         // 평균 점수
 }
 
@@ -120,6 +145,9 @@ export interface TechnicalScores {
   volumeTrend: number     // 거래량 추세 점수 (1-10)
   macd: number            // MACD 점수 (1-10)
   bollingerBand: number   // 볼린저 밴드 점수 (1-10)
+  stochastic: number      // 스토캐스틱 점수 (1-10)
+  adx: number             // ADX 점수 (1-10)
+  divergence: number      // 다이버전스 점수 (1-10)
   average: number         // 평균 점수
 }
 
@@ -129,6 +157,13 @@ export interface NewsScores {
   frequency: number       // 뉴스/공시 빈도 점수 (1-10)
   disclosureImpact: number // 공시 유형별 영향 점수 (1-10)
   recency: number         // 뉴스 신선도 점수 (1-10)
+  average: number         // 평균 점수
+}
+
+// 수급 분석 점수
+export interface SupplyDemandScores {
+  foreignFlow: number     // 외국인 수급 점수 (1-10)
+  institutionFlow: number // 기관 수급 점수 (1-10)
   average: number         // 평균 점수
 }
 
