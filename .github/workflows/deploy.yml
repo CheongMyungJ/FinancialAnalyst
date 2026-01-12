@@ -32,9 +32,13 @@ jobs:
         working-directory: frontend
         run: npm install
 
+      - name: TypeScript Check
+        working-directory: frontend
+        run: npx tsc --noEmit --listFiles 2>&1 | head -100 || true
+
       - name: Build frontend
         working-directory: frontend
-        run: npm run build
+        run: npm run build 2>&1
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
