@@ -240,20 +240,22 @@ function calculateBollingerBandScore(prices: number[]): number {
 }
 
 /**
- * 스토캐스틱 계산 및 점수화
+ * 스토캐스틱 계산 및 점수화 (고가/저가 데이터 사용)
  */
-function calculateStochasticScore(prices: number[]): number {
-  if (prices.length < 14) return 5
+function calculateStochasticScore(priceData: PriceData[]): number {
+  if (priceData.length < 14) return 5
 
   const period = 14
-  const recentPrices = prices.slice(-period)
-  const high = Math.max(...recentPrices)
-  const low = Math.min(...recentPrices)
-  const current = prices[prices.length - 1]
+  const recentData = priceData.slice(-period)
 
-  if (high === low) return 5
+  // 기간 내 최고가, 최저가 계산
+  const highestHigh = Math.max(...recentData.map(d => d.high))
+  const lowestLow = Math.min(...recentData.map(d => d.low))
+  const currentClose = priceData[priceData.length - 1].close
 
-  const percentK = ((current - low) / (high - low)) * 100
+  if (highestHigh === lowestLow) return 5
+
+  const percentK = ((currentClose - lowestLow) / (highestHigh - lowestLow)) * 100
 
   // 과매도 (20 미만): 매수 신호 -> 높은 점수
   // 과매수 (80 이상): 매도 신호 -> 낮은 점수
@@ -265,10 +267,10 @@ function calculateStochasticScore(prices: number[]): number {
 }
 
 /**
- * ADX (Average Directional Index) 점수 계산
+ * ADX (Average Directional Index) 점수 계산 (고가/저가 데이터 사용)
  */
-function calculateADXScore(prices: number[]): number {
-  if (prices.length < 28) return 5
+function calculateADXScore(priceData: PriceData[]): number {
+  if (priceData.length < 28) return 5
 
   const period = 14
 
@@ -277,12 +279,12 @@ function calculateADXScore(prices: number[]): number {
   const minusDM: number[] = []
   const tr: number[] = []
 
-  for (let i = 1; i < prices.length; i++) {
-    const high = prices[i]
-    const low = prices[i]
-    const prevHigh = prices[i - 1]
-    const prevLow = prices[i - 1]
-    const prevClose = prices[i - 1]
+  for (let i = 1; i < priceData.length; i++) {
+    const high = priceData[i].high
+    const low = priceData[i].low
+    const prevHigh = priceData[i - 1].high
+    const prevLow = priceData[i - 1].low
+    const prevClose = priceData[i - 1].close
 
     const upMove = high - prevHigh
     const downMove = prevLow - low
@@ -438,8 +440,8 @@ export function calculateTechnicalScores(
     momentum: calculateMomentumScore(closes),
     volumeTrend: calculateVolumeTrendScore(volumes),
     bollingerBand: calculateBollingerBandScore(closes),
-    stochastic: calculateStochasticScore(closes),
-    adx: calculateADXScore(closes),
+    stochastic: calculateStochasticScore(data),
+    adx: calculateADXScore(data),
     divergence: calculateDivergenceScore(closes),
     foreignFlow: calculateForeignFlowScore(supplyDemand),
     institutionFlow: calculateInstitutionFlowScore(supplyDemand),

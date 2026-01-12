@@ -4,6 +4,7 @@
  */
 
 import type { Stock, PriceData } from '../../types'
+import { calculateAllTechnicalIndicators } from '../indicators/technicalIndicators'
 
 // GitHub Raw 콘텐츠 URL
 const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/CheongMyungJ/FinancialAnalyst/main'
@@ -38,20 +39,33 @@ export async function fetchStocksFromGitHub(): Promise<StocksResponse> {
  * 특정 종목 상세 데이터 가져오기
  * - 기본 데이터는 전체 데이터에서 추출
  * - 가격 히스토리는 Yahoo Finance에서 직접 가져옴
+ * - 기술적 지표는 가격 히스토리로부터 실시간 계산
  */
 export async function fetchStockDetailFromGitHub(
   symbol: string,
   allStocks: Stock[]
 ): Promise<StockDetailResponse> {
   // 전체 목록에서 해당 종목 찾기
-  const stock = allStocks.find(s => s.symbol === symbol) || null
+  const baseStock = allStocks.find(s => s.symbol === symbol) || null
 
-  if (!stock) {
+  if (!baseStock) {
     return { stock: null, priceHistory: [] }
   }
 
   // 가격 히스토리 가져오기 (Yahoo Finance)
-  const priceHistory = await fetchPriceHistory(symbol, stock.market)
+  const priceHistory = await fetchPriceHistory(symbol, baseStock.market)
+
+  // 가격 히스토리로부터 기술적 지표 계산
+  const technicals = calculateAllTechnicalIndicators(priceHistory)
+
+  // 기술적 지표가 계산되면 stock 객체에 적용
+  const stock: Stock = {
+    ...baseStock,
+    technicals: {
+      ...baseStock.technicals,
+      ...technicals,
+    },
+  }
 
   return { stock, priceHistory }
 }

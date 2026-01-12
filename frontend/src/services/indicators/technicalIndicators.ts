@@ -156,6 +156,278 @@ export function calculateMACD(
 }
 
 /**
+ * 표준편차 계산
+ */
+export function calculateStandardDeviation(values: number[], period: number): number[] {
+  const result: number[] = []
+  const sma = calculateSMA(values, period)
+
+  for (let i = 0; i < values.length; i++) {
+    if (i < period - 1) {
+      result.push(NaN)
+    } else {
+      const slice = values.slice(i - period + 1, i + 1)
+      const mean = sma[i]
+      const squaredDiffs = slice.map(v => Math.pow(v - mean, 2))
+      const variance = squaredDiffs.reduce((a, b) => a + b, 0) / period
+      result.push(Math.sqrt(variance))
+    }
+  }
+  return result
+}
+
+/**
+ * 볼린저 밴드 계산
+ */
+export function calculateBollingerBands(
+  prices: number[],
+  period: number = 20,
+  multiplier: number = 2
+): {
+  upper: number[]
+  middle: number[]
+  lower: number[]
+  width: number[]
+  percentB: number[]
+} {
+  const middle = calculateSMA(prices, period)
+  const stdDev = calculateStandardDeviation(prices, period)
+
+  const upper: number[] = []
+  const lower: number[] = []
+  const width: number[] = []
+  const percentB: number[] = []
+
+  for (let i = 0; i < prices.length; i++) {
+    if (isNaN(middle[i]) || isNaN(stdDev[i])) {
+      upper.push(NaN)
+      lower.push(NaN)
+      width.push(NaN)
+      percentB.push(NaN)
+    } else {
+      const upperBand = middle[i] + multiplier * stdDev[i]
+      const lowerBand = middle[i] - multiplier * stdDev[i]
+      upper.push(upperBand)
+      lower.push(lowerBand)
+      width.push(((upperBand - lowerBand) / middle[i]) * 100)
+      const bandRange = upperBand - lowerBand
+      percentB.push(bandRange > 0 ? (prices[i] - lowerBand) / bandRange : 0.5)
+    }
+  }
+
+  return { upper, middle, lower, width, percentB }
+}
+
+/**
+ * 스토캐스틱 계산
+ */
+export function calculateStochastic(
+  highs: number[],
+  lows: number[],
+  closes: number[],
+  kPeriod: number = 14,
+  dPeriod: number = 3
+): { k: number[]; d: number[] } {
+  const k: number[] = []
+
+  for (let i = 0; i < closes.length; i++) {
+    if (i < kPeriod - 1) {
+      k.push(NaN)
+    } else {
+      const highSlice = highs.slice(i - kPeriod + 1, i + 1)
+      const lowSlice = lows.slice(i - kPeriod + 1, i + 1)
+      const highestHigh = Math.max(...highSlice)
+      const lowestLow = Math.min(...lowSlice)
+      const range = highestHigh - lowestLow
+
+      if (range === 0) {
+        k.push(50)
+      } else {
+        k.push(((closes[i] - lowestLow) / range) * 100)
+      }
+    }
+  }
+
+  const validK = k.filter(v => !isNaN(v))
+  const d = calculateSMA(validK, dPeriod)
+
+  const dAligned: number[] = []
+  let dIndex = 0
+  for (let i = 0; i < k.length; i++) {
+    if (isNaN(k[i])) {
+      dAligned.push(NaN)
+    } else {
+      dAligned.push(d[dIndex] || NaN)
+      dIndex++
+    }
+  }
+
+  return { k, d: dAligned }
+}
+
+/**
+ * ADX 계산
+ */
+export function calculateADX(
+  highs: number[],
+  lows: number[],
+  closes: number[],
+  period: number = 14
+): { adx: number[]; plusDI: number[]; minusDI: number[] } {
+  const tr: number[] = []
+  const plusDM: number[] = []
+  const minusDM: number[] = []
+
+  for (let i = 0; i < closes.length; i++) {
+    if (i === 0) {
+      tr.push(highs[i] - lows[i])
+      plusDM.push(0)
+      minusDM.push(0)
+    } else {
+      const hl = highs[i] - lows[i]
+      const hc = Math.abs(highs[i] - closes[i - 1])
+      const lc = Math.abs(lows[i] - closes[i - 1])
+      tr.push(Math.max(hl, hc, lc))
+
+      const upMove = highs[i] - highs[i - 1]
+      const downMove = lows[i - 1] - lows[i]
+
+      if (upMove > downMove && upMove > 0) {
+        plusDM.push(upMove)
+      } else {
+        plusDM.push(0)
+      }
+
+      if (downMove > upMove && downMove > 0) {
+        minusDM.push(downMove)
+      } else {
+        minusDM.push(0)
+      }
+    }
+  }
+
+  const atr = calculateEMA(tr, period)
+  const smoothedPlusDM = calculateEMA(plusDM, period)
+  const smoothedMinusDM = calculateEMA(minusDM, period)
+
+  const plusDI: number[] = []
+  const minusDI: number[] = []
+  const dx: number[] = []
+
+  for (let i = 0; i < closes.length; i++) {
+    if (atr[i] === 0 || isNaN(atr[i])) {
+      plusDI.push(NaN)
+      minusDI.push(NaN)
+      dx.push(NaN)
+    } else {
+      const pdi = (smoothedPlusDM[i] / atr[i]) * 100
+      const mdi = (smoothedMinusDM[i] / atr[i]) * 100
+      plusDI.push(pdi)
+      minusDI.push(mdi)
+
+      const diSum = pdi + mdi
+      if (diSum === 0) {
+        dx.push(0)
+      } else {
+        dx.push((Math.abs(pdi - mdi) / diSum) * 100)
+      }
+    }
+  }
+
+  const validDx = dx.filter(v => !isNaN(v))
+  const adxValues = calculateEMA(validDx, period)
+
+  const adxAligned: number[] = []
+  let adxIndex = 0
+  for (let i = 0; i < dx.length; i++) {
+    if (isNaN(dx[i])) {
+      adxAligned.push(NaN)
+    } else {
+      adxAligned.push(adxValues[adxIndex] || NaN)
+      adxIndex++
+    }
+  }
+
+  return { adx: adxAligned, plusDI, minusDI }
+}
+
+/**
+ * RSI 다이버전스 감지
+ */
+export function detectRSIDivergence(
+  closes: number[],
+  rsiValues: number[],
+  lookback: number = 14
+): 'bullish' | 'bearish' | null {
+  if (closes.length < lookback * 2) return null
+
+  const recentCloses = closes.slice(-lookback)
+  const previousCloses = closes.slice(-lookback * 2, -lookback)
+  const recentRSI = rsiValues.slice(-lookback).filter(v => !isNaN(v))
+  const previousRSI = rsiValues.slice(-lookback * 2, -lookback).filter(v => !isNaN(v))
+
+  if (recentRSI.length === 0 || previousRSI.length === 0) return null
+
+  const currentLow = Math.min(...recentCloses)
+  const previousLow = Math.min(...previousCloses)
+  const currentHigh = Math.max(...recentCloses)
+  const previousHigh = Math.max(...previousCloses)
+
+  const currentRSILow = Math.min(...recentRSI)
+  const previousRSILow = Math.min(...previousRSI)
+  const currentRSIHigh = Math.max(...recentRSI)
+  const previousRSIHigh = Math.max(...previousRSI)
+
+  if (currentLow < previousLow && currentRSILow > previousRSILow) {
+    return 'bullish'
+  }
+
+  if (currentHigh > previousHigh && currentRSIHigh < previousRSIHigh) {
+    return 'bearish'
+  }
+
+  return null
+}
+
+/**
+ * MACD 다이버전스 감지
+ */
+export function detectMACDDivergence(
+  closes: number[],
+  histogram: number[],
+  lookback: number = 14
+): 'bullish' | 'bearish' | null {
+  if (closes.length < lookback * 2) return null
+
+  const recentCloses = closes.slice(-lookback)
+  const previousCloses = closes.slice(-lookback * 2, -lookback)
+  const recentHist = histogram.slice(-lookback).filter(v => !isNaN(v))
+  const previousHist = histogram.slice(-lookback * 2, -lookback).filter(v => !isNaN(v))
+
+  if (recentHist.length === 0 || previousHist.length === 0) return null
+
+  const currentLow = Math.min(...recentCloses)
+  const previousLow = Math.min(...previousCloses)
+  const currentHigh = Math.max(...recentCloses)
+  const previousHigh = Math.max(...previousCloses)
+
+  const currentHistLow = Math.min(...recentHist)
+  const previousHistLow = Math.min(...previousHist)
+  const currentHistHigh = Math.max(...recentHist)
+  const previousHistHigh = Math.max(...previousHist)
+
+  if (currentLow < previousLow && currentHistLow > previousHistLow) {
+    return 'bullish'
+  }
+
+  if (currentHigh > previousHigh && currentHistHigh < previousHistHigh) {
+    return 'bearish'
+  }
+
+  return null
+}
+
+/**
  * 가격 데이터에서 전체 기술적 지표 계산
  */
 export function calculateAllTechnicalIndicators(prices: PriceData[]): TechnicalData {
@@ -170,10 +442,24 @@ export function calculateAllTechnicalIndicators(prices: PriceData[]): TechnicalD
       histogram: null,
       volumeAvg20: null,
       volumeChange: null,
+      bollingerUpper: null,
+      bollingerMiddle: null,
+      bollingerLower: null,
+      bollingerWidth: null,
+      bollingerPercentB: null,
+      stochasticK: null,
+      stochasticD: null,
+      adx: null,
+      plusDI: null,
+      minusDI: null,
+      rsiDivergence: null,
+      macdDivergence: null,
     }
   }
 
   const closes = prices.map(p => p.close)
+  const highs = prices.map(p => p.high)
+  const lows = prices.map(p => p.low)
   const volumes = prices.map(p => p.volume)
 
   // 이동평균
@@ -186,6 +472,19 @@ export function calculateAllTechnicalIndicators(prices: PriceData[]): TechnicalD
 
   // MACD
   const { macdLine, signalLine, histogram } = calculateMACD(closes)
+
+  // 볼린저 밴드
+  const bollinger = calculateBollingerBands(closes, 20, 2)
+
+  // 스토캐스틱
+  const stochastic = calculateStochastic(highs, lows, closes, 14, 3)
+
+  // ADX
+  const adxResult = calculateADX(highs, lows, closes, 14)
+
+  // 다이버전스
+  const rsiDivergence = detectRSIDivergence(closes, rsiValues, 14)
+  const macdDivergence = detectMACDDivergence(closes, histogram, 14)
 
   // 거래량 분석
   const volumeAvg20Values = calculateSMA(volumes, 20)
@@ -206,6 +505,18 @@ export function calculateAllTechnicalIndicators(prices: PriceData[]): TechnicalD
     histogram: histogram[lastIndex] || null,
     volumeAvg20,
     volumeChange,
+    bollingerUpper: bollinger.upper[lastIndex] || null,
+    bollingerMiddle: bollinger.middle[lastIndex] || null,
+    bollingerLower: bollinger.lower[lastIndex] || null,
+    bollingerWidth: bollinger.width[lastIndex] || null,
+    bollingerPercentB: bollinger.percentB[lastIndex] || null,
+    stochasticK: stochastic.k[lastIndex] || null,
+    stochasticD: stochastic.d[lastIndex] || null,
+    adx: adxResult.adx[lastIndex] || null,
+    plusDI: adxResult.plusDI[lastIndex] || null,
+    minusDI: adxResult.minusDI[lastIndex] || null,
+    rsiDivergence,
+    macdDivergence,
   }
 }
 
