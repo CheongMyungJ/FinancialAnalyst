@@ -44,11 +44,19 @@ export default function SectorAnalysisPage() {
   const sectorStats = useMemo(() => {
     if (list.length === 0) return []
 
-    // 섹터별 그룹화
+    // 시장을 지역으로 변환 (KOSPI/KOSDAQ -> KR, NYSE/NASDAQ -> US)
+    const getRegion = (market: string) => {
+      if (market === 'KOSPI' || market === 'KOSDAQ') return 'KR'
+      if (market === 'NYSE' || market === 'NASDAQ') return 'US'
+      return market
+    }
+
+    // 섹터별 그룹화 (지역 기준)
     const sectorMap = new Map<string, Stock[]>()
 
     list.forEach((stock) => {
-      const key = `${stock.sector}|${stock.market}`
+      const region = getRegion(stock.market)
+      const key = `${stock.sector}|${region}`
       if (!sectorMap.has(key)) {
         sectorMap.set(key, [])
       }
@@ -59,7 +67,7 @@ export default function SectorAnalysisPage() {
     const stats: SectorStats[] = []
 
     sectorMap.forEach((stocks, key) => {
-      const [sector, market] = key.split('|')
+      const [sector, region] = key.split('|')
       const count = stocks.length
 
       // 평균 계산
@@ -76,7 +84,7 @@ export default function SectorAnalysisPage() {
 
       stats.push({
         name: sector,
-        market,
+        market: region,
         stockCount: count,
         avgScore,
         avgFundamental,
@@ -92,12 +100,8 @@ export default function SectorAnalysisPage() {
   }, [list])
 
   // 한국/미국 섹터 분리
-  const koreanSectors = sectorStats.filter(
-    (s) => s.market === 'KOSPI' || s.market === 'KOSDAQ'
-  )
-  const usSectors = sectorStats.filter(
-    (s) => s.market === 'NYSE' || s.market === 'NASDAQ'
-  )
+  const koreanSectors = sectorStats.filter((s) => s.market === 'KR')
+  const usSectors = sectorStats.filter((s) => s.market === 'US')
 
   if (list.length === 0) {
     return (
@@ -120,7 +124,12 @@ export default function SectorAnalysisPage() {
                 {sector.name}
               </Typography>
               <Box display="flex" gap={1}>
-                <Chip label={sector.market} size="small" color="primary" variant="outlined" />
+                <Chip
+                  label={sector.market === 'KR' ? '한국' : '미국'}
+                  size="small"
+                  color="primary"
+                  variant="outlined"
+                />
                 <Chip label={`${sector.stockCount}개 종목`} size="small" variant="outlined" />
               </Box>
             </Box>
