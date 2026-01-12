@@ -1,0 +1,48 @@
+name: Stock Analysis
+
+on:
+  schedule:
+    # 매 시간 0분에 실행 (UTC 기준)
+    - cron: '0 * * * *'
+  workflow_dispatch:  # 수동 실행 가능
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run analysis
+        run: npm run analyze
+        env:
+          AUTO_COMMIT: 'false'  # GitHub Actions에서 직접 커밋할 것이므로
+
+      - name: Commit and push results
+        run: |
+          cd ..
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if [ -n "$(git status --porcelain data/)" ]; then
+            git add data/
+            git commit -m "Update stock analysis data - $(date -u '+%Y-%m-%d %H:%M UTC')"
+            git push
+            echo "Changes committed and pushed"
+          else
+            echo "No changes to commit"
+          fi
