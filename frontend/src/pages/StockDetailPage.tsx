@@ -131,38 +131,51 @@ function calculateEMA(prices: number[], period: number): number[] {
   return ema
 }
 
-// MACD 계산
+// MACD 계산 (백엔드와 동일)
 function calculateMACD(prices: PriceData[], fastPeriod: number = 12, slowPeriod: number = 26, signalPeriod: number = 9) {
   const closePrices = prices.map(p => p.close)
   const emaFast = calculateEMA(closePrices, fastPeriod)
   const emaSlow = calculateEMA(closePrices, slowPeriod)
 
+  // MACD Line 계산
   const macdLine: (number | null)[] = []
   for (let i = 0; i < prices.length; i++) {
-    if (emaFast[i] !== undefined && emaSlow[i] !== undefined) {
-      macdLine[i] = emaFast[i] - emaSlow[i]
+    if (i < slowPeriod - 1 || emaFast[i] === undefined || emaSlow[i] === undefined) {
+      macdLine.push(null)
     } else {
-      macdLine[i] = null
+      macdLine.push(emaFast[i] - emaSlow[i])
     }
   }
 
-  // MACD의 EMA = Signal Line
+  // Signal Line 계산 - 유효한 MACD 값들로 EMA 계산
   const validMacd = macdLine.filter((v): v is number => v !== null)
   const signalEma = calculateEMA(validMacd, signalPeriod)
 
+  // Signal Line을 원래 인덱스에 매핑
+  const signalLine: (number | null)[] = []
+  let signalIndex = 0
+  for (let i = 0; i < prices.length; i++) {
+    if (macdLine[i] === null) {
+      signalLine.push(null)
+    } else {
+      signalLine.push(signalEma[signalIndex] ?? null)
+      signalIndex++
+    }
+  }
+
+  // Histogram 계산
   const result = prices.map((_, i) => {
     const macd = macdLine[i]
-    if (macd === null || i < slowPeriod + signalPeriod - 2) {
+    const signal = signalLine[i]
+
+    if (macd === null || signal === null) {
       return { macdLine: null, signalLine: null, histogram: null }
     }
-
-    const signalIndex = i - (slowPeriod - 1)
-    const signal = signalEma[signalIndex] ?? null
 
     return {
       macdLine: macd,
       signalLine: signal,
-      histogram: signal !== null ? macd - signal : null,
+      histogram: macd - signal,
     }
   })
 
