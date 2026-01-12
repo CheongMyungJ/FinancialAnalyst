@@ -23,7 +23,7 @@ import {
   OpenInNew as OpenInNewIcon,
 } from '@mui/icons-material'
 import { useAppDispatch, useAppSelector } from '../store'
-import { fetchStockDetail } from '../store/stockSlice'
+import { fetchStockDetail, clearSelectedStock } from '../store/stockSlice'
 import ScoreBreakdown from '../components/scoring/ScoreBreakdown'
 import PriceChart from '../components/charts/PriceChart'
 import VolumeChart from '../components/charts/VolumeChart'
@@ -102,8 +102,11 @@ export default function StockDetailPage() {
     (state) => state.stocks
   )
 
-  // 종목 정보 및 가격 히스토리 로드
+  // 종목 변경 시 이전 데이터 초기화 후 새 데이터 로드
   useEffect(() => {
+    // 먼저 이전 종목 데이터 초기화
+    dispatch(clearSelectedStock())
+
     if (symbol) {
       dispatch(fetchStockDetail(symbol))
     }

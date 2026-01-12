@@ -89,6 +89,11 @@ const stockSlice = createSlice({
       state.error = null
     },
 
+    clearSelectedStock: (state) => {
+      state.selectedStock = null
+      state.selectedStockPriceHistory = []
+    },
+
     updateStockScore: (
       state,
       action: PayloadAction<{ symbol: string; scores: Stock['scores'] }>
@@ -139,6 +144,7 @@ export const {
   setStockList,
   setSelectedStock,
   clearError,
+  clearSelectedStock,
   updateStockScore,
 } = stockSlice.actions
 
