@@ -4,6 +4,7 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [react()],
+  base: '/FinancialAnalyst/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -12,5 +13,8 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
+  },
+  build: {
+    outDir: 'dist',
   },
 })
