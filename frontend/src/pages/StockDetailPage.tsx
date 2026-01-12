@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
   ArrowLeft,
@@ -15,7 +15,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../store'
 import { fetchStockDetail, clearSelectedStock } from '../store/stockSlice'
 import ScoreBreakdown from '../components/scoring/ScoreBreakdown'
-import PriceChart from '../components/charts/PriceChart'
+import PriceChart, { type ChartPeriod } from '../components/charts/PriceChart'
 import VolumeChart from '../components/charts/VolumeChart'
 import RSIChart from '../components/charts/RSIChart'
 import MACDChart from '../components/charts/MACDChart'
@@ -212,6 +212,9 @@ export default function StockDetailPage() {
     (state) => state.stocks
   )
 
+  // 차트 기간 상태
+  const [chartPeriod, setChartPeriod] = useState<ChartPeriod>('3M')
+
   // 종목 변경 시 이전 데이터 초기화 후 새 데이터 로드
   useEffect(() => {
     dispatch(clearSelectedStock())
@@ -263,6 +266,22 @@ export default function StockDetailPage() {
       histogram: macdValues[i].histogram,
     }))
   }, [selectedStockPriceHistory])
+
+  // 기간에 따라 필터링된 데이터
+  const filteredPriceHistory = useMemo(() => {
+    const days = chartPeriod === '1M' ? 30 : chartPeriod === '3M' ? 90 : 180
+    return priceHistory.slice(-days)
+  }, [priceHistory, chartPeriod])
+
+  const filteredRsiData = useMemo(() => {
+    const days = chartPeriod === '1M' ? 30 : chartPeriod === '3M' ? 90 : 180
+    return rsiData.slice(-days)
+  }, [rsiData, chartPeriod])
+
+  const filteredMacdData = useMemo(() => {
+    const days = chartPeriod === '1M' ? 30 : chartPeriod === '3M' ? 90 : 180
+    return macdData.slice(-days)
+  }, [macdData, chartPeriod])
 
   const chartLoading = loading && selectedStockPriceHistory.length === 0
 
@@ -396,10 +415,28 @@ export default function StockDetailPage() {
         <div className="lg:col-span-2">
           <Card className="hover:shadow-lg hover:shadow-cyan-500/5 transition-shadow">
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-base">
-                <LineChart className="h-5 w-5 text-cyan-400" />
-                가격 차트
-              </CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <LineChart className="h-5 w-5 text-cyan-400" />
+                  기술적 분석 차트
+                </CardTitle>
+                <div className="flex gap-1">
+                  {(['1M', '3M', '6M'] as const).map((p) => (
+                    <button
+                      key={p}
+                      onClick={() => setChartPeriod(p)}
+                      className={cn(
+                        'px-3 py-1 text-xs rounded-md transition-colors',
+                        chartPeriod === p
+                          ? 'bg-cyan-500/20 text-cyan-400'
+                          : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                      )}
+                    >
+                      {p === '1M' ? '1개월' : p === '3M' ? '3개월' : '6개월'}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </CardHeader>
             <CardContent>
               {chartLoading ? (
@@ -413,13 +450,13 @@ export default function StockDetailPage() {
                 </div>
               ) : (
                 <>
-                  <PriceChart data={priceHistory} currency={currency} showBollinger />
+                  <PriceChart key={`price-${chartPeriod}`} data={filteredPriceHistory} currency={currency} showBollinger showPeriodSelector={false} />
                   <div className="border-t border-slate-800 my-4" />
-                  <VolumeChart data={priceHistory} />
+                  <VolumeChart key={`volume-${chartPeriod}`} data={filteredPriceHistory} />
                   <div className="border-t border-slate-800 my-4" />
-                  <RSIChart data={rsiData} />
+                  <RSIChart key={`rsi-${chartPeriod}`} data={filteredRsiData} />
                   <div className="border-t border-slate-800 my-4" />
-                  <MACDChart data={macdData} />
+                  <MACDChart key={`macd-${chartPeriod}`} data={filteredMacdData} />
                 </>
               )}
             </CardContent>
