@@ -2,8 +2,12 @@ name: Stock Analysis
 
 on:
   schedule:
-    # 매 시간 0분에 실행 (UTC 기준)
-    - cron: '0 * * * *'
+    # 한국 시간 (KST = UTC+9) 기준
+    - cron: '0 23 * * *'   # KST 08:00
+    - cron: '0 1 * * *'    # KST 10:00
+    - cron: '0 3 * * *'    # KST 12:00
+    - cron: '0 8 * * *'    # KST 17:00
+    - cron: '0 13 * * *'   # KST 22:00
   workflow_dispatch:  # 수동 실행 가능
 
 permissions:
