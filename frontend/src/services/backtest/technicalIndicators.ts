@@ -11,6 +11,10 @@ export interface TechnicalScores {
   maCrossover: number  // 0-10 (이동평균 크로스오버)
   momentum: number     // 0-10 (모멘텀)
   volumeTrend: number  // 0-10 (거래량 추세)
+  bollingerBand: number // 0-10 (볼린저 밴드)
+  stochastic: number   // 0-10 (스토캐스틱)
+  adx: number          // 0-10 (ADX 추세 강도)
+  divergence: number   // 0-10 (다이버전스)
   foreignFlow: number  // 0-10 (외국인 수급)
   institutionFlow: number // 0-10 (기관 수급)
 }
@@ -21,18 +25,26 @@ export interface IndicatorWeights {
   maCrossover: number
   momentum: number
   volumeTrend: number
+  bollingerBand: number
+  stochastic: number
+  adx: number
+  divergence: number
   foreignFlow: number
   institutionFlow: number
 }
 
 export const DEFAULT_WEIGHTS: IndicatorWeights = {
-  rsi: 15,
-  macd: 15,
-  maCrossover: 15,
-  momentum: 15,
-  volumeTrend: 10,
-  foreignFlow: 15,
-  institutionFlow: 15,
+  rsi: 10,
+  macd: 10,
+  maCrossover: 10,
+  momentum: 10,
+  volumeTrend: 8,
+  bollingerBand: 8,
+  stochastic: 8,
+  adx: 8,
+  divergence: 8,
+  foreignFlow: 10,
+  institutionFlow: 10,
 }
 
 /**
@@ -196,6 +208,147 @@ function calculateVolumeTrendScore(volumes: number[]): number {
 }
 
 /**
+ * 볼린저 밴드 점수 계산
+ */
+function calculateBollingerBandScore(prices: number[]): number {
+  if (prices.length < 20) return 5
+
+  const period = 20
+  const recentPrices = prices.slice(-period)
+  const sma = recentPrices.reduce((a, b) => a + b, 0) / period
+
+  // 표준편차 계산
+  const variance = recentPrices.reduce((sum, p) => sum + Math.pow(p - sma, 2), 0) / period
+  const stdDev = Math.sqrt(variance)
+
+  const upperBand = sma + 2 * stdDev
+  const lowerBand = sma - 2 * stdDev
+  const currentPrice = prices[prices.length - 1]
+
+  // 밴드 내 위치 계산 (0 = 하단, 1 = 상단)
+  const bandWidth = upperBand - lowerBand
+  if (bandWidth === 0) return 5
+
+  const position = (currentPrice - lowerBand) / bandWidth
+
+  // 하단 근처: 매수 기회 (높은 점수), 상단 근처: 매도 고려 (낮은 점수)
+  if (position <= 0.1) return 9  // 하단 돌파 - 강한 매수 신호
+  if (position <= 0.3) return 7  // 하단 근처
+  if (position >= 0.9) return 2  // 상단 돌파 - 매도 신호
+  if (position >= 0.7) return 4  // 상단 근처
+  return 5  // 중간
+}
+
+/**
+ * 스토캐스틱 계산 및 점수화
+ */
+function calculateStochasticScore(prices: number[]): number {
+  if (prices.length < 14) return 5
+
+  const period = 14
+  const recentPrices = prices.slice(-period)
+  const high = Math.max(...recentPrices)
+  const low = Math.min(...recentPrices)
+  const current = prices[prices.length - 1]
+
+  if (high === low) return 5
+
+  const percentK = ((current - low) / (high - low)) * 100
+
+  // 과매도 (20 미만): 매수 신호 -> 높은 점수
+  // 과매수 (80 이상): 매도 신호 -> 낮은 점수
+  if (percentK <= 20) return 8
+  if (percentK <= 30) return 7
+  if (percentK >= 80) return 3
+  if (percentK >= 70) return 4
+  return 5 + (50 - percentK) / 20  // 50 근처에서 5점
+}
+
+/**
+ * ADX (Average Directional Index) 점수 계산
+ */
+function calculateADXScore(prices: number[]): number {
+  if (prices.length < 28) return 5
+
+  const period = 14
+
+  // +DM, -DM, TR 계산
+  const plusDM: number[] = []
+  const minusDM: number[] = []
+  const tr: number[] = []
+
+  for (let i = 1; i < prices.length; i++) {
+    const high = prices[i]
+    const low = prices[i]
+    const prevHigh = prices[i - 1]
+    const prevLow = prices[i - 1]
+    const prevClose = prices[i - 1]
+
+    const upMove = high - prevHigh
+    const downMove = prevLow - low
+
+    plusDM.push(upMove > downMove && upMove > 0 ? upMove : 0)
+    minusDM.push(downMove > upMove && downMove > 0 ? downMove : 0)
+    tr.push(Math.max(high - low, Math.abs(high - prevClose), Math.abs(low - prevClose)))
+  }
+
+  if (plusDM.length < period) return 5
+
+  // 14일 평균 계산
+  const avgPlusDM = plusDM.slice(-period).reduce((a, b) => a + b, 0) / period
+  const avgMinusDM = minusDM.slice(-period).reduce((a, b) => a + b, 0) / period
+  const avgTR = tr.slice(-period).reduce((a, b) => a + b, 0) / period
+
+  if (avgTR === 0) return 5
+
+  const plusDI = (avgPlusDM / avgTR) * 100
+  const minusDI = (avgMinusDM / avgTR) * 100
+  const diSum = plusDI + minusDI
+
+  if (diSum === 0) return 5
+
+  const dx = Math.abs(plusDI - minusDI) / diSum * 100
+
+  // ADX가 25 이상이면 추세가 강함
+  // +DI > -DI면 상승 추세, 반대면 하락 추세
+  const isUptrend = plusDI > minusDI
+
+  if (dx >= 25) {
+    return isUptrend ? 8 : 3  // 강한 추세
+  }
+  return isUptrend ? 6 : 4  // 약한 추세
+}
+
+/**
+ * 다이버전스 점수 계산 (가격과 RSI 비교)
+ */
+function calculateDivergenceScore(prices: number[]): number {
+  if (prices.length < 30) return 5
+
+  // 최근 20일 데이터로 다이버전스 감지
+  const period = 20
+  const recentPrices = prices.slice(-period)
+
+  // 가격의 고점/저점 추세
+  const priceStart = recentPrices.slice(0, 5).reduce((a, b) => a + b, 0) / 5
+  const priceEnd = recentPrices.slice(-5).reduce((a, b) => a + b, 0) / 5
+  const priceTrend = priceEnd - priceStart
+
+  // RSI 추세 계산
+  const rsiStart = calculateRSI(prices.slice(0, -period + 5))
+  const rsiEnd = calculateRSI(prices)
+  const rsiTrend = rsiEnd - rsiStart
+
+  // 상승 다이버전스: 가격 하락 + RSI 상승 (매수 신호)
+  if (priceTrend < 0 && rsiTrend > 5) return 8
+
+  // 하락 다이버전스: 가격 상승 + RSI 하락 (매도 신호)
+  if (priceTrend > 0 && rsiTrend < -5) return 3
+
+  return 5  // 다이버전스 없음
+}
+
+/**
  * 외국인 수급 점수 계산
  */
 function calculateForeignFlowScore(supplyDemand?: SupplyDemandData): number {
@@ -267,7 +420,11 @@ export function calculateTechnicalScores(
   const volumes = data.map(d => d.volume)
 
   if (closes.length < 5) {
-    return { rsi: 5, macd: 5, maCrossover: 5, momentum: 5, volumeTrend: 5, foreignFlow: 5, institutionFlow: 5 }
+    return {
+      rsi: 5, macd: 5, maCrossover: 5, momentum: 5, volumeTrend: 5,
+      bollingerBand: 5, stochastic: 5, adx: 5, divergence: 5,
+      foreignFlow: 5, institutionFlow: 5
+    }
   }
 
   const rsiValue = calculateRSI(closes)
@@ -280,6 +437,10 @@ export function calculateTechnicalScores(
     maCrossover: calculateMACrossoverScore(closes),
     momentum: calculateMomentumScore(closes),
     volumeTrend: calculateVolumeTrendScore(volumes),
+    bollingerBand: calculateBollingerBandScore(closes),
+    stochastic: calculateStochasticScore(closes),
+    adx: calculateADXScore(closes),
+    divergence: calculateDivergenceScore(closes),
     foreignFlow: calculateForeignFlowScore(supplyDemand),
     institutionFlow: calculateInstitutionFlowScore(supplyDemand),
   }
@@ -298,6 +459,10 @@ export function calculateWeightedScore(
     weights.maCrossover +
     weights.momentum +
     weights.volumeTrend +
+    weights.bollingerBand +
+    weights.stochastic +
+    weights.adx +
+    weights.divergence +
     weights.foreignFlow +
     weights.institutionFlow
 
@@ -309,6 +474,10 @@ export function calculateWeightedScore(
     scores.maCrossover * weights.maCrossover +
     scores.momentum * weights.momentum +
     scores.volumeTrend * weights.volumeTrend +
+    scores.bollingerBand * weights.bollingerBand +
+    scores.stochastic * weights.stochastic +
+    scores.adx * weights.adx +
+    scores.divergence * weights.divergence +
     scores.foreignFlow * weights.foreignFlow +
     scores.institutionFlow * weights.institutionFlow
 

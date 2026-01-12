@@ -56,6 +56,22 @@ const INDICATOR_INFO: Record<keyof IndicatorWeights, { name: string; desc: strin
     name: '거래량 추세',
     desc: '최근 거래량이 평균 대비 증가하면 추세 신뢰도 상승',
   },
+  bollingerBand: {
+    name: '볼린저 밴드',
+    desc: '가격의 상대적 위치. 하단 근처면 매수, 상단 근처면 매도 신호',
+  },
+  stochastic: {
+    name: '스토캐스틱',
+    desc: '일정 기간 내 가격 위치. 20 이하 과매도(매수), 80 이상 과매수(매도)',
+  },
+  adx: {
+    name: 'ADX',
+    desc: '추세 강도 지표. 25 이상이면 강한 추세, 방향은 +DI/-DI로 판단',
+  },
+  divergence: {
+    name: '다이버전스',
+    desc: '가격과 RSI의 괴리 감지. 상승 다이버전스는 반등 신호',
+  },
   foreignFlow: {
     name: '외국인 수급',
     desc: '외국인 순매수/순매도 동향. 연속 순매수는 상승 신호',
@@ -68,10 +84,38 @@ const INDICATOR_INFO: Record<keyof IndicatorWeights, { name: string; desc: strin
 
 // 프리셋 전략
 const PRESETS: { name: string; weights: IndicatorWeights }[] = [
-  { name: '균형', weights: { rsi: 15, macd: 15, maCrossover: 15, momentum: 15, volumeTrend: 10, foreignFlow: 15, institutionFlow: 15 } },
-  { name: '추세추종', weights: { rsi: 10, macd: 25, maCrossover: 25, momentum: 15, volumeTrend: 5, foreignFlow: 10, institutionFlow: 10 } },
-  { name: '역추세', weights: { rsi: 35, macd: 10, maCrossover: 10, momentum: 25, volumeTrend: 5, foreignFlow: 7, institutionFlow: 8 } },
-  { name: '수급중심', weights: { rsi: 10, macd: 10, maCrossover: 10, momentum: 10, volumeTrend: 10, foreignFlow: 25, institutionFlow: 25 } },
+  {
+    name: '균형',
+    weights: {
+      rsi: 10, macd: 10, maCrossover: 10, momentum: 10, volumeTrend: 8,
+      bollingerBand: 8, stochastic: 8, adx: 8, divergence: 8,
+      foreignFlow: 10, institutionFlow: 10
+    }
+  },
+  {
+    name: '추세추종',
+    weights: {
+      rsi: 5, macd: 15, maCrossover: 15, momentum: 12, volumeTrend: 5,
+      bollingerBand: 5, stochastic: 5, adx: 15, divergence: 8,
+      foreignFlow: 8, institutionFlow: 7
+    }
+  },
+  {
+    name: '역추세',
+    weights: {
+      rsi: 18, macd: 5, maCrossover: 5, momentum: 10, volumeTrend: 5,
+      bollingerBand: 15, stochastic: 15, adx: 5, divergence: 12,
+      foreignFlow: 5, institutionFlow: 5
+    }
+  },
+  {
+    name: '수급중심',
+    weights: {
+      rsi: 5, macd: 5, maCrossover: 5, momentum: 5, volumeTrend: 10,
+      bollingerBand: 5, stochastic: 5, adx: 5, divergence: 5,
+      foreignFlow: 25, institutionFlow: 25
+    }
+  },
 ]
 
 export default function BacktestPage() {
