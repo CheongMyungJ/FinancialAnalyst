@@ -54,7 +54,8 @@ export async function getStockQuote(symbol: string, market: Market): Promise<{
 
   const lastIndex = timestamps.length - 1
   const currentPrice = meta.regularMarketPrice || (quote?.close?.[lastIndex] ?? 0)
-  const previousClose = meta.chartPreviousClose || meta.previousClose || (quote?.close?.[lastIndex - 1] ?? currentPrice)
+  // 전일 종가: regularMarketPreviousClose 또는 previousClose 사용 (chartPreviousClose는 차트 범위 시작점이므로 제외)
+  const previousClose = meta.regularMarketPreviousClose || meta.previousClose || (quote?.close?.[lastIndex - 1] ?? currentPrice)
   const change = currentPrice - previousClose
   const changePercent = previousClose > 0 ? (change / previousClose) * 100 : 0
 
