@@ -28,7 +28,7 @@ function Tooltip({ content, children, side = 'top', className }: TooltipProps) {
       {isVisible && (
         <div
           className={cn(
-            'absolute z-50 px-3 py-2 text-xs font-medium text-slate-50 bg-slate-800 border border-slate-700 rounded-lg shadow-xl max-w-[200px] whitespace-normal text-center animate-fade-in',
+            'absolute z-50 px-3 py-2 text-xs font-medium text-slate-50 bg-slate-800 border border-slate-700 rounded-lg shadow-xl max-w-md whitespace-normal animate-fade-in',
             sideStyles[side],
             className
           )}
