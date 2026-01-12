@@ -128,14 +128,7 @@ export default function StockDetailPage() {
 
   const chartLoading = loading && selectedStockPriceHistory.length === 0
 
-  if (loading && !selectedStock) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
-        <CircularProgress />
-      </Box>
-    )
-  }
-
+  // 에러가 있으면 에러 표시
   if (error) {
     return (
       <Box>
@@ -147,15 +140,14 @@ export default function StockDetailPage() {
     )
   }
 
-  if (!selectedStock) {
+  // 현재 URL의 symbol과 로드된 데이터의 symbol이 다르면 로딩 표시
+  const isWrongStock = selectedStock && selectedStock.symbol !== symbol
+  const showLoading = loading || isWrongStock || !selectedStock
+
+  if (showLoading) {
     return (
-      <Box>
-        <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)} sx={{ mb: 2 }}>
-          뒤로가기
-        </Button>
-        <Alert severity="warning">
-          종목 정보를 찾을 수 없습니다. 먼저 메인 페이지에서 새로고침을 해주세요.
-        </Alert>
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+        <CircularProgress />
       </Box>
     )
   }
