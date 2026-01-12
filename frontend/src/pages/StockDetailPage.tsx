@@ -17,6 +17,8 @@ import { fetchStockDetail, clearSelectedStock } from '../store/stockSlice'
 import ScoreBreakdown from '../components/scoring/ScoreBreakdown'
 import PriceChart from '../components/charts/PriceChart'
 import VolumeChart from '../components/charts/VolumeChart'
+import RSIChart from '../components/charts/RSIChart'
+import MACDChart from '../components/charts/MACDChart'
 import ScoreRadarChart from '../components/charts/ScoreRadarChart'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Badge } from '../components/ui/badge'
@@ -32,6 +34,119 @@ function calculateMA(prices: PriceData[], period: number): (number | undefined)[
     const slice = prices.slice(i - period + 1, i + 1)
     return slice.reduce((sum, p) => sum + p.close, 0) / period
   })
+}
+
+// 볼린저밴드 계산
+function calculateBollingerBands(prices: PriceData[], period: number = 20, multiplier: number = 2) {
+  const ma = calculateMA(prices, period)
+
+  return prices.map((_, i) => {
+    if (i < period - 1 || ma[i] === undefined) {
+      return { upper: undefined, middle: undefined, lower: undefined }
+    }
+
+    const slice = prices.slice(i - period + 1, i + 1)
+    const mean = ma[i]!
+    const squaredDiffs = slice.map(p => Math.pow(p.close - mean, 2))
+    const stdDev = Math.sqrt(squaredDiffs.reduce((a, b) => a + b, 0) / period)
+
+    return {
+      upper: mean + multiplier * stdDev,
+      middle: mean,
+      lower: mean - multiplier * stdDev,
+    }
+  })
+}
+
+// RSI 계산
+function calculateRSI(prices: PriceData[], period: number = 14): (number | null)[] {
+  const result: (number | null)[] = []
+
+  for (let i = 0; i < prices.length; i++) {
+    if (i < period) {
+      result.push(null)
+      continue
+    }
+
+    let gains = 0
+    let losses = 0
+
+    for (let j = i - period + 1; j <= i; j++) {
+      const change = prices[j].close - prices[j - 1].close
+      if (change > 0) gains += change
+      else losses += Math.abs(change)
+    }
+
+    const avgGain = gains / period
+    const avgLoss = losses / period
+
+    if (avgLoss === 0) {
+      result.push(100)
+    } else {
+      const rs = avgGain / avgLoss
+      result.push(100 - (100 / (1 + rs)))
+    }
+  }
+
+  return result
+}
+
+// EMA 계산
+function calculateEMA(prices: number[], period: number): number[] {
+  const ema: number[] = []
+  const multiplier = 2 / (period + 1)
+
+  // 첫 번째 EMA는 SMA
+  let sum = 0
+  for (let i = 0; i < period && i < prices.length; i++) {
+    sum += prices[i]
+  }
+  ema[period - 1] = sum / period
+
+  // 이후 EMA 계산
+  for (let i = period; i < prices.length; i++) {
+    ema[i] = (prices[i] - ema[i - 1]) * multiplier + ema[i - 1]
+  }
+
+  return ema
+}
+
+// MACD 계산
+function calculateMACD(prices: PriceData[], fastPeriod: number = 12, slowPeriod: number = 26, signalPeriod: number = 9) {
+  const closePrices = prices.map(p => p.close)
+  const emaFast = calculateEMA(closePrices, fastPeriod)
+  const emaSlow = calculateEMA(closePrices, slowPeriod)
+
+  const macdLine: (number | null)[] = []
+  for (let i = 0; i < prices.length; i++) {
+    if (emaFast[i] !== undefined && emaSlow[i] !== undefined) {
+      macdLine[i] = emaFast[i] - emaSlow[i]
+    } else {
+      macdLine[i] = null
+    }
+  }
+
+  // MACD의 EMA = Signal Line
+  const validMacd = macdLine.filter((v): v is number => v !== null)
+  const signalEma = calculateEMA(validMacd, signalPeriod)
+
+  const result = prices.map((_, i) => {
+    const macd = macdLine[i]
+    if (macd === null || i < slowPeriod + signalPeriod - 2) {
+      return { macdLine: null, signalLine: null, histogram: null }
+    }
+
+    const signalIndex = i - (slowPeriod - 1)
+    const signal = signalEma[signalIndex] ?? null
+
+    return {
+      macdLine: macd,
+      signalLine: signal,
+      histogram: signal !== null ? macd - signal : null,
+    }
+  })
+
+  return result
 }
 
 // 섹터별 기업 설명
@@ -105,17 +220,47 @@ export default function StockDetailPage() {
     }
   }, [dispatch, symbol])
 
-  // 이동평균이 추가된 가격 데이터
+  // 기술적 지표가 추가된 가격 데이터
   const priceHistory = useMemo(() => {
     if (selectedStockPriceHistory.length === 0) return []
 
     const ma20Values = calculateMA(selectedStockPriceHistory, 20)
     const ma50Values = calculateMA(selectedStockPriceHistory, 50)
+    const bollingerBands = calculateBollingerBands(selectedStockPriceHistory, 20, 2)
 
     return selectedStockPriceHistory.map((p, i) => ({
       ...p,
       ma20: ma20Values[i],
       ma50: ma50Values[i],
+      bollingerUpper: bollingerBands[i].upper,
+      bollingerMiddle: bollingerBands[i].middle,
+      bollingerLower: bollingerBands[i].lower,
+    }))
+  }, [selectedStockPriceHistory])
+
+  // RSI 데이터
+  const rsiData = useMemo(() => {
+    if (selectedStockPriceHistory.length === 0) return []
+
+    const rsiValues = calculateRSI(selectedStockPriceHistory, 14)
+
+    return selectedStockPriceHistory.map((p, i) => ({
+      date: p.date,
+      rsi: rsiValues[i],
+    }))
+  }, [selectedStockPriceHistory])
+
+  // MACD 데이터
+  const macdData = useMemo(() => {
+    if (selectedStockPriceHistory.length === 0) return []
+
+    const macdValues = calculateMACD(selectedStockPriceHistory)
+
+    return selectedStockPriceHistory.map((p, i) => ({
+      date: p.date,
+      macdLine: macdValues[i].macdLine,
+      signalLine: macdValues[i].signalLine,
+      histogram: macdValues[i].histogram,
     }))
   }, [selectedStockPriceHistory])
 
@@ -268,9 +413,13 @@ export default function StockDetailPage() {
                 </div>
               ) : (
                 <>
-                  <PriceChart data={priceHistory} currency={currency} />
+                  <PriceChart data={priceHistory} currency={currency} showBollinger />
                   <div className="border-t border-slate-800 my-4" />
                   <VolumeChart data={priceHistory} />
+                  <div className="border-t border-slate-800 my-4" />
+                  <RSIChart data={rsiData} />
+                  <div className="border-t border-slate-800 my-4" />
+                  <MACDChart data={macdData} />
                 </>
               )}
             </CardContent>

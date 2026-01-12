@@ -22,14 +22,18 @@ interface PriceData {
   ma20?: number
   ma50?: number
   volume?: number
+  bollingerUpper?: number
+  bollingerMiddle?: number
+  bollingerLower?: number
 }
 
 interface PriceChartProps {
   data: PriceData[]
   currency: 'KRW' | 'USD'
+  showBollinger?: boolean
 }
 
-export default function PriceChart({ data, currency }: PriceChartProps) {
+export default function PriceChart({ data, currency, showBollinger = false }: PriceChartProps) {
   const [period, setPeriod] = useState<'1M' | '3M' | '6M'>('3M')
 
   const getFilteredData = () => {
@@ -155,6 +159,36 @@ export default function PriceChart({ data, currency }: PriceChartProps) {
               dot={false}
               strokeWidth={1.5}
             />
+          )}
+          {showBollinger && filteredData[0]?.bollingerUpper && (
+            <>
+              <Line
+                type="monotone"
+                dataKey="bollingerUpper"
+                name="BB 상단"
+                stroke="#8b5cf6"
+                dot={false}
+                strokeWidth={1}
+                strokeDasharray="4 2"
+              />
+              <Line
+                type="monotone"
+                dataKey="bollingerMiddle"
+                name="BB 중간"
+                stroke="#a78bfa"
+                dot={false}
+                strokeWidth={1}
+              />
+              <Line
+                type="monotone"
+                dataKey="bollingerLower"
+                name="BB 하단"
+                stroke="#8b5cf6"
+                dot={false}
+                strokeWidth={1}
+                strokeDasharray="4 2"
+              />
+            </>
           )}
         </ComposedChart>
       </ResponsiveContainer>
