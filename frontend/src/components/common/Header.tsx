@@ -10,6 +10,7 @@ import {
 import {
   Refresh as RefreshIcon,
   Assessment as AssessmentIcon,
+  PieChart as PieChartIcon,
 } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../store'
@@ -49,6 +50,27 @@ export default function Header() {
         >
           Stock Analysis
         </Typography>
+
+        {/* 네비게이션 */}
+        <Box sx={{ ml: 3, display: 'flex', gap: 1 }}>
+          <Button
+            color="inherit"
+            size="small"
+            onClick={() => navigate('/')}
+            sx={{ opacity: 0.9 }}
+          >
+            랭킹
+          </Button>
+          <Button
+            color="inherit"
+            size="small"
+            startIcon={<PieChartIcon />}
+            onClick={() => navigate('/sector')}
+            sx={{ opacity: 0.9 }}
+          >
+            섹터분석
+          </Button>
+        </Box>
 
         <Box sx={{ flexGrow: 1 }} />
 
