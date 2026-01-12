@@ -110,7 +110,7 @@ export interface Stock {
   fundamentals: FundamentalData
   technicals: TechnicalData
   newsData: NewsData
-  supplyDemand: SupplyDemandData
+  supplyDemand?: SupplyDemandData  // Optional for backward compatibility
 
   // 점수
   scores: StockScores

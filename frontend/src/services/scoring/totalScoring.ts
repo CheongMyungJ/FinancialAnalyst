@@ -172,6 +172,15 @@ export function calculateAllScores(
   }
 }
 
+// 기본 수급 데이터 (기존 데이터 호환성)
+const DEFAULT_SUPPLY_DEMAND: SupplyDemandData = {
+  foreignNetBuy: null,
+  institutionNetBuy: null,
+  foreignNetBuyDays: null,
+  institutionNetBuyDays: null,
+  foreignOwnership: null,
+}
+
 /**
  * 주식 목록에 대해 점수 재계산 (가중치 변경 시)
  */
@@ -184,7 +193,7 @@ export function recalculateScoresWithWeights(
       stock.fundamentals,
       stock.technicals,
       stock.newsData,
-      stock.supplyDemand,
+      stock.supplyDemand || DEFAULT_SUPPLY_DEMAND,
       stock.currentPrice,
       stock.changePercent,
       stock.sector,
@@ -209,7 +218,7 @@ export function recalculateSingleStockScores(
     stock.fundamentals,
     stock.technicals,
     stock.newsData,
-    stock.supplyDemand,
+    stock.supplyDemand || DEFAULT_SUPPLY_DEMAND,
     stock.currentPrice,
     stock.changePercent,
     stock.sector,
