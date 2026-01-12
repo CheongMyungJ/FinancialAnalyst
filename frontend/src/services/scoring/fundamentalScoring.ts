@@ -147,6 +147,48 @@ export function calculateOperatingMarginScore(
 }
 
 /**
+ * 부채비율 점수 계산
+ * 부채비율 = (총부채 / 자기자본) × 100
+ * 낮을수록 재무 안정성이 높음
+ */
+export function calculateDebtRatioScore(debtRatio: number | null): number {
+  if (debtRatio === null) return 5
+
+  // 부채비율이 낮을수록 좋음
+  if (debtRatio <= 30) return 10   // 매우 우수 (무차입 경영)
+  if (debtRatio <= 50) return 9    // 우수
+  if (debtRatio <= 80) return 8    // 양호
+  if (debtRatio <= 100) return 7   // 적정 (자기자본 = 부채)
+  if (debtRatio <= 150) return 6   // 보통
+  if (debtRatio <= 200) return 5   // 주의
+  if (debtRatio <= 300) return 4   // 경고
+  if (debtRatio <= 400) return 3   // 위험
+  if (debtRatio <= 500) return 2   // 고위험
+  return 1                          // 매우 고위험
+}
+
+/**
+ * 유동비율 점수 계산
+ * 유동비율 = (유동자산 / 유동부채) × 100
+ * 100% 이상이면 단기 지급 능력 양호
+ */
+export function calculateCurrentRatioScore(currentRatio: number | null): number {
+  if (currentRatio === null) return 5
+
+  // 유동비율이 높을수록 좋음 (단, 너무 높으면 자산 효율성 문제)
+  if (currentRatio >= 300) return 8  // 매우 높음 (과잉 유동성)
+  if (currentRatio >= 200) return 10 // 매우 우수
+  if (currentRatio >= 150) return 9  // 우수
+  if (currentRatio >= 120) return 8  // 양호
+  if (currentRatio >= 100) return 7  // 적정
+  if (currentRatio >= 80) return 5   // 주의
+  if (currentRatio >= 60) return 4   // 경고
+  if (currentRatio >= 40) return 3   // 위험
+  if (currentRatio >= 20) return 2   // 고위험
+  return 1                            // 매우 고위험
+}
+
+/**
  * 전체 기본적 분석 점수 계산
  */
 export function calculateFundamentalScores(
@@ -157,14 +199,18 @@ export function calculateFundamentalScores(
   const pbr = calculatePBRScore(data.pbr)
   const roe = calculateROEScore(data.roe)
   const operatingMargin = calculateOperatingMarginScore(data.operatingMargin, sector)
+  const debtRatio = calculateDebtRatioScore(data.debtRatio)
+  const currentRatio = calculateCurrentRatioScore(data.currentRatio)
 
-  const average = (per + pbr + roe + operatingMargin) / 4
+  const average = (per + pbr + roe + operatingMargin + debtRatio + currentRatio) / 6
 
   return {
     per,
     pbr,
     roe,
     operatingMargin,
+    debtRatio,
+    currentRatio,
     average: Math.round(average * 10) / 10,
   }
 }

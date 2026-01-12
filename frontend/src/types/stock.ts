@@ -12,6 +12,8 @@ export interface FundamentalData {
   operatingMargin: number | null  // 영업이익률 (%)
   eps: number | null        // 주당순이익
   marketCap: number | null  // 시가총액
+  debtRatio: number | null        // 부채비율 (%)
+  currentRatio: number | null     // 유동비율 (%)
 }
 
 // 기술적 분석 데이터
@@ -25,6 +27,12 @@ export interface TechnicalData {
   histogram: number | null  // MACD 히스토그램
   volumeAvg20: number | null // 20일 평균 거래량
   volumeChange: number | null // 거래량 변화율
+  // 볼린저 밴드
+  bollingerUpper: number | null   // 상단 밴드
+  bollingerMiddle: number | null  // 중간 밴드 (20일 SMA)
+  bollingerLower: number | null   // 하단 밴드
+  bollingerWidth: number | null   // 밴드폭 (%)
+  bollingerPercentB: number | null // %B (0-1, 현재가 위치)
 }
 
 // 뉴스/공시 데이터
@@ -100,6 +108,8 @@ export interface FundamentalScores {
   pbr: number             // PBR 점수 (1-10)
   roe: number             // ROE 점수 (1-10)
   operatingMargin: number // 영업이익률 점수 (1-10)
+  debtRatio: number       // 부채비율 점수 (1-10)
+  currentRatio: number    // 유동비율 점수 (1-10)
   average: number         // 평균 점수
 }
 
@@ -109,6 +119,7 @@ export interface TechnicalScores {
   rsi: number             // RSI 점수 (1-10)
   volumeTrend: number     // 거래량 추세 점수 (1-10)
   macd: number            // MACD 점수 (1-10)
+  bollingerBand: number   // 볼린저 밴드 점수 (1-10)
   average: number         // 평균 점수
 }
 
@@ -116,6 +127,8 @@ export interface TechnicalScores {
 export interface NewsScores {
   sentiment: number       // 감성 분석 점수 (1-10)
   frequency: number       // 뉴스/공시 빈도 점수 (1-10)
+  disclosureImpact: number // 공시 유형별 영향 점수 (1-10)
+  recency: number         // 뉴스 신선도 점수 (1-10)
   average: number         // 평균 점수
 }
 

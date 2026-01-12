@@ -12,6 +12,8 @@ export interface FundamentalData {
   operatingMargin: number | null
   eps: number | null
   marketCap: number | null
+  debtRatio: number | null        // 부채비율 (%)
+  currentRatio: number | null     // 유동비율 (%)
 }
 
 // 기술적 분석 데이터
@@ -25,6 +27,12 @@ export interface TechnicalData {
   histogram: number | null
   volumeAvg20: number | null
   volumeChange: number | null
+  // 볼린저 밴드
+  bollingerUpper: number | null   // 상단 밴드
+  bollingerMiddle: number | null  // 중간 밴드 (20일 SMA)
+  bollingerLower: number | null   // 하단 밴드
+  bollingerWidth: number | null   // 밴드폭 (%)
+  bollingerPercentB: number | null // %B (0-1, 현재가 위치)
 }
 
 // 뉴스/공시 데이터
@@ -93,6 +101,8 @@ export interface FundamentalScores {
   pbr: number
   roe: number
   operatingMargin: number
+  debtRatio: number           // 부채비율 점수
+  currentRatio: number        // 유동비율 점수
   average: number
 }
 
@@ -101,12 +111,15 @@ export interface TechnicalScores {
   rsi: number
   volumeTrend: number
   macd: number
+  bollingerBand: number       // 볼린저 밴드 점수
   average: number
 }
 
 export interface NewsScores {
   sentiment: number
   frequency: number
+  disclosureImpact: number    // 공시 유형별 영향 점수
+  recency: number             // 뉴스 신선도 점수
   average: number
 }
 
@@ -137,16 +150,21 @@ export interface WeightConfig {
     pbr: number
     roe: number
     operatingMargin: number
+    debtRatio: number
+    currentRatio: number
   }
   technical: {
     maPosition: number
     rsi: number
     volumeTrend: number
     macd: number
+    bollingerBand: number
   }
   news: {
     sentiment: number
     frequency: number
+    disclosureImpact: number
+    recency: number
   }
   category: {
     fundamental: number
@@ -157,8 +175,8 @@ export interface WeightConfig {
 
 // 기본 가중치
 export const DEFAULT_WEIGHTS: WeightConfig = {
-  fundamental: { per: 25, pbr: 25, roe: 25, operatingMargin: 25 },
-  technical: { maPosition: 25, rsi: 25, volumeTrend: 25, macd: 25 },
-  news: { sentiment: 50, frequency: 50 },
+  fundamental: { per: 20, pbr: 20, roe: 20, operatingMargin: 20, debtRatio: 10, currentRatio: 10 },
+  technical: { maPosition: 20, rsi: 20, volumeTrend: 20, macd: 20, bollingerBand: 20 },
+  news: { sentiment: 30, frequency: 30, disclosureImpact: 20, recency: 20 },
   category: { fundamental: 40, technical: 40, news: 20 },
 }

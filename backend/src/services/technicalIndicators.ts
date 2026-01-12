@@ -94,6 +94,74 @@ export function calculateRSI(prices: number[], period: number = 14): number[] {
 }
 
 /**
+ * 표준편차 계산
+ */
+export function calculateStandardDeviation(values: number[], period: number): number[] {
+  const result: number[] = []
+  const sma = calculateSMA(values, period)
+
+  for (let i = 0; i < values.length; i++) {
+    if (i < period - 1) {
+      result.push(NaN)
+    } else {
+      const slice = values.slice(i - period + 1, i + 1)
+      const mean = sma[i]
+      const squaredDiffs = slice.map(v => Math.pow(v - mean, 2))
+      const variance = squaredDiffs.reduce((a, b) => a + b, 0) / period
+      result.push(Math.sqrt(variance))
+    }
+  }
+  return result
+}
+
+/**
+ * 볼린저 밴드 계산
+ * @param prices 종가 배열
+ * @param period 기간 (기본 20)
+ * @param multiplier 표준편차 배수 (기본 2)
+ */
+export function calculateBollingerBands(
+  prices: number[],
+  period: number = 20,
+  multiplier: number = 2
+): {
+  upper: number[]
+  middle: number[]
+  lower: number[]
+  width: number[]
+  percentB: number[]
+} {
+  const middle = calculateSMA(prices, period)
+  const stdDev = calculateStandardDeviation(prices, period)
+
+  const upper: number[] = []
+  const lower: number[] = []
+  const width: number[] = []
+  const percentB: number[] = []
+
+  for (let i = 0; i < prices.length; i++) {
+    if (isNaN(middle[i]) || isNaN(stdDev[i])) {
+      upper.push(NaN)
+      lower.push(NaN)
+      width.push(NaN)
+      percentB.push(NaN)
+    } else {
+      const upperBand = middle[i] + multiplier * stdDev[i]
+      const lowerBand = middle[i] - multiplier * stdDev[i]
+      upper.push(upperBand)
+      lower.push(lowerBand)
+      // 밴드폭 (%) = (상단 - 하단) / 중간 * 100
+      width.push(((upperBand - lowerBand) / middle[i]) * 100)
+      // %B = (현재가 - 하단) / (상단 - 하단)
+      const bandRange = upperBand - lowerBand
+      percentB.push(bandRange > 0 ? (prices[i] - lowerBand) / bandRange : 0.5)
+    }
+  }
+
+  return { upper, middle, lower, width, percentB }
+}
+
+/**
  * MACD 계산
  */
 export function calculateMACD(
@@ -155,6 +223,11 @@ export function calculateAllTechnicalIndicators(prices: PriceData[]): TechnicalD
       histogram: null,
       volumeAvg20: null,
       volumeChange: null,
+      bollingerUpper: null,
+      bollingerMiddle: null,
+      bollingerLower: null,
+      bollingerWidth: null,
+      bollingerPercentB: null,
     }
   }
 
@@ -167,6 +240,9 @@ export function calculateAllTechnicalIndicators(prices: PriceData[]): TechnicalD
 
   const rsiValues = calculateRSI(closes, 14)
   const { macdLine, signalLine, histogram } = calculateMACD(closes)
+
+  // 볼린저 밴드 계산
+  const bollinger = calculateBollingerBands(closes, 20, 2)
 
   const volumeAvg20Values = calculateSMA(volumes, 20)
   const recentVolumeAvg = volumes.slice(-5).reduce((a, b) => a + b, 0) / 5
@@ -185,5 +261,10 @@ export function calculateAllTechnicalIndicators(prices: PriceData[]): TechnicalD
     histogram: histogram[lastIndex] || null,
     volumeAvg20,
     volumeChange,
+    bollingerUpper: bollinger.upper[lastIndex] || null,
+    bollingerMiddle: bollinger.middle[lastIndex] || null,
+    bollingerLower: bollinger.lower[lastIndex] || null,
+    bollingerWidth: bollinger.width[lastIndex] || null,
+    bollingerPercentB: bollinger.percentB[lastIndex] || null,
   }
 }

@@ -38,12 +38,12 @@ function weightedAverage(values: number[], weights: number[]): number {
  * 기본적 분석 점수 가중 평균 계산
  */
 export function calculateWeightedFundamentalScore(
-  scores: { per: number; pbr: number; roe: number; operatingMargin: number },
+  scores: { per: number; pbr: number; roe: number; operatingMargin: number; debtRatio: number; currentRatio: number },
   weights: WeightConfig['fundamental']
 ): number {
   return weightedAverage(
-    [scores.per, scores.pbr, scores.roe, scores.operatingMargin],
-    [weights.per, weights.pbr, weights.roe, weights.operatingMargin]
+    [scores.per, scores.pbr, scores.roe, scores.operatingMargin, scores.debtRatio, scores.currentRatio],
+    [weights.per, weights.pbr, weights.roe, weights.operatingMargin, weights.debtRatio, weights.currentRatio]
   )
 }
 
@@ -51,12 +51,12 @@ export function calculateWeightedFundamentalScore(
  * 기술적 분석 점수 가중 평균 계산
  */
 export function calculateWeightedTechnicalScore(
-  scores: { maPosition: number; rsi: number; volumeTrend: number; macd: number },
+  scores: { maPosition: number; rsi: number; volumeTrend: number; macd: number; bollingerBand: number },
   weights: WeightConfig['technical']
 ): number {
   return weightedAverage(
-    [scores.maPosition, scores.rsi, scores.volumeTrend, scores.macd],
-    [weights.maPosition, weights.rsi, weights.volumeTrend, weights.macd]
+    [scores.maPosition, scores.rsi, scores.volumeTrend, scores.macd, scores.bollingerBand],
+    [weights.maPosition, weights.rsi, weights.volumeTrend, weights.macd, weights.bollingerBand]
   )
 }
 
@@ -64,12 +64,12 @@ export function calculateWeightedTechnicalScore(
  * 뉴스 분석 점수 가중 평균 계산
  */
 export function calculateWeightedNewsScore(
-  scores: { sentiment: number; frequency: number },
+  scores: { sentiment: number; frequency: number; disclosureImpact: number; recency: number },
   weights: WeightConfig['news']
 ): number {
   return weightedAverage(
-    [scores.sentiment, scores.frequency],
-    [weights.sentiment, weights.frequency]
+    [scores.sentiment, scores.frequency, scores.disclosureImpact, scores.recency],
+    [weights.sentiment, weights.frequency, weights.disclosureImpact, weights.recency]
   )
 }
 
@@ -104,9 +104,9 @@ export function calculateAllScores(
 ): StockScores {
   // 기본 가중치 (제공되지 않은 경우)
   const defaultWeights: WeightConfig = {
-    fundamental: { per: 25, pbr: 25, roe: 25, operatingMargin: 25 },
-    technical: { maPosition: 25, rsi: 25, volumeTrend: 25, macd: 25 },
-    news: { sentiment: 50, frequency: 50 },
+    fundamental: { per: 20, pbr: 20, roe: 20, operatingMargin: 20, debtRatio: 10, currentRatio: 10 },
+    technical: { maPosition: 20, rsi: 20, volumeTrend: 20, macd: 20, bollingerBand: 20 },
+    news: { sentiment: 30, frequency: 30, disclosureImpact: 20, recency: 20 },
     category: { fundamental: 40, technical: 40, news: 20 },
   }
 

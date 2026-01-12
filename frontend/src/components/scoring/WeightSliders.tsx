@@ -143,6 +143,16 @@ export default function WeightSliders() {
           value={config.fundamental.operatingMargin}
           onChange={(v) => handleWeightChange('fundamental', 'operatingMargin', v)}
         />
+        <SliderItem
+          label="부채비율"
+          value={config.fundamental.debtRatio}
+          onChange={(v) => handleWeightChange('fundamental', 'debtRatio', v)}
+        />
+        <SliderItem
+          label="유동비율"
+          value={config.fundamental.currentRatio}
+          onChange={(v) => handleWeightChange('fundamental', 'currentRatio', v)}
+        />
       </AccordionItem>
 
       {/* Technical analysis weights */}
@@ -171,6 +181,11 @@ export default function WeightSliders() {
           value={config.technical.macd}
           onChange={(v) => handleWeightChange('technical', 'macd', v)}
         />
+        <SliderItem
+          label="볼린저 밴드"
+          value={config.technical.bollingerBand}
+          onChange={(v) => handleWeightChange('technical', 'bollingerBand', v)}
+        />
       </AccordionItem>
 
       {/* News weights */}
@@ -188,6 +203,16 @@ export default function WeightSliders() {
           label="빈도"
           value={config.news.frequency}
           onChange={(v) => handleWeightChange('news', 'frequency', v)}
+        />
+        <SliderItem
+          label="공시 영향도"
+          value={config.news.disclosureImpact}
+          onChange={(v) => handleWeightChange('news', 'disclosureImpact', v)}
+        />
+        <SliderItem
+          label="뉴스 신선도"
+          value={config.news.recency}
+          onChange={(v) => handleWeightChange('news', 'recency', v)}
         />
       </AccordionItem>
 

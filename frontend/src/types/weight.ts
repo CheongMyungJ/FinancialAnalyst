@@ -6,6 +6,8 @@ export interface WeightConfig {
     pbr: number
     roe: number
     operatingMargin: number
+    debtRatio: number
+    currentRatio: number
   }
 
   // 기술적 분석 항목별 가중치 (0-100)
@@ -14,12 +16,15 @@ export interface WeightConfig {
     rsi: number
     volumeTrend: number
     macd: number
+    bollingerBand: number
   }
 
   // 뉴스/공시 분석 항목별 가중치 (0-100)
   news: {
     sentiment: number
     frequency: number
+    disclosureImpact: number
+    recency: number
   }
 
   // 카테고리별 가중치 (0-100)
@@ -33,20 +38,25 @@ export interface WeightConfig {
 // 기본 가중치 값
 export const DEFAULT_WEIGHTS: WeightConfig = {
   fundamental: {
-    per: 25,
-    pbr: 25,
-    roe: 25,
-    operatingMargin: 25,
+    per: 20,
+    pbr: 20,
+    roe: 20,
+    operatingMargin: 20,
+    debtRatio: 10,
+    currentRatio: 10,
   },
   technical: {
-    maPosition: 25,
-    rsi: 25,
-    volumeTrend: 25,
-    macd: 25,
+    maPosition: 20,
+    rsi: 20,
+    volumeTrend: 20,
+    macd: 20,
+    bollingerBand: 20,
   },
   news: {
-    sentiment: 50,
-    frequency: 50,
+    sentiment: 30,
+    frequency: 30,
+    disclosureImpact: 20,
+    recency: 20,
   },
   category: {
     fundamental: 40,
