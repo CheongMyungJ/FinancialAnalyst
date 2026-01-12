@@ -3,11 +3,41 @@
  * GitHub에 저장된 분석 결과를 가져옵니다.
  */
 
-import type { Stock, PriceData } from '../../types'
+import type { Stock, PriceData, TechnicalScores, StockScores } from '../../types'
 import { calculateAllTechnicalIndicators } from '../indicators/technicalIndicators'
+import { calculateTechnicalScores } from '../scoring/technicalScoring'
 
 // GitHub Raw 콘텐츠 URL
 const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/CheongMyungJ/FinancialAnalyst/main'
+
+/**
+ * 기술적 점수가 변경되었을 때 총점 재계산
+ */
+function recalculateTotalScore(
+  originalScores: StockScores,
+  newTechnicalScores: TechnicalScores
+): number {
+  // 기본 가중치 (totalScoring.ts와 동일)
+  const weights = {
+    fundamental: 0.35,
+    technical: 0.30,
+    news: 0.15,
+    supplyDemand: 0.20,
+  }
+
+  const fundamentalScore = originalScores.fundamental.average
+  const technicalScore = newTechnicalScores.average
+  const newsScore = originalScores.news.average
+  const supplyDemandScore = originalScores.supplyDemand.average
+
+  const total =
+    fundamentalScore * weights.fundamental +
+    technicalScore * weights.technical +
+    newsScore * weights.news +
+    supplyDemandScore * weights.supplyDemand
+
+  return Math.round(total * 10) / 10
+}
 
 export interface StocksResponse {
   lastUpdated: string
@@ -58,12 +88,25 @@ export async function fetchStockDetailFromGitHub(
   // 가격 히스토리로부터 기술적 지표 계산
   const technicals = calculateAllTechnicalIndicators(priceHistory)
 
-  // 기술적 지표가 계산되면 stock 객체에 적용
+  // 기술적 점수 재계산
+  const technicalScores = calculateTechnicalScores(
+    technicals,
+    baseStock.currentPrice,
+    baseStock.changePercent
+  )
+
+  // 기술적 지표와 점수를 stock 객체에 적용
   const stock: Stock = {
     ...baseStock,
     technicals: {
       ...baseStock.technicals,
       ...technicals,
+    },
+    scores: {
+      ...baseStock.scores,
+      technical: technicalScores,
+      // 총점도 재계산 (기술적 점수 반영)
+      total: recalculateTotalScore(baseStock.scores, technicalScores),
     },
   }
 
