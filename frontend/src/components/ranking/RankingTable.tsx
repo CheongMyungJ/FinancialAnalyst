@@ -1,11 +1,23 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { DataGrid, GridColDef, GridRenderCellParams, GridPaginationModel } from '@mui/x-data-grid'
-import { Alert, Box, Chip, Typography } from '@mui/material'
+import {
+  useReactTable,
+  getCoreRowModel,
+  getPaginationRowModel,
+  flexRender,
+  type ColumnDef,
+} from '@tanstack/react-table'
+import { ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react'
 import { useAppSelector } from '../../store'
 import type { Stock } from '../../types'
 import ScoreBadge from '../scoring/ScoreBadge'
 import { recalculateScoresWithWeights } from '../../services/scoring/totalScoring'
+import { Button } from '../ui/button'
+import { Badge } from '../ui/badge'
+import { Spinner } from '../ui/spinner'
+import { cn } from '../../lib/utils'
+
+type StockWithRank = Stock & { rank: number }
 
 export default function RankingTable() {
   const navigate = useNavigate()
@@ -13,32 +25,24 @@ export default function RankingTable() {
   const filters = useAppSelector((state) => state.filters)
   const weights = useAppSelector((state) => state.weights.config)
 
-  // 페이지네이션 상태
-  const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
-    pageSize: filters.displayCount,
-    page: 0,
-  })
+  const [pageIndex, setPageIndex] = useState(0)
+  const [pageSize, setPageSize] = useState(20)
 
-  // 가중치가 변경되면 점수 재계산
   const stocksWithRecalculatedScores = useMemo(() => {
     return recalculateScoresWithWeights(list, weights)
   }, [list, weights])
 
-  // 필터링 및 정렬된 데이터
   const filteredData = useMemo(() => {
     let result = [...stocksWithRecalculatedScores]
 
-    // 시장 필터
     if (filters.markets.length > 0) {
       result = result.filter((stock) => filters.markets.includes(stock.market))
     }
 
-    // 섹터 필터
     if (filters.sectors.length > 0) {
       result = result.filter((stock) => filters.sectors.includes(stock.sector))
     }
 
-    // 검색어 필터
     if (filters.searchQuery) {
       const query = filters.searchQuery.toLowerCase()
       result = result.filter(
@@ -48,7 +52,6 @@ export default function RankingTable() {
       )
     }
 
-    // 정렬
     result.sort((a, b) => {
       let aValue: number | string
       let bValue: number | string
@@ -94,174 +97,260 @@ export default function RankingTable() {
         : (bValue as number) - (aValue as number)
     })
 
-    // DataGrid가 페이지네이션 처리하므로 slice 제거
-    // 순위 추가
     return result.map((stock, index) => ({
       ...stock,
       rank: index + 1,
     }))
   }, [stocksWithRecalculatedScores, filters])
 
-  const columns: GridColDef<Stock & { rank: number }>[] = [
+  const columns: ColumnDef<StockWithRank>[] = [
     {
-      field: 'rank',
-      headerName: '순위',
-      width: 70,
-      renderCell: (params: GridRenderCellParams) => (
-        <Typography fontWeight="bold">{params.row.rank}</Typography>
+      accessorKey: 'rank',
+      header: '순위',
+      cell: ({ row }) => (
+        <span className="font-bold text-slate-300">#{row.original.rank}</span>
+      ),
+      size: 60,
+    },
+    {
+      accessorKey: 'name',
+      header: '종목명',
+      cell: ({ row }) => (
+        <div>
+          <p className="font-medium text-slate-100">{row.original.name}</p>
+          <p className="text-xs text-slate-500">{row.original.symbol}</p>
+        </div>
       ),
     },
     {
-      field: 'name',
-      headerName: '종목명',
-      flex: 1,
-      minWidth: 150,
-      renderCell: (params: GridRenderCellParams<Stock>) => (
-        <Box>
-          <Typography variant="body2" fontWeight="medium">
-            {params.row.name}
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            {params.row.symbol}
-          </Typography>
-        </Box>
-      ),
-    },
-    {
-      field: 'market',
-      headerName: '시장',
-      width: 100,
-      renderCell: (params: GridRenderCellParams<Stock>) => (
-        <Chip
-          label={params.row.market}
-          size="small"
-          color={
-            params.row.market === 'KOSPI' || params.row.market === 'NYSE'
-              ? 'primary'
+      accessorKey: 'market',
+      header: '시장',
+      cell: ({ row }) => (
+        <Badge
+          variant={
+            row.original.market === 'KOSPI' || row.original.market === 'NYSE'
+              ? 'default'
               : 'secondary'
           }
-          variant="outlined"
-        />
+        >
+          {row.original.market}
+        </Badge>
       ),
+      size: 90,
     },
     {
-      field: 'currentPrice',
-      headerName: '현재가',
-      width: 120,
-      align: 'right',
-      headerAlign: 'right',
-      renderCell: (params: GridRenderCellParams<Stock>) => {
-        const { currentPrice, currency } = params.row
-        return currency === 'KRW'
-          ? currentPrice.toLocaleString('ko-KR') + '원'
-          : '$' + currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })
+      accessorKey: 'currentPrice',
+      header: () => <div className="text-right">현재가</div>,
+      cell: ({ row }) => {
+        const { currentPrice, currency } = row.original
+        const formatted =
+          currency === 'KRW'
+            ? currentPrice.toLocaleString('ko-KR') + '원'
+            : '$' + currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })
+        return <div className="text-right font-medium">{formatted}</div>
       },
+      size: 120,
     },
     {
-      field: 'changePercent',
-      headerName: '등락률',
-      width: 100,
-      align: 'right',
-      headerAlign: 'right',
-      renderCell: (params: GridRenderCellParams<Stock>) => {
-        const value = params.row.changePercent
+      accessorKey: 'changePercent',
+      header: () => <div className="text-right">등락률</div>,
+      cell: ({ row }) => {
+        const value = row.original.changePercent
         return (
-          <Typography color={value >= 0 ? 'success.main' : 'error.main'}>
+          <div
+            className={cn(
+              'text-right font-medium',
+              value >= 0 ? 'text-emerald-400' : 'text-rose-400'
+            )}
+          >
             {value >= 0 ? '+' : ''}
             {value.toFixed(2)}%
-          </Typography>
+          </div>
         )
       },
+      size: 90,
     },
     {
-      field: 'totalScore',
-      headerName: '종합',
-      width: 80,
-      align: 'center',
-      headerAlign: 'center',
-      renderCell: (params: GridRenderCellParams<Stock>) => (
-        <ScoreBadge score={params.row.scores.total} size="medium" />
+      accessorKey: 'totalScore',
+      header: () => <div className="text-center">종합</div>,
+      cell: ({ row }) => (
+        <div className="flex justify-center">
+          <ScoreBadge score={row.original.scores.total} size="medium" />
+        </div>
       ),
+      size: 80,
     },
     {
-      field: 'fundamentalScore',
-      headerName: '기본',
-      width: 70,
-      align: 'center',
-      headerAlign: 'center',
-      renderCell: (params: GridRenderCellParams<Stock>) => (
-        <ScoreBadge score={params.row.scores.fundamental.average} size="small" />
+      accessorKey: 'fundamentalScore',
+      header: () => <div className="text-center">기본</div>,
+      cell: ({ row }) => (
+        <div className="flex justify-center">
+          <ScoreBadge score={row.original.scores.fundamental.average} size="small" />
+        </div>
       ),
+      size: 60,
     },
     {
-      field: 'technicalScore',
-      headerName: '기술',
-      width: 70,
-      align: 'center',
-      headerAlign: 'center',
-      renderCell: (params: GridRenderCellParams<Stock>) => (
-        <ScoreBadge score={params.row.scores.technical.average} size="small" />
+      accessorKey: 'technicalScore',
+      header: () => <div className="text-center">기술</div>,
+      cell: ({ row }) => (
+        <div className="flex justify-center">
+          <ScoreBadge score={row.original.scores.technical.average} size="small" />
+        </div>
       ),
+      size: 60,
     },
     {
-      field: 'newsScore',
-      headerName: '뉴스',
-      width: 70,
-      align: 'center',
-      headerAlign: 'center',
-      renderCell: (params: GridRenderCellParams<Stock>) => (
-        <ScoreBadge score={params.row.scores.news.average} size="small" />
+      accessorKey: 'newsScore',
+      header: () => <div className="text-center">뉴스</div>,
+      cell: ({ row }) => (
+        <div className="flex justify-center">
+          <ScoreBadge score={row.original.scores.news.average} size="small" />
+        </div>
       ),
+      size: 60,
     },
   ]
 
-  const handleRowClick = (params: { row: Stock }) => {
-    navigate(`/stock/${params.row.symbol}`)
-  }
+  const table = useReactTable({
+    data: filteredData,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    state: {
+      pagination: {
+        pageIndex,
+        pageSize,
+      },
+    },
+    onPaginationChange: (updater) => {
+      if (typeof updater === 'function') {
+        const newState = updater({ pageIndex, pageSize })
+        setPageIndex(newState.pageIndex)
+        setPageSize(newState.pageSize)
+      }
+    },
+  })
 
   if (error) {
     return (
-      <Box sx={{ p: 2 }}>
-        <Alert severity="error" sx={{ mb: 2 }}>
-          데이터 로딩 오류: {error}
-        </Alert>
-        <Typography variant="body2" color="text.secondary">
+      <div className="p-6">
+        <div className="flex items-center gap-2 text-rose-400 mb-2">
+          <AlertCircle className="h-5 w-5" />
+          <span className="font-medium">데이터 로딩 오류: {error}</span>
+        </div>
+        <p className="text-sm text-slate-500">
           새로고침 버튼을 눌러 다시 시도해주세요.
-        </Typography>
-      </Box>
+        </p>
+      </div>
+    )
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <div className="flex flex-col items-center gap-3">
+          <Spinner size="lg" />
+          <p className="text-slate-400">데이터 로딩중...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (filteredData.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-96 text-slate-500">
+        데이터가 없습니다. 새로고침을 눌러주세요.
+      </div>
     )
   }
 
   return (
-    <Box sx={{ height: 700, width: '100%' }}>
-      <DataGrid
-        rows={filteredData}
-        columns={columns}
-        getRowId={(row) => row.symbol}
-        loading={loading}
-        disableRowSelectionOnClick
-        onRowClick={handleRowClick}
-        pagination
-        paginationModel={paginationModel}
-        onPaginationModelChange={setPaginationModel}
-        pageSizeOptions={[10, 20, 50, 100]}
-        sx={{
-          '& .MuiDataGrid-row': {
-            cursor: 'pointer',
-          },
-          '& .MuiDataGrid-row:hover': {
-            backgroundColor: 'action.hover',
-          },
-        }}
-        localeText={{
-          noRowsLabel: '데이터가 없습니다. 새로고침을 눌러주세요.',
-          MuiTablePagination: {
-            labelRowsPerPage: '페이지당 행 수:',
-            labelDisplayedRows: ({ from, to, count }) =>
-              `${from}-${to} / 총 ${count}개`,
-          },
-        }}
-      />
-    </Box>
+    <div>
+      {/* Table */}
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id} className="border-b border-slate-800">
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider"
+                    style={{ width: header.getSize() }}
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(header.column.columnDef.header, header.getContext())}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map((row) => (
+              <tr
+                key={row.id}
+                onClick={() => navigate(`/stock/${row.original.symbol}`)}
+                className="border-b border-slate-800/50 hover:bg-slate-800/50 cursor-pointer transition-colors"
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id} className="px-4 py-3">
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Pagination */}
+      <div className="flex items-center justify-between px-4 py-3 border-t border-slate-800">
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-slate-400">페이지당</span>
+          <select
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value))
+              setPageIndex(0)
+            }}
+            className="bg-slate-800 border border-slate-700 rounded-md px-2 py-1 text-sm text-slate-300"
+          >
+            {[10, 20, 50, 100].map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
+          </select>
+          <span className="text-sm text-slate-400">개</span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-slate-400">
+            {pageIndex * pageSize + 1}-{Math.min((pageIndex + 1) * pageSize, filteredData.length)} / 총{' '}
+            {filteredData.length}개
+          </span>
+          <div className="flex gap-1">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => setPageIndex((p) => Math.max(0, p - 1))}
+              disabled={pageIndex === 0}
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => setPageIndex((p) => p + 1)}
+              disabled={(pageIndex + 1) * pageSize >= filteredData.length}
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

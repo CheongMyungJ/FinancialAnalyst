@@ -12,7 +12,6 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from 'recharts'
-import { Box, Typography } from '@mui/material'
 import type { StockScores } from '../../types'
 
 interface ScoreRadarChartProps {
@@ -39,57 +38,45 @@ export default function ScoreRadarChart({ scores }: ScoreRadarChartProps) {
     if (active && payload && payload.length) {
       const item = payload[0].payload
       return (
-        <Box
-          sx={{
-            bgcolor: 'background.paper',
-            p: 1,
-            border: 1,
-            borderColor: 'divider',
-            borderRadius: 1,
-            boxShadow: 1,
-          }}
-        >
-          <Typography variant="body2" fontWeight="bold">
-            {item.subject}
-          </Typography>
-          <Typography variant="body2" color="primary">
+        <div className="bg-slate-800 border border-slate-700 rounded-lg p-2 shadow-xl">
+          <p className="text-sm font-bold text-slate-200">{item.subject}</p>
+          <p className="text-sm text-cyan-400">
             {item.score.toFixed(1)} / 10
-          </Typography>
-        </Box>
+          </p>
+        </div>
       )
     }
     return null
   }
 
   return (
-    <Box>
-      <Typography variant="subtitle2" gutterBottom>
-        항목별 점수 분포
-      </Typography>
+    <div>
+      <h4 className="text-sm font-medium text-slate-200 mb-2">항목별 점수 분포</h4>
       <ResponsiveContainer width="100%" height={350}>
         <RadarChart cx="50%" cy="50%" outerRadius="70%" data={data}>
-          <PolarGrid stroke="#e0e0e0" />
+          <PolarGrid stroke="#334155" />
           <PolarAngleAxis
             dataKey="subject"
-            tick={{ fontSize: 11, fill: '#666' }}
+            tick={{ fontSize: 11, fill: '#94a3b8' }}
           />
           <PolarRadiusAxis
             angle={90}
             domain={[0, 10]}
-            tick={{ fontSize: 10 }}
+            tick={{ fontSize: 10, fill: '#64748b' }}
             tickCount={6}
+            stroke="#475569"
           />
           <Tooltip content={<CustomTooltip />} />
           <Radar
             name="점수"
             dataKey="score"
-            stroke="#1976d2"
-            fill="#1976d2"
-            fillOpacity={0.4}
+            stroke="#06b6d4"
+            fill="#06b6d4"
+            fillOpacity={0.3}
             strokeWidth={2}
           />
         </RadarChart>
       </ResponsiveContainer>
-    </Box>
+    </div>
   )
 }

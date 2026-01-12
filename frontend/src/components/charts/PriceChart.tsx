@@ -1,8 +1,8 @@
 /**
  * 주가 차트 컴포넌트
- * 종가, 이동평균선을 표시하는 Area Chart
  */
 
+import { useState } from 'react'
 import {
   Area,
   XAxis,
@@ -14,8 +14,7 @@ import {
   Line,
   ComposedChart,
 } from 'recharts'
-import { Box, Typography, ToggleButton, ToggleButtonGroup } from '@mui/material'
-import { useState } from 'react'
+import { cn } from '../../lib/utils'
 
 interface PriceData {
   date: string
@@ -33,7 +32,6 @@ interface PriceChartProps {
 export default function PriceChart({ data, currency }: PriceChartProps) {
   const [period, setPeriod] = useState<'1M' | '3M' | '6M'>('3M')
 
-  // 기간에 따른 데이터 필터링
   const getFilteredData = () => {
     const days = period === '1M' ? 30 : period === '3M' ? 90 : 180
     return data.slice(-days)
@@ -41,7 +39,6 @@ export default function PriceChart({ data, currency }: PriceChartProps) {
 
   const filteredData = getFilteredData()
 
-  // 가격 포맷터
   const formatPrice = (value: number) => {
     if (currency === 'KRW') {
       return value >= 10000
@@ -51,39 +48,22 @@ export default function PriceChart({ data, currency }: PriceChartProps) {
     return `$${value.toFixed(2)}`
   }
 
-  // 날짜 포맷터
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr)
     return `${date.getMonth() + 1}/${date.getDate()}`
   }
 
-  // 툴팁 포맷터
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <Box
-          sx={{
-            bgcolor: 'background.paper',
-            p: 1.5,
-            border: 1,
-            borderColor: 'divider',
-            borderRadius: 1,
-            boxShadow: 1,
-          }}
-        >
-          <Typography variant="caption" color="text.secondary">
-            {label}
-          </Typography>
+        <div className="bg-slate-800 border border-slate-700 rounded-lg p-2.5 shadow-xl">
+          <p className="text-xs text-slate-400 mb-1">{label}</p>
           {payload.map((entry: any, index: number) => (
-            <Typography
-              key={index}
-              variant="body2"
-              sx={{ color: entry.color }}
-            >
+            <p key={index} className="text-sm" style={{ color: entry.color }}>
               {entry.name}: {formatPrice(entry.value)}
-            </Typography>
+            </p>
           ))}
-        </Box>
+        </div>
       )
     }
     return null
@@ -91,63 +71,67 @@ export default function PriceChart({ data, currency }: PriceChartProps) {
 
   if (!data || data.length === 0) {
     return (
-      <Box
-        sx={{
-          height: 300,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Typography color="text.secondary">차트 데이터가 없습니다</Typography>
-      </Box>
+      <div className="h-[300px] flex items-center justify-center text-slate-500">
+        차트 데이터가 없습니다
+      </div>
     )
   }
 
   return (
-    <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-        <Typography variant="subtitle2">주가 추이</Typography>
-        <ToggleButtonGroup
-          value={period}
-          exclusive
-          onChange={(_, value) => value && setPeriod(value)}
-          size="small"
-        >
-          <ToggleButton value="1M">1개월</ToggleButton>
-          <ToggleButton value="3M">3개월</ToggleButton>
-          <ToggleButton value="6M">6개월</ToggleButton>
-        </ToggleButtonGroup>
-      </Box>
+    <div>
+      <div className="flex justify-between items-center mb-4">
+        <h4 className="text-sm font-medium text-slate-200">주가 추이</h4>
+        <div className="flex gap-1">
+          {(['1M', '3M', '6M'] as const).map((p) => (
+            <button
+              key={p}
+              onClick={() => setPeriod(p)}
+              className={cn(
+                'px-3 py-1 text-xs rounded-md transition-colors',
+                period === p
+                  ? 'bg-cyan-500/20 text-cyan-400'
+                  : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+              )}
+            >
+              {p === '1M' ? '1개월' : p === '3M' ? '3개월' : '6개월'}
+            </button>
+          ))}
+        </div>
+      </div>
 
       <ResponsiveContainer width="100%" height={300}>
         <ComposedChart data={filteredData}>
           <defs>
             <linearGradient id="colorClose" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#1976d2" stopOpacity={0.3} />
-              <stop offset="95%" stopColor="#1976d2" stopOpacity={0} />
+              <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.3} />
+              <stop offset="95%" stopColor="#06b6d4" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+          <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
           <XAxis
             dataKey="date"
             tickFormatter={formatDate}
-            tick={{ fontSize: 12 }}
+            tick={{ fontSize: 11, fill: '#94a3b8' }}
             interval="preserveStartEnd"
+            stroke="#475569"
           />
           <YAxis
             tickFormatter={formatPrice}
-            tick={{ fontSize: 12 }}
+            tick={{ fontSize: 11, fill: '#94a3b8' }}
             domain={['auto', 'auto']}
             width={60}
+            stroke="#475569"
           />
           <Tooltip content={<CustomTooltip />} />
-          <Legend />
+          <Legend
+            wrapperStyle={{ fontSize: '12px' }}
+            formatter={(value) => <span style={{ color: '#94a3b8' }}>{value}</span>}
+          />
           <Area
             type="monotone"
             dataKey="close"
             name="종가"
-            stroke="#1976d2"
+            stroke="#06b6d4"
             fillOpacity={1}
             fill="url(#colorClose)"
             strokeWidth={2}
@@ -157,7 +141,7 @@ export default function PriceChart({ data, currency }: PriceChartProps) {
               type="monotone"
               dataKey="ma20"
               name="MA20"
-              stroke="#ff9800"
+              stroke="#f59e0b"
               dot={false}
               strokeWidth={1.5}
             />
@@ -167,13 +151,13 @@ export default function PriceChart({ data, currency }: PriceChartProps) {
               type="monotone"
               dataKey="ma50"
               name="MA50"
-              stroke="#4caf50"
+              stroke="#10b981"
               dot={false}
               strokeWidth={1.5}
             />
           )}
         </ComposedChart>
       </ResponsiveContainer>
-    </Box>
+    </div>
   )
 }

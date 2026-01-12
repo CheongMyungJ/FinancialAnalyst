@@ -1,59 +1,33 @@
-import { Box, Typography } from '@mui/material'
+import { cn } from '../../lib/utils'
 
 interface ScoreBadgeProps {
   score: number
   size?: 'small' | 'medium' | 'large'
 }
 
-// 점수에 따른 색상 반환
-function getScoreColor(score: number): string {
-  if (score >= 8) return '#2e7d32' // 녹색 (우수)
-  if (score >= 6) return '#1976d2' // 파랑 (양호)
-  if (score >= 4) return '#ed6c02' // 주황 (보통)
-  return '#d32f2f' // 빨강 (주의)
-}
-
-// 점수에 따른 배경 색상 반환
-function getScoreBgColor(score: number): string {
-  if (score >= 8) return '#e8f5e9'
-  if (score >= 6) return '#e3f2fd'
-  if (score >= 4) return '#fff3e0'
-  return '#ffebee'
+function getScoreStyle(score: number): string {
+  if (score >= 8) return 'bg-emerald-500/20 border-emerald-500/50 text-emerald-400'
+  if (score >= 6) return 'bg-cyan-500/20 border-cyan-500/50 text-cyan-400'
+  if (score >= 4) return 'bg-amber-500/20 border-amber-500/50 text-amber-400'
+  return 'bg-rose-500/20 border-rose-500/50 text-rose-400'
 }
 
 export default function ScoreBadge({ score, size = 'medium' }: ScoreBadgeProps) {
   const sizeStyles = {
-    small: { width: 32, height: 32, fontSize: '0.75rem' },
-    medium: { width: 44, height: 44, fontSize: '1rem' },
-    large: { width: 64, height: 64, fontSize: '1.5rem' },
+    small: 'w-8 h-8 text-xs',
+    medium: 'w-11 h-11 text-sm',
+    large: 'w-16 h-16 text-xl',
   }
 
-  const color = getScoreColor(score)
-  const bgColor = getScoreBgColor(score)
-  const styles = sizeStyles[size]
-
   return (
-    <Box
-      sx={{
-        width: styles.width,
-        height: styles.height,
-        borderRadius: '50%',
-        backgroundColor: bgColor,
-        border: `2px solid ${color}`,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
+    <div
+      className={cn(
+        'rounded-full border-2 flex items-center justify-center font-bold transition-all',
+        sizeStyles[size],
+        getScoreStyle(score)
+      )}
     >
-      <Typography
-        sx={{
-          fontSize: styles.fontSize,
-          fontWeight: 'bold',
-          color: color,
-        }}
-      >
-        {score.toFixed(1)}
-      </Typography>
-    </Box>
+      {score.toFixed(1)}
+    </div>
   )
 }

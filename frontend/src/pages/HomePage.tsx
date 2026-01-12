@@ -1,51 +1,52 @@
-import { Box, Grid, Paper, Typography, Stack } from '@mui/material'
-import { EmojiEvents as TrophyIcon } from '@mui/icons-material'
+import { Trophy } from 'lucide-react'
 import RankingTable from '../components/ranking/RankingTable'
 import RankingFilters from '../components/ranking/RankingFilters'
 import WeightSliders from '../components/scoring/WeightSliders'
+import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card'
 
 export default function HomePage() {
   return (
-    <Box>
-      <Box sx={{ mb: 4 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
-          <TrophyIcon sx={{ fontSize: 32, color: 'warning.main' }} />
-          <Typography variant="h4" component="h1" fontWeight="bold">
-            종목 랭킹
-          </Typography>
-        </Box>
-        <Typography variant="body1" color="text.secondary">
+    <div>
+      {/* Header */}
+      <div className="mb-6">
+        <div className="flex items-center gap-3 mb-2">
+          <Trophy className="h-8 w-8 text-amber-500" />
+          <h1 className="text-2xl font-bold text-slate-50">종목 랭킹</h1>
+        </div>
+        <p className="text-slate-400">
           기본적 분석, 기술적 분석, 뉴스 분석을 종합한 점수로 종목을 평가합니다.
-        </Typography>
-      </Box>
+        </p>
+      </div>
 
-      <Grid container spacing={3}>
-        {/* 좌측: 필터 및 가중치 설정 */}
-        <Grid item xs={12} md={3}>
-          <Stack spacing={2}>
-            <Paper sx={{ p: 2.5 }}>
-              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                필터
-              </Typography>
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        {/* Left sidebar - Filters & Weights */}
+        <div className="lg:col-span-1 space-y-4">
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base">필터</CardTitle>
+            </CardHeader>
+            <CardContent>
               <RankingFilters />
-            </Paper>
+            </CardContent>
+          </Card>
 
-            <Paper sx={{ p: 2.5 }}>
-              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                점수 가중치
-              </Typography>
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base">점수 가중치</CardTitle>
+            </CardHeader>
+            <CardContent>
               <WeightSliders />
-            </Paper>
-          </Stack>
-        </Grid>
+            </CardContent>
+          </Card>
+        </div>
 
-        {/* 우측: 랭킹 테이블 */}
-        <Grid item xs={12} md={9}>
-          <Paper sx={{ p: 0, overflow: 'hidden' }}>
+        {/* Right content - Ranking Table */}
+        <div className="lg:col-span-3">
+          <Card className="overflow-hidden">
             <RankingTable />
-          </Paper>
-        </Grid>
-      </Grid>
-    </Box>
+          </Card>
+        </div>
+      </div>
+    </div>
   )
 }

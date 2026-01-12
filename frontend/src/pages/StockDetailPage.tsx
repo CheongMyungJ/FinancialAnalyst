@@ -1,43 +1,28 @@
 import { useEffect, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
-  Box,
-  Paper,
-  Typography,
-  Grid,
-  Button,
-  CircularProgress,
-  Chip,
-  Divider,
-  Alert,
-  Link,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Card,
-  CardContent,
-  Stack,
-  LinearProgress,
-} from '@mui/material'
-import {
-  ArrowBack as ArrowBackIcon,
-  Business as BusinessIcon,
-  Newspaper as NewspaperIcon,
-  OpenInNew as OpenInNewIcon,
-  TrendingUp as TrendingUpIcon,
-  TrendingDown as TrendingDownIcon,
-  Star as StarIcon,
-  ShowChart as ShowChartIcon,
-  AccountBalance as AccountBalanceIcon,
-  Speed as SpeedIcon,
-} from '@mui/icons-material'
+  ArrowLeft,
+  Building2,
+  Newspaper,
+  ExternalLink,
+  TrendingUp,
+  TrendingDown,
+  Star,
+  LineChart,
+  Landmark,
+  Gauge,
+} from 'lucide-react'
 import { useAppDispatch, useAppSelector } from '../store'
 import { fetchStockDetail, clearSelectedStock } from '../store/stockSlice'
 import ScoreBreakdown from '../components/scoring/ScoreBreakdown'
 import PriceChart from '../components/charts/PriceChart'
 import VolumeChart from '../components/charts/VolumeChart'
 import ScoreRadarChart from '../components/charts/ScoreRadarChart'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
+import { Badge } from '../components/ui/badge'
+import { Progress } from '../components/ui/progress'
+import { Spinner } from '../components/ui/spinner'
+import { cn } from '../lib/utils'
 import type { PriceData } from '../types'
 
 // 이동평균 계산
@@ -114,9 +99,7 @@ export default function StockDetailPage() {
 
   // 종목 변경 시 이전 데이터 초기화 후 새 데이터 로드
   useEffect(() => {
-    // 먼저 이전 종목 데이터 초기화
     dispatch(clearSelectedStock())
-
     if (symbol) {
       dispatch(fetchStockDetail(symbol))
     }
@@ -141,12 +124,18 @@ export default function StockDetailPage() {
   // 에러가 있으면 에러 표시
   if (error) {
     return (
-      <Box>
-        <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)} sx={{ mb: 2 }}>
+      <div>
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-2 text-slate-400 hover:text-slate-200 mb-4 transition-colors"
+        >
+          <ArrowLeft className="h-4 w-4" />
           뒤로가기
-        </Button>
-        <Alert severity="error">{error}</Alert>
-      </Box>
+        </button>
+        <div className="bg-rose-500/10 border border-rose-500/50 rounded-lg p-4 text-rose-400">
+          {error}
+        </div>
+      </div>
     )
   }
 
@@ -156,9 +145,9 @@ export default function StockDetailPage() {
 
   if (showLoading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
-        <CircularProgress />
-      </Box>
+      <div className="flex items-center justify-center min-h-[50vh]">
+        <Spinner size="lg" />
+      </div>
     )
   }
 
@@ -175,214 +164,156 @@ export default function StockDetailPage() {
       : '$' + price.toLocaleString('en-US', { minimumFractionDigits: 2 })
   }
 
-  const getScoreColor = (score: number) => {
-    if (score >= 7) return 'success'
-    if (score >= 4) return 'warning'
-    return 'error'
-  }
-
   return (
-    <Box>
-      <Button
-        startIcon={<ArrowBackIcon />}
+    <div>
+      <button
         onClick={() => navigate(-1)}
-        sx={{ mb: 2 }}
-        variant="text"
-        color="inherit"
+        className="flex items-center gap-2 text-slate-400 hover:text-slate-200 mb-4 transition-colors"
       >
+        <ArrowLeft className="h-4 w-4" />
         뒤로가기
-      </Button>
+      </button>
 
       {/* 종목 헤더 */}
-      <Paper
-        sx={{
-          p: 3,
-          mb: 3,
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          color: 'white',
-        }}
-      >
-        <Box display="flex" alignItems="center" gap={2} mb={3} flexWrap="wrap">
-          <Typography variant="h4" fontWeight="bold">{name}</Typography>
-          <Chip
-            label={symbol}
-            size="small"
-            sx={{ bgcolor: 'rgba(255,255,255,0.2)', color: 'white' }}
-          />
-          <Chip
-            label={market}
-            size="small"
-            sx={{ bgcolor: 'rgba(255,255,255,0.3)', color: 'white', fontWeight: 'bold' }}
-          />
-          <Chip
-            label={sector}
-            size="small"
-            sx={{ bgcolor: 'rgba(255,255,255,0.2)', color: 'white' }}
-          />
-        </Box>
+      <div className="rounded-xl p-6 mb-6 bg-gradient-to-r from-purple-600/80 to-cyan-600/80 backdrop-blur-sm">
+        <div className="flex items-center gap-3 mb-6 flex-wrap">
+          <h1 className="text-2xl font-bold text-white">{name}</h1>
+          <Badge variant="secondary" className="bg-white/20 text-white border-0">
+            {symbol}
+          </Badge>
+          <Badge variant="secondary" className="bg-white/30 text-white border-0 font-bold">
+            {market}
+          </Badge>
+          <Badge variant="secondary" className="bg-white/20 text-white border-0">
+            {sector}
+          </Badge>
+        </div>
 
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={4}>
-            <Typography variant="body2" sx={{ opacity: 0.8 }}>
-              현재가
-            </Typography>
-            <Typography variant="h4" fontWeight="bold">{formatPrice(currentPrice)}</Typography>
-            <Box
-              sx={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 0.5,
-                mt: 1,
-                px: 1.5,
-                py: 0.5,
-                borderRadius: 2,
-                bgcolor: change >= 0 ? 'rgba(76, 175, 80, 0.3)' : 'rgba(244, 67, 54, 0.3)',
-              }}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div>
+            <p className="text-sm text-white/70 mb-1">현재가</p>
+            <p className="text-3xl font-bold text-white">{formatPrice(currentPrice)}</p>
+            <div
+              className={cn(
+                'inline-flex items-center gap-1.5 mt-2 px-3 py-1 rounded-full',
+                change >= 0 ? 'bg-emerald-500/30' : 'bg-rose-500/30'
+              )}
             >
-              {change >= 0 ? <TrendingUpIcon fontSize="small" /> : <TrendingDownIcon fontSize="small" />}
-              <Typography variant="body1" fontWeight="bold">
+              {change >= 0 ? (
+                <TrendingUp className="h-4 w-4" />
+              ) : (
+                <TrendingDown className="h-4 w-4" />
+              )}
+              <span className="font-bold">
                 {change >= 0 ? '+' : ''}{formatPrice(change)} ({changePercent >= 0 ? '+' : ''}{changePercent.toFixed(2)}%)
-              </Typography>
-            </Box>
-          </Grid>
+              </span>
+            </div>
+          </div>
 
-          <Grid item xs={12} sm={4}>
-            <Typography variant="body2" sx={{ opacity: 0.8 }}>
-              종합 점수
-            </Typography>
-            <Box display="flex" alignItems="baseline" gap={1}>
-              <StarIcon sx={{ fontSize: 32, color: 'gold' }} />
-              <Typography variant="h2" fontWeight="bold">
-                {scores.total.toFixed(1)}
-              </Typography>
-              <Typography variant="h6" sx={{ opacity: 0.7 }}>
-                / 10
-              </Typography>
-            </Box>
-          </Grid>
+          <div>
+            <p className="text-sm text-white/70 mb-1">종합 점수</p>
+            <div className="flex items-baseline gap-2">
+              <Star className="h-8 w-8 text-amber-400" />
+              <span className="text-5xl font-bold text-white">{scores.total.toFixed(1)}</span>
+              <span className="text-xl text-white/60">/ 10</span>
+            </div>
+          </div>
 
-          <Grid item xs={12} sm={4}>
-            <Typography variant="body2" sx={{ opacity: 0.8, mb: 1 }}>
-              카테고리별 점수
-            </Typography>
-            <Stack spacing={1}>
+          <div>
+            <p className="text-sm text-white/70 mb-2">카테고리별 점수</p>
+            <div className="space-y-2">
               {[
                 { label: '기본', value: scores.fundamental.average },
                 { label: '기술', value: scores.technical.average },
                 { label: '뉴스', value: scores.news.average },
               ].map((item) => (
-                <Box key={item.label}>
-                  <Box display="flex" justifyContent="space-between" mb={0.25}>
-                    <Typography variant="caption">{item.label}</Typography>
-                    <Typography variant="caption" fontWeight="bold">{item.value.toFixed(1)}</Typography>
-                  </Box>
-                  <LinearProgress
-                    variant="determinate"
-                    value={item.value * 10}
-                    sx={{
-                      height: 6,
-                      borderRadius: 1,
-                      bgcolor: 'rgba(255,255,255,0.2)',
-                      '& .MuiLinearProgress-bar': {
-                        bgcolor: 'white',
-                      },
-                    }}
-                  />
-                </Box>
+                <div key={item.label}>
+                  <div className="flex justify-between text-xs mb-0.5">
+                    <span className="text-white/80">{item.label}</span>
+                    <span className="font-bold text-white">{item.value.toFixed(1)}</span>
+                  </div>
+                  <div className="h-1.5 bg-white/20 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-white rounded-full transition-all"
+                      style={{ width: `${item.value * 10}%` }}
+                    />
+                  </div>
+                </div>
               ))}
-            </Stack>
-          </Grid>
-        </Grid>
-      </Paper>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* 차트 섹션 */}
-      <Grid container spacing={3} sx={{ mb: 3 }}>
-        <Grid item xs={12} lg={8}>
-          <Paper
-            sx={{
-              p: 3,
-              transition: 'box-shadow 0.2s',
-              '&:hover': { boxShadow: 4 },
-            }}
-          >
-            <Box display="flex" alignItems="center" gap={1} mb={2}>
-              <ShowChartIcon color="primary" />
-              <Typography variant="h6" fontWeight="bold">가격 차트</Typography>
-            </Box>
-            <Divider sx={{ mb: 2 }} />
-            {chartLoading ? (
-              <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" height={400}>
-                <CircularProgress />
-                <Typography sx={{ mt: 2 }} color="text.secondary">
-                  차트 데이터 로딩중...
-                </Typography>
-              </Box>
-            ) : priceHistory.length === 0 ? (
-              <Box display="flex" justifyContent="center" alignItems="center" height={400}>
-                <Typography color="text.secondary">차트 데이터가 없습니다</Typography>
-              </Box>
-            ) : (
-              <>
-                <PriceChart data={priceHistory} currency={currency} />
-                <Divider sx={{ my: 2 }} />
-                <VolumeChart data={priceHistory} />
-              </>
-            )}
-          </Paper>
-        </Grid>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <div className="lg:col-span-2">
+          <Card className="hover:shadow-lg hover:shadow-cyan-500/5 transition-shadow">
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center gap-2 text-base">
+                <LineChart className="h-5 w-5 text-cyan-400" />
+                가격 차트
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {chartLoading ? (
+                <div className="flex flex-col items-center justify-center h-[400px]">
+                  <Spinner size="lg" />
+                  <p className="mt-4 text-slate-500">차트 데이터 로딩중...</p>
+                </div>
+              ) : priceHistory.length === 0 ? (
+                <div className="flex items-center justify-center h-[400px]">
+                  <p className="text-slate-500">차트 데이터가 없습니다</p>
+                </div>
+              ) : (
+                <>
+                  <PriceChart data={priceHistory} currency={currency} />
+                  <div className="border-t border-slate-800 my-4" />
+                  <VolumeChart data={priceHistory} />
+                </>
+              )}
+            </CardContent>
+          </Card>
+        </div>
 
-        <Grid item xs={12} lg={4}>
-          <Paper
-            sx={{
-              p: 3,
-              height: '100%',
-              transition: 'box-shadow 0.2s',
-              '&:hover': { boxShadow: 4 },
-            }}
-          >
-            <Box display="flex" alignItems="center" gap={1} mb={2}>
-              <SpeedIcon color="primary" />
-              <Typography variant="h6" fontWeight="bold">점수 분포</Typography>
-            </Box>
-            <Divider sx={{ mb: 2 }} />
-            <ScoreRadarChart scores={scores} />
-          </Paper>
-        </Grid>
-      </Grid>
+        <div>
+          <Card className="h-full hover:shadow-lg hover:shadow-cyan-500/5 transition-shadow">
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center gap-2 text-base">
+                <Gauge className="h-5 w-5 text-cyan-400" />
+                점수 분포
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ScoreRadarChart scores={scores} />
+            </CardContent>
+          </Card>
+        </div>
+      </div>
 
       {/* 점수 상세 및 재무 정보 */}
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
-          <Paper
-            sx={{
-              p: 3,
-              transition: 'box-shadow 0.2s',
-              '&:hover': { boxShadow: 4 },
-            }}
-          >
-            <Box display="flex" alignItems="center" gap={1} mb={2}>
-              <StarIcon color="warning" />
-              <Typography variant="h6" fontWeight="bold">점수 상세</Typography>
-            </Box>
-            <Divider sx={{ mb: 2 }} />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <Card className="hover:shadow-lg hover:shadow-cyan-500/5 transition-shadow">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-base">
+              <Star className="h-5 w-5 text-amber-400" />
+              점수 상세
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
             <ScoreBreakdown scores={scores} />
-          </Paper>
-        </Grid>
+          </CardContent>
+        </Card>
 
-        <Grid item xs={12} md={6}>
-          <Paper
-            sx={{
-              p: 3,
-              transition: 'box-shadow 0.2s',
-              '&:hover': { boxShadow: 4 },
-            }}
-          >
-            <Box display="flex" alignItems="center" gap={1} mb={2}>
-              <AccountBalanceIcon color="primary" />
-              <Typography variant="h6" fontWeight="bold">재무 지표</Typography>
-            </Box>
-            <Divider sx={{ mb: 2 }} />
-            <Grid container spacing={2}>
+        <Card className="hover:shadow-lg hover:shadow-cyan-500/5 transition-shadow">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-base">
+              <Landmark className="h-5 w-5 text-cyan-400" />
+              재무 지표
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 gap-3 mb-4">
               {[
                 { label: 'PER', value: selectedStock.fundamentals.per?.toFixed(2) || 'N/A' },
                 { label: 'PBR', value: selectedStock.fundamentals.pbr?.toFixed(2) || 'N/A' },
@@ -398,178 +329,127 @@ export default function StockDetailPage() {
                     : 'N/A'
                 },
               ].map((item) => (
-                <Grid item xs={6} key={item.label}>
-                  <Card variant="outlined" sx={{ p: 1.5, bgcolor: 'grey.50' }}>
-                    <Typography variant="caption" color="text.secondary">{item.label}</Typography>
-                    <Typography variant="h6" fontWeight="bold">{item.value}</Typography>
-                  </Card>
-                </Grid>
+                <div key={item.label} className="bg-slate-800/50 rounded-lg p-3">
+                  <p className="text-xs text-slate-500">{item.label}</p>
+                  <p className="text-lg font-bold text-slate-200">{item.value}</p>
+                </div>
               ))}
-            </Grid>
+            </div>
 
-            <Divider sx={{ my: 2 }} />
+            <div className="border-t border-slate-800 my-4" />
 
-            <Box display="flex" alignItems="center" gap={1} mb={2}>
-              <ShowChartIcon color="secondary" />
-              <Typography variant="subtitle1" fontWeight="bold">기술적 지표</Typography>
-            </Box>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Card variant="outlined" sx={{ p: 1.5, bgcolor: 'grey.50' }}>
-                  <Typography variant="caption" color="text.secondary">RSI</Typography>
-                  <Typography
-                    variant="h6"
-                    fontWeight="bold"
-                    color={
-                      selectedStock.technicals.rsi
-                        ? selectedStock.technicals.rsi > 70
-                          ? 'error.main'
-                          : selectedStock.technicals.rsi < 30
-                          ? 'success.main'
-                          : 'text.primary'
-                        : 'text.primary'
-                    }
-                  >
-                    {selectedStock.technicals.rsi?.toFixed(1) || 'N/A'}
-                  </Typography>
-                </Card>
-              </Grid>
-              <Grid item xs={6}>
-                <Card variant="outlined" sx={{ p: 1.5, bgcolor: 'grey.50' }}>
-                  <Typography variant="caption" color="text.secondary">거래량 변화</Typography>
-                  <Typography
-                    variant="h6"
-                    fontWeight="bold"
-                    color={
-                      selectedStock.technicals.volumeChange
-                        ? selectedStock.technicals.volumeChange > 0
-                          ? 'success.main'
-                          : 'error.main'
-                        : 'text.primary'
-                    }
-                  >
-                    {selectedStock.technicals.volumeChange
-                      ? `${selectedStock.technicals.volumeChange > 0 ? '+' : ''}${selectedStock.technicals.volumeChange.toFixed(1)}%`
-                      : 'N/A'}
-                  </Typography>
-                </Card>
-              </Grid>
-            </Grid>
-          </Paper>
-        </Grid>
-      </Grid>
+            <div className="flex items-center gap-2 mb-3">
+              <LineChart className="h-4 w-4 text-purple-400" />
+              <h4 className="font-medium text-slate-200">기술적 지표</h4>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-slate-800/50 rounded-lg p-3">
+                <p className="text-xs text-slate-500">RSI</p>
+                <p
+                  className={cn(
+                    'text-lg font-bold',
+                    selectedStock.technicals.rsi
+                      ? selectedStock.technicals.rsi > 70
+                        ? 'text-rose-400'
+                        : selectedStock.technicals.rsi < 30
+                        ? 'text-emerald-400'
+                        : 'text-slate-200'
+                      : 'text-slate-200'
+                  )}
+                >
+                  {selectedStock.technicals.rsi?.toFixed(1) || 'N/A'}
+                </p>
+              </div>
+              <div className="bg-slate-800/50 rounded-lg p-3">
+                <p className="text-xs text-slate-500">거래량 변화</p>
+                <p
+                  className={cn(
+                    'text-lg font-bold',
+                    selectedStock.technicals.volumeChange
+                      ? selectedStock.technicals.volumeChange > 0
+                        ? 'text-emerald-400'
+                        : 'text-rose-400'
+                      : 'text-slate-200'
+                  )}
+                >
+                  {selectedStock.technicals.volumeChange
+                    ? `${selectedStock.technicals.volumeChange > 0 ? '+' : ''}${selectedStock.technicals.volumeChange.toFixed(1)}%`
+                    : 'N/A'}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
       {/* 기업 정보 및 뉴스 섹션 */}
-      <Grid container spacing={3} sx={{ mt: 1 }}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* 기업 정보 */}
-        <Grid item xs={12} md={6}>
-          <Paper
-            sx={{
-              p: 3,
-              height: '100%',
-              transition: 'box-shadow 0.2s',
-              '&:hover': { boxShadow: 4 },
-            }}
-          >
-            <Box display="flex" alignItems="center" gap={1} mb={2}>
-              <BusinessIcon color="primary" />
-              <Typography variant="h6" fontWeight="bold">기업 정보</Typography>
-            </Box>
-            <Divider sx={{ mb: 2 }} />
-
-            <Grid container spacing={2}>
+        <Card className="hover:shadow-lg hover:shadow-cyan-500/5 transition-shadow">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-base">
+              <Building2 className="h-5 w-5 text-cyan-400" />
+              기업 정보
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-3 gap-3 mb-4">
               {[
                 { label: '종목코드', value: symbol },
                 { label: '시장', value: market },
                 { label: '섹터', value: sector },
               ].map((item) => (
-                <Grid item xs={4} key={item.label}>
-                  <Card variant="outlined" sx={{ p: 1.5, bgcolor: 'grey.50', textAlign: 'center' }}>
-                    <Typography variant="caption" color="text.secondary">{item.label}</Typography>
-                    <Typography variant="body1" fontWeight="bold">{item.value}</Typography>
-                  </Card>
-                </Grid>
+                <div key={item.label} className="bg-slate-800/50 rounded-lg p-3 text-center">
+                  <p className="text-xs text-slate-500">{item.label}</p>
+                  <p className="font-bold text-slate-200 truncate">{item.value}</p>
+                </div>
               ))}
-            </Grid>
+            </div>
 
-            <Box
-              sx={{
-                mt: 3,
-                p: 2,
-                bgcolor: 'primary.50',
-                borderRadius: 2,
-                borderLeft: 4,
-                borderColor: 'primary.main',
-              }}
-            >
-              <Typography variant="body2" color="primary.dark" fontWeight="bold" gutterBottom>
-                업종 설명
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {sectorDescription}
-              </Typography>
-            </Box>
-          </Paper>
-        </Grid>
+            <div className="bg-cyan-500/10 border-l-4 border-cyan-500 rounded-r-lg p-3">
+              <p className="text-sm font-bold text-cyan-400 mb-1">업종 설명</p>
+              <p className="text-sm text-slate-400">{sectorDescription}</p>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* 관련 뉴스 링크 */}
-        <Grid item xs={12} md={6}>
-          <Paper
-            sx={{
-              p: 3,
-              height: '100%',
-              transition: 'box-shadow 0.2s',
-              '&:hover': { boxShadow: 4 },
-            }}
-          >
-            <Box display="flex" alignItems="center" gap={1} mb={2}>
-              <NewspaperIcon color="primary" />
-              <Typography variant="h6" fontWeight="bold">관련 뉴스 및 정보</Typography>
-            </Box>
-            <Divider sx={{ mb: 2 }} />
-
-            <List dense>
+        <Card className="hover:shadow-lg hover:shadow-cyan-500/5 transition-shadow">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-base">
+              <Newspaper className="h-5 w-5 text-cyan-400" />
+              관련 뉴스 및 정보
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
               {newsLinks.map((link, index) => (
-                <ListItem
+                <a
                   key={index}
-                  component={Link}
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  sx={{
-                    borderRadius: 2,
-                    mb: 1,
-                    bgcolor: 'grey.50',
-                    transition: 'all 0.2s',
-                    '&:hover': {
-                      bgcolor: 'primary.main',
-                      color: 'white',
-                      transform: 'translateX(4px)',
-                      '& .MuiListItemIcon-root': { color: 'white' },
-                      '& .MuiListItemText-secondary': { color: 'rgba(255,255,255,0.7)' },
-                    },
-                    textDecoration: 'none',
-                    color: 'inherit',
-                  }}
+                  className="flex items-center gap-3 p-3 rounded-lg bg-slate-800/50 hover:bg-cyan-500 hover:text-white transition-all group"
                 >
-                  <ListItemIcon sx={{ minWidth: 36, transition: 'color 0.2s' }}>
-                    <OpenInNewIcon fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={link.name}
-                    secondary={`${name} 관련 뉴스 보기`}
-                    primaryTypographyProps={{ fontWeight: 'medium' }}
-                  />
-                </ListItem>
+                  <ExternalLink className="h-4 w-4 text-slate-500 group-hover:text-white transition-colors" />
+                  <div className="flex-1">
+                    <p className="font-medium text-slate-200 group-hover:text-white transition-colors">
+                      {link.name}
+                    </p>
+                    <p className="text-xs text-slate-500 group-hover:text-white/70 transition-colors">
+                      {name} 관련 뉴스 보기
+                    </p>
+                  </div>
+                </a>
               ))}
-            </List>
+            </div>
 
-            <Typography variant="caption" color="text.secondary" sx={{ mt: 2, display: 'block' }}>
+            <p className="text-xs text-slate-600 mt-4">
               * 외부 사이트로 연결됩니다
-            </Typography>
-          </Paper>
-        </Grid>
-      </Grid>
-    </Box>
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   )
 }

@@ -1,34 +1,26 @@
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  Box,
-  Chip,
-  CircularProgress,
-  IconButton,
-  Tooltip,
-} from '@mui/material'
-import {
-  Refresh as RefreshIcon,
-  Assessment as AssessmentIcon,
-  PieChart as PieChartIcon,
-  Science as ScienceIcon,
-  EmojiEvents as TrophyIcon,
-  Schedule as ScheduleIcon,
-  Storage as StorageIcon,
-} from '@mui/icons-material'
 import { useNavigate, useLocation } from 'react-router-dom'
+import {
+  BarChart3,
+  PieChart,
+  FlaskConical,
+  RefreshCw,
+  Clock,
+  Database,
+  Trophy,
+} from 'lucide-react'
 import { useAppDispatch, useAppSelector } from '../../store'
 import { refreshStocks } from '../../store/stockSlice'
+import { Button } from '../ui/button'
+import { Badge } from '../ui/badge'
+import { Tooltip } from '../ui/tooltip'
+import { Spinner } from '../ui/spinner'
+import { cn } from '../../lib/utils'
 
 export default function Header() {
   const navigate = useNavigate()
   const location = useLocation()
   const dispatch = useAppDispatch()
-  const { loading, lastUpdated, list } = useAppSelector(
-    (state) => state.stocks
-  )
+  const { loading, lastUpdated, list } = useAppSelector((state) => state.stocks)
 
   const handleRefresh = () => {
     dispatch(refreshStocks())
@@ -50,135 +42,93 @@ export default function Header() {
     return location.pathname.startsWith(path)
   }
 
-  const navButtonStyle = (path: string) => ({
-    borderRadius: 2,
-    px: 2,
-    py: 0.75,
-    bgcolor: isActive(path) ? 'rgba(255,255,255,0.2)' : 'transparent',
-    '&:hover': {
-      bgcolor: 'rgba(255,255,255,0.15)',
-    },
-  })
+  const navItems = [
+    { path: '/', label: '랭킹', icon: Trophy },
+    { path: '/sector', label: '섹터분석', icon: PieChart },
+    { path: '/backtest', label: '전략검증', icon: FlaskConical },
+  ]
 
   return (
-    <AppBar
-      position="static"
-      elevation={2}
-      sx={{
-        background: 'linear-gradient(90deg, #1976d2 0%, #1565c0 100%)',
-      }}
-    >
-      <Toolbar>
-        {/* 로고 */}
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            cursor: 'pointer',
-            mr: 1,
-          }}
-          onClick={() => navigate('/')}
-        >
-          <AssessmentIcon sx={{ fontSize: 28, mr: 1 }} />
-          <Typography
-            variant="h6"
-            component="div"
-            fontWeight="bold"
-            sx={{
-              letterSpacing: -0.5,
-              display: { xs: 'none', sm: 'block' },
-            }}
-          >
-            Stock Analysis
-          </Typography>
-        </Box>
-
-        {/* 네비게이션 */}
-        <Box sx={{ ml: 2, display: 'flex', gap: 0.5 }}>
-          <Button
-            color="inherit"
-            size="small"
-            startIcon={<TrophyIcon />}
+    <header className="sticky top-0 z-50 w-full border-b border-slate-800 bg-slate-900/80 backdrop-blur-xl">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          {/* Logo */}
+          <div
+            className="flex items-center gap-2 cursor-pointer group"
             onClick={() => navigate('/')}
-            sx={navButtonStyle('/')}
           >
-            랭킹
-          </Button>
-          <Button
-            color="inherit"
-            size="small"
-            startIcon={<PieChartIcon />}
-            onClick={() => navigate('/sector')}
-            sx={navButtonStyle('/sector')}
-          >
-            섹터분석
-          </Button>
-          <Button
-            color="inherit"
-            size="small"
-            startIcon={<ScienceIcon />}
-            onClick={() => navigate('/backtest')}
-            sx={navButtonStyle('/backtest')}
-          >
-            전략검증
-          </Button>
-        </Box>
+            <BarChart3 className="h-7 w-7 text-cyan-500 group-hover:text-cyan-400 transition-colors" />
+            <span className="text-lg font-bold text-slate-50 hidden sm:block">
+              Stock Analysis
+            </span>
+          </div>
 
-        <Box sx={{ flexGrow: 1 }} />
+          {/* Navigation */}
+          <nav className="flex items-center gap-1">
+            {navItems.map((item) => {
+              const Icon = item.icon
+              return (
+                <button
+                  key={item.path}
+                  onClick={() => navigate(item.path)}
+                  className={cn(
+                    'flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all',
+                    isActive(item.path)
+                      ? 'bg-cyan-500/20 text-cyan-400'
+                      : 'text-slate-400 hover:text-slate-50 hover:bg-slate-800'
+                  )}
+                >
+                  <Icon className="h-4 w-4" />
+                  <span className="hidden sm:inline">{item.label}</span>
+                </button>
+              )
+            })}
+          </nav>
 
-        {/* 종목 수 표시 */}
-        {list.length > 0 && (
-          <Tooltip title="로드된 종목 수">
-            <Chip
-              icon={<StorageIcon sx={{ fontSize: 16, color: 'white !important' }} />}
-              label={`${list.length}개`}
-              size="small"
-              sx={{
-                mr: 1.5,
-                bgcolor: 'rgba(255,255,255,0.15)',
-                color: 'white',
-                fontWeight: 'bold',
-                '& .MuiChip-icon': { color: 'white' },
-              }}
-            />
-          </Tooltip>
-        )}
+          {/* Right side */}
+          <div className="flex items-center gap-3">
+            {/* Stock count */}
+            {list.length > 0 && (
+              <Tooltip content="로드된 종목 수">
+                <Badge variant="secondary" className="gap-1.5">
+                  <Database className="h-3 w-3" />
+                  {list.length}개
+                </Badge>
+              </Tooltip>
+            )}
 
-        {/* 마지막 업데이트 시간 */}
-        {lastUpdated && !loading && (
-          <Tooltip title="마지막 업데이트">
-            <Box sx={{ display: 'flex', alignItems: 'center', mr: 1.5, opacity: 0.9 }}>
-              <ScheduleIcon sx={{ fontSize: 16, mr: 0.5 }} />
-              <Typography variant="body2">
-                {formatLastUpdated(lastUpdated)}
-              </Typography>
-            </Box>
-          </Tooltip>
-        )}
+            {/* Last updated */}
+            {lastUpdated && !loading && (
+              <Tooltip content="마지막 업데이트">
+                <div className="hidden md:flex items-center gap-1.5 text-xs text-slate-400">
+                  <Clock className="h-3 w-3" />
+                  {formatLastUpdated(lastUpdated)}
+                </div>
+              </Tooltip>
+            )}
 
-        {/* 데이터 새로고침 버튼 */}
-        <Tooltip title="데이터 새로고침">
-          <span>
-            <Button
-              color="inherit"
-              variant="outlined"
-              size="small"
-              startIcon={loading ? <CircularProgress size={18} color="inherit" /> : <RefreshIcon />}
-              onClick={handleRefresh}
-              disabled={loading}
-              sx={{
-                borderColor: 'rgba(255,255,255,0.5)',
-                '&:hover': {
-                  borderColor: 'white',
-                  bgcolor: 'rgba(255,255,255,0.1)',
-                },
-              }}
-            >
-              {loading ? '로딩중...' : '새로고침'}
-            </Button>
-          </span>
-        </Tooltip>
-      </Toolbar>
-    </AppBar>
+            {/* Refresh button */}
+            <Tooltip content="데이터 새로고침">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleRefresh}
+                disabled={loading}
+                className="gap-2"
+              >
+                {loading ? (
+                  <Spinner size="sm" />
+                ) : (
+                  <RefreshCw className="h-4 w-4" />
+                )}
+                <span className="hidden sm:inline">
+                  {loading ? '로딩중...' : '새로고침'}
+                </span>
+              </Button>
+            </Tooltip>
+          </div>
+        </div>
+      </div>
+    </header>
   )
 }

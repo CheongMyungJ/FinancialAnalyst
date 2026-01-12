@@ -1,54 +1,38 @@
 import { useState, useCallback, useMemo } from 'react'
 import {
-  Box,
-  Paper,
-  Typography,
-  Grid,
-  Slider,
-  Button,
-  CircularProgress,
-  Alert,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Chip,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Card,
-  CardContent,
-  Divider,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
-  LinearProgress,
-  Tooltip,
-  IconButton,
-  Collapse,
-  Stack,
-  ButtonGroup,
-} from '@mui/material'
-import {
-  PlayArrow as PlayIcon,
-  TrendingUp as TrendingUpIcon,
-  TrendingDown as TrendingDownIcon,
-  Info as InfoIcon,
-  ExpandMore as ExpandMoreIcon,
-  ExpandLess as ExpandLessIcon,
-  AccountBalance as AccountBalanceIcon,
-  Timeline as TimelineIcon,
-  Speed as SpeedIcon,
-  ShowChart as ShowChartIcon,
-  AttachMoney as MoneyIcon,
-  SwapVert as SwapVertIcon,
-} from '@mui/icons-material'
+  Play,
+  TrendingUp,
+  TrendingDown,
+  Info,
+  ChevronDown,
+  ChevronUp,
+  Landmark,
+  LineChart,
+  Gauge,
+  DollarSign,
+  ArrowUpDown,
+  FlaskConical,
+} from 'lucide-react'
 import { useAppSelector } from '../store'
 import { fetchPriceHistoryForBacktest } from '../services/api/backtestApi'
 import { runBacktest, type BacktestResult, type StockPriceData } from '../services/backtest/backtester'
 import { DEFAULT_WEIGHTS, type IndicatorWeights } from '../services/backtest/technicalIndicators'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
+import { Button } from '../components/ui/button'
+import { Badge } from '../components/ui/badge'
+import { Progress } from '../components/ui/progress'
+import { Slider } from '../components/ui/slider'
+import { Spinner } from '../components/ui/spinner'
+import { Tooltip } from '../components/ui/tooltip'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../components/ui/table'
+import { cn } from '../lib/utils'
 
 // 지표 설명
 const INDICATOR_INFO: Record<keyof IndicatorWeights, { name: string; desc: string }> = {
@@ -108,11 +92,8 @@ export default function BacktestPage() {
     [list, selectedMarkets]
   )
 
-  const handleWeightChange = (indicator: keyof IndicatorWeights) => (
-    _: Event,
-    value: number | number[]
-  ) => {
-    setWeights(prev => ({ ...prev, [indicator]: value as number }))
+  const handleWeightChange = (indicator: keyof IndicatorWeights, value: number) => {
+    setWeights(prev => ({ ...prev, [indicator]: value }))
   }
 
   const applyPreset = (preset: typeof PRESETS[0]) => {
@@ -208,480 +189,439 @@ export default function BacktestPage() {
     list.filter(s => s.market === market).length
 
   return (
-    <Box>
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" component="h1" fontWeight="bold" gutterBottom>
-          전략 검증
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
+    <div>
+      {/* Header */}
+      <div className="mb-6">
+        <div className="flex items-center gap-3 mb-2">
+          <FlaskConical className="h-8 w-8 text-cyan-500" />
+          <h1 className="text-2xl font-bold text-slate-50">전략 검증</h1>
+        </div>
+        <p className="text-slate-400">
           기술적 지표 가중치를 설정하고 과거 데이터로 전략 성과를 검증합니다.
-        </Typography>
-      </Box>
+        </p>
+      </div>
 
-      <Grid container spacing={3}>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* 설정 패널 */}
-        <Grid item xs={12} md={4}>
-          <Stack spacing={2}>
-            {/* 지표 가중치 */}
-            <Paper sx={{ p: 2.5 }}>
-              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                지표 가중치
-              </Typography>
-
+        <div className="space-y-4">
+          {/* 지표 가중치 */}
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base">지표 가중치</CardTitle>
+            </CardHeader>
+            <CardContent>
               {/* 프리셋 버튼 */}
-              <Box sx={{ mb: 2 }}>
-                <Typography variant="caption" color="text.secondary" sx={{ mb: 1, display: 'block' }}>
-                  빠른 설정
-                </Typography>
-                <ButtonGroup size="small" fullWidth>
+              <div className="mb-4">
+                <p className="text-xs text-slate-500 mb-2">빠른 설정</p>
+                <div className="grid grid-cols-4 gap-1">
                   {PRESETS.map(preset => (
-                    <Button
+                    <button
                       key={preset.name}
                       onClick={() => applyPreset(preset)}
-                      variant="outlined"
+                      className="px-2 py-1.5 text-xs rounded-md border border-slate-700 hover:bg-slate-800 transition-colors"
                     >
                       {preset.name}
-                    </Button>
+                    </button>
                   ))}
-                </ButtonGroup>
-              </Box>
+                </div>
+              </div>
 
-              <Divider sx={{ my: 2 }} />
+              <div className="border-t border-slate-800 my-4" />
 
               {/* 슬라이더들 */}
               {(Object.keys(INDICATOR_INFO) as (keyof IndicatorWeights)[]).map(key => (
-                <Box key={key} sx={{ mb: 2 }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                      <Typography variant="body2">{INDICATOR_INFO[key].name}</Typography>
-                      <Tooltip title={INDICATOR_INFO[key].desc} arrow placement="top">
-                        <IconButton size="small" sx={{ p: 0.25 }}>
-                          <InfoIcon sx={{ fontSize: 14, color: 'text.secondary' }} />
-                        </IconButton>
+                <div key={key} className="mb-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-sm text-slate-300">{INDICATOR_INFO[key].name}</span>
+                      <Tooltip content={INDICATOR_INFO[key].desc}>
+                        <Info className="h-3.5 w-3.5 text-slate-500 cursor-help" />
                       </Tooltip>
-                    </Box>
-                    <Typography variant="body2" fontWeight="bold" color="primary">
+                    </div>
+                    <span className="text-sm font-bold text-cyan-400">
                       {weights[key]}%
-                    </Typography>
-                  </Box>
+                    </span>
+                  </div>
                   <Slider
                     value={weights[key]}
-                    onChange={handleWeightChange(key)}
+                    onChange={(v) => handleWeightChange(key, v)}
                     min={0}
                     max={100}
-                    size="small"
-                    sx={{ mt: 0.5 }}
                   />
-                </Box>
+                </div>
               ))}
-            </Paper>
+            </CardContent>
+          </Card>
 
-            {/* 대상 시장 */}
-            <Paper sx={{ p: 2.5 }}>
-              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                대상 시장
-              </Typography>
-
-              <Grid container spacing={1}>
+          {/* 대상 시장 */}
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base">대상 시장</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 gap-2">
                 {[
                   { code: 'KOSPI', label: 'KOSPI', flag: '🇰🇷' },
                   { code: 'KOSDAQ', label: 'KOSDAQ', flag: '🇰🇷' },
                   { code: 'NYSE', label: 'NYSE', flag: '🇺🇸' },
                   { code: 'NASDAQ', label: 'NASDAQ', flag: '🇺🇸' },
                 ].map(market => (
-                  <Grid item xs={6} key={market.code}>
-                    <Paper
-                      variant="outlined"
-                      sx={{
-                        p: 1.5,
-                        cursor: 'pointer',
-                        textAlign: 'center',
-                        bgcolor: selectedMarkets.includes(market.code) ? 'primary.main' : 'transparent',
-                        color: selectedMarkets.includes(market.code) ? 'white' : 'text.primary',
-                        transition: 'all 0.2s',
-                        '&:hover': {
-                          bgcolor: selectedMarkets.includes(market.code) ? 'primary.dark' : 'action.hover',
-                        },
-                      }}
-                      onClick={() => toggleMarket(market.code)}
-                    >
-                      <Typography variant="body2" fontWeight="bold">
-                        {market.flag} {market.label}
-                      </Typography>
-                      <Typography variant="caption" sx={{ opacity: 0.8 }}>
-                        {getMarketStockCount(market.code)}개
-                      </Typography>
-                    </Paper>
-                  </Grid>
+                  <button
+                    key={market.code}
+                    onClick={() => toggleMarket(market.code)}
+                    className={cn(
+                      'p-3 rounded-lg border text-center transition-all',
+                      selectedMarkets.includes(market.code)
+                        ? 'bg-cyan-500/20 border-cyan-500/50 text-cyan-400'
+                        : 'border-slate-700 hover:bg-slate-800'
+                    )}
+                  >
+                    <p className="text-sm font-bold">
+                      {market.flag} {market.label}
+                    </p>
+                    <p className="text-xs text-slate-500">
+                      {getMarketStockCount(market.code)}개
+                    </p>
+                  </button>
                 ))}
-              </Grid>
+              </div>
 
-              <Typography variant="body2" sx={{ mt: 2, textAlign: 'center' }} color="text.secondary">
-                총 <strong>{selectedStockCount}개</strong> 종목 선택됨
-              </Typography>
-            </Paper>
+              <p className="text-sm text-center text-slate-500 mt-3">
+                총 <strong className="text-slate-200">{selectedStockCount}개</strong> 종목 선택됨
+              </p>
+            </CardContent>
+          </Card>
 
-            {/* 평가 설정 */}
-            <Paper sx={{ p: 2.5 }}>
-              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                평가 설정
-              </Typography>
-
-              <FormControl fullWidth size="small" sx={{ mb: 2 }}>
-                <InputLabel>평가 기간</InputLabel>
-                <Select
+          {/* 평가 설정 */}
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base">평가 설정</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div>
+                <label className="block text-xs text-slate-500 mb-1.5">평가 기간</label>
+                <select
                   value={evaluationPeriod}
-                  label="평가 기간"
-                  onChange={(e) => setEvaluationPeriod(e.target.value as number)}
+                  onChange={(e) => setEvaluationPeriod(Number(e.target.value))}
+                  className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                 >
-                  <MenuItem value={30}>1개월</MenuItem>
-                  <MenuItem value={60}>2개월</MenuItem>
-                  <MenuItem value={90}>3개월</MenuItem>
-                  <MenuItem value={120}>4개월</MenuItem>
-                  <MenuItem value={180}>6개월</MenuItem>
-                </Select>
-              </FormControl>
+                  <option value={30}>1개월</option>
+                  <option value={60}>2개월</option>
+                  <option value={90}>3개월</option>
+                  <option value={120}>4개월</option>
+                  <option value={180}>6개월</option>
+                </select>
+              </div>
 
-              <FormControl fullWidth size="small" sx={{ mb: 2 }}>
-                <InputLabel>리밸런싱 주기</InputLabel>
-                <Select
+              <div>
+                <label className="block text-xs text-slate-500 mb-1.5">리밸런싱 주기</label>
+                <select
                   value={rebalanceCycle}
-                  label="리밸런싱 주기"
-                  onChange={(e) => setRebalanceCycle(e.target.value as number)}
+                  onChange={(e) => setRebalanceCycle(Number(e.target.value))}
+                  className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                 >
-                  <MenuItem value={1}>매일</MenuItem>
-                  <MenuItem value={7}>매주</MenuItem>
-                  <MenuItem value={14}>2주마다</MenuItem>
-                  <MenuItem value={30}>매월</MenuItem>
-                </Select>
-              </FormControl>
+                  <option value={1}>매일</option>
+                  <option value={7}>매주</option>
+                  <option value={14}>2주마다</option>
+                  <option value={30}>매월</option>
+                </select>
+              </div>
 
-              <FormControl fullWidth size="small">
-                <InputLabel>보유 종목 수</InputLabel>
-                <Select
+              <div>
+                <label className="block text-xs text-slate-500 mb-1.5">보유 종목 수</label>
+                <select
                   value={topN}
-                  label="보유 종목 수"
-                  onChange={(e) => setTopN(e.target.value as number)}
+                  onChange={(e) => setTopN(Number(e.target.value))}
+                  className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                 >
-                  <MenuItem value={1}>1개 (집중투자)</MenuItem>
-                  <MenuItem value={3}>3개</MenuItem>
-                  <MenuItem value={5}>5개</MenuItem>
-                  <MenuItem value={10}>10개 (분산투자)</MenuItem>
-                </Select>
-              </FormControl>
-            </Paper>
+                  <option value={1}>1개 (집중투자)</option>
+                  <option value={3}>3개</option>
+                  <option value={5}>5개</option>
+                  <option value={10}>10개 (분산투자)</option>
+                </select>
+              </div>
+            </CardContent>
+          </Card>
 
-            {/* 실행 버튼 */}
-            <Button
-              variant="contained"
-              size="large"
-              fullWidth
-              startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <PlayIcon />}
-              onClick={runBacktestSimulation}
-              disabled={loading || list.length === 0 || selectedStockCount === 0}
-              sx={{ py: 1.5 }}
-            >
-              {loading ? '실행 중...' : '백테스트 실행'}
-            </Button>
-
-            {list.length === 0 && (
-              <Alert severity="warning" variant="outlined">
-                메인 페이지에서 종목 데이터를 먼저 불러와주세요.
-              </Alert>
+          {/* 실행 버튼 */}
+          <Button
+            onClick={runBacktestSimulation}
+            disabled={loading || list.length === 0 || selectedStockCount === 0}
+            className="w-full py-3 gap-2"
+          >
+            {loading ? (
+              <>
+                <Spinner size="sm" />
+                실행 중...
+              </>
+            ) : (
+              <>
+                <Play className="h-4 w-4" />
+                백테스트 실행
+              </>
             )}
-          </Stack>
-        </Grid>
+          </Button>
+
+          {list.length === 0 && (
+            <div className="bg-amber-500/10 border border-amber-500/50 rounded-lg p-3 text-sm text-amber-400">
+              메인 페이지에서 종목 데이터를 먼저 불러와주세요.
+            </div>
+          )}
+        </div>
 
         {/* 결과 패널 */}
-        <Grid item xs={12} md={8}>
+        <div className="lg:col-span-2 space-y-4">
           {/* 로딩 상태 */}
           {loading && (
-            <Paper sx={{ p: 4 }}>
-              <Box sx={{ textAlign: 'center', mb: 3 }}>
-                <CircularProgress size={48} sx={{ mb: 2 }} />
-                <Typography variant="h6" gutterBottom>
-                  데이터 수집 중...
-                </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                  {progressText}
-                </Typography>
-              </Box>
-              <LinearProgress
-                variant="determinate"
-                value={progressPercent}
-                sx={{ height: 8, borderRadius: 1 }}
-              />
-              <Typography variant="body2" color="text.secondary" sx={{ mt: 1, textAlign: 'center' }}>
-                {progressPercent}%
-              </Typography>
-            </Paper>
+            <Card>
+              <CardContent className="py-8 text-center">
+                <Spinner size="lg" className="mb-4" />
+                <h3 className="text-lg font-medium text-slate-200 mb-2">데이터 수집 중...</h3>
+                <p className="text-sm text-slate-500 mb-4">{progressText}</p>
+                <Progress value={progressPercent} max={100} />
+                <p className="text-sm text-slate-500 mt-2">{progressPercent}%</p>
+              </CardContent>
+            </Card>
           )}
 
           {/* 에러 */}
           {error && (
-            <Alert severity="error" sx={{ mb: 2 }}>
+            <div className="bg-rose-500/10 border border-rose-500/50 rounded-lg p-4 text-rose-400">
               {error}
-            </Alert>
+            </div>
           )}
 
           {/* 결과 */}
           {result && !loading && (
-            <Stack spacing={2}>
+            <>
               {/* 핵심 지표 카드 */}
-              <Grid container spacing={2}>
-                <Grid item xs={6} md={3}>
-                  <Card sx={{
-                    bgcolor: result.totalReturn >= 0 ? 'success.main' : 'error.main',
-                    color: 'white',
-                  }}>
-                    <CardContent sx={{ textAlign: 'center', py: 2 }}>
-                      <TrendingUpIcon sx={{ fontSize: 28, mb: 0.5, opacity: 0.9 }} />
-                      <Typography variant="h5" fontWeight="bold">
-                        {result.totalReturn >= 0 ? '+' : ''}{result.totalReturn.toFixed(1)}%
-                      </Typography>
-                      <Typography variant="caption" sx={{ opacity: 0.9 }}>
-                        총 수익률
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item xs={6} md={3}>
-                  <Card sx={{
-                    bgcolor: result.excessReturn >= 0 ? 'info.main' : 'warning.main',
-                    color: 'white',
-                  }}>
-                    <CardContent sx={{ textAlign: 'center', py: 2 }}>
-                      <ShowChartIcon sx={{ fontSize: 28, mb: 0.5, opacity: 0.9 }} />
-                      <Typography variant="h5" fontWeight="bold">
-                        {result.excessReturn >= 0 ? '+' : ''}{result.excessReturn.toFixed(1)}%
-                      </Typography>
-                      <Typography variant="caption" sx={{ opacity: 0.9 }}>
-                        벤치마크 대비
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item xs={6} md={3}>
-                  <Card>
-                    <CardContent sx={{ textAlign: 'center', py: 2 }}>
-                      <SpeedIcon sx={{ fontSize: 28, mb: 0.5, color: 'text.secondary' }} />
-                      <Typography variant="h5" fontWeight="bold">
-                        {result.winRate.toFixed(0)}%
-                      </Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        승률
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item xs={6} md={3}>
-                  <Card>
-                    <CardContent sx={{ textAlign: 'center', py: 2 }}>
-                      <TrendingDownIcon sx={{ fontSize: 28, mb: 0.5, color: 'error.main' }} />
-                      <Typography variant="h5" fontWeight="bold" color="error.main">
-                        -{result.maxDrawdown.toFixed(1)}%
-                      </Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        최대 낙폭
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              </Grid>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <Card className={cn(
+                  'text-center',
+                  result.totalReturn >= 0 ? 'bg-emerald-500/20 border-emerald-500/50' : 'bg-rose-500/20 border-rose-500/50'
+                )}>
+                  <CardContent className="py-4">
+                    <TrendingUp className={cn(
+                      'h-7 w-7 mx-auto mb-1',
+                      result.totalReturn >= 0 ? 'text-emerald-400' : 'text-rose-400'
+                    )} />
+                    <p className={cn(
+                      'text-2xl font-bold',
+                      result.totalReturn >= 0 ? 'text-emerald-400' : 'text-rose-400'
+                    )}>
+                      {result.totalReturn >= 0 ? '+' : ''}{result.totalReturn.toFixed(1)}%
+                    </p>
+                    <p className="text-xs text-slate-400">총 수익률</p>
+                  </CardContent>
+                </Card>
+
+                <Card className={cn(
+                  'text-center',
+                  result.excessReturn >= 0 ? 'bg-blue-500/20 border-blue-500/50' : 'bg-amber-500/20 border-amber-500/50'
+                )}>
+                  <CardContent className="py-4">
+                    <LineChart className={cn(
+                      'h-7 w-7 mx-auto mb-1',
+                      result.excessReturn >= 0 ? 'text-blue-400' : 'text-amber-400'
+                    )} />
+                    <p className={cn(
+                      'text-2xl font-bold',
+                      result.excessReturn >= 0 ? 'text-blue-400' : 'text-amber-400'
+                    )}>
+                      {result.excessReturn >= 0 ? '+' : ''}{result.excessReturn.toFixed(1)}%
+                    </p>
+                    <p className="text-xs text-slate-400">벤치마크 대비</p>
+                  </CardContent>
+                </Card>
+
+                <Card className="text-center">
+                  <CardContent className="py-4">
+                    <Gauge className="h-7 w-7 mx-auto mb-1 text-slate-400" />
+                    <p className="text-2xl font-bold text-slate-200">
+                      {result.winRate.toFixed(0)}%
+                    </p>
+                    <p className="text-xs text-slate-400">승률</p>
+                  </CardContent>
+                </Card>
+
+                <Card className="text-center">
+                  <CardContent className="py-4">
+                    <TrendingDown className="h-7 w-7 mx-auto mb-1 text-rose-400" />
+                    <p className="text-2xl font-bold text-rose-400">
+                      -{result.maxDrawdown.toFixed(1)}%
+                    </p>
+                    <p className="text-xs text-slate-400">최대 낙폭</p>
+                  </CardContent>
+                </Card>
+              </div>
 
               {/* 상세 결과 */}
-              <Paper sx={{ p: 2.5 }}>
-                <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                  투자 결과
-                </Typography>
-                <Grid container spacing={3}>
-                  <Grid item xs={6} md={3}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <AccountBalanceIcon color="action" />
-                      <Box>
-                        <Typography variant="caption" color="text.secondary">초기 자본</Typography>
-                        <Typography variant="body1" fontWeight="bold">
-                          {formatCurrency(result.initialValue)}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Grid>
-                  <Grid item xs={6} md={3}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <MoneyIcon color={result.finalValue >= result.initialValue ? 'success' : 'error'} />
-                      <Box>
-                        <Typography variant="caption" color="text.secondary">최종 자본</Typography>
-                        <Typography variant="body1" fontWeight="bold">
-                          {formatCurrency(result.finalValue)}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Grid>
-                  <Grid item xs={6} md={3}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <SwapVertIcon color="action" />
-                      <Box>
-                        <Typography variant="caption" color="text.secondary">거래 횟수</Typography>
-                        <Typography variant="body1" fontWeight="bold">
-                          {result.tradeCount}회
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Grid>
-                  <Grid item xs={6} md={3}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <TimelineIcon color="action" />
-                      <Box>
-                        <Typography variant="caption" color="text.secondary">샤프 비율</Typography>
-                        <Typography variant="body1" fontWeight="bold">
-                          {result.sharpeRatio.toFixed(2)}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Paper>
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-base">투자 결과</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="flex items-center gap-2">
+                      <Landmark className="h-5 w-5 text-slate-500" />
+                      <div>
+                        <p className="text-xs text-slate-500">초기 자본</p>
+                        <p className="font-bold text-slate-200">{formatCurrency(result.initialValue)}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <DollarSign className={cn(
+                        'h-5 w-5',
+                        result.finalValue >= result.initialValue ? 'text-emerald-400' : 'text-rose-400'
+                      )} />
+                      <div>
+                        <p className="text-xs text-slate-500">최종 자본</p>
+                        <p className="font-bold text-slate-200">{formatCurrency(result.finalValue)}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <ArrowUpDown className="h-5 w-5 text-slate-500" />
+                      <div>
+                        <p className="text-xs text-slate-500">거래 횟수</p>
+                        <p className="font-bold text-slate-200">{result.tradeCount}회</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <LineChart className="h-5 w-5 text-slate-500" />
+                      <div>
+                        <p className="text-xs text-slate-500">샤프 비율</p>
+                        <p className="font-bold text-slate-200">{result.sharpeRatio.toFixed(2)}</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
 
               {/* 종목별 보유 기록 */}
-              <Paper sx={{ p: 2.5 }}>
-                <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                  종목별 수익
-                </Typography>
-                {result.holdingPeriods.length === 0 ? (
-                  <Typography color="text.secondary" sx={{ py: 2, textAlign: 'center' }}>
-                    보유 기록이 없습니다.
-                  </Typography>
-                ) : (
-                  <Box sx={{ maxHeight: 300, overflow: 'auto' }}>
-                    <Table size="small">
-                      <TableHead>
-                        <TableRow>
-                          <TableCell>종목</TableCell>
-                          <TableCell align="center">보유 기간</TableCell>
-                          <TableCell align="right">수익률</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {result.holdingPeriods.map((holding, index) => (
-                          <TableRow key={index} hover>
-                            <TableCell>
-                              <Typography variant="body2" fontWeight="medium">
-                                {holding.name}
-                              </Typography>
-                              <Typography variant="caption" color="text.secondary">
-                                {holding.symbol}
-                              </Typography>
-                            </TableCell>
-                            <TableCell align="center">
-                              <Chip label={`${holding.days}일`} size="small" variant="outlined" />
-                            </TableCell>
-                            <TableCell align="right">
-                              <Chip
-                                icon={holding.return >= 0 ? <TrendingUpIcon /> : <TrendingDownIcon />}
-                                label={`${holding.return >= 0 ? '+' : ''}${holding.return.toFixed(1)}%`}
-                                size="small"
-                                color={holding.return >= 0 ? 'success' : 'error'}
-                                variant="outlined"
-                              />
-                            </TableCell>
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-base">종목별 수익</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {result.holdingPeriods.length === 0 ? (
+                    <p className="text-center text-slate-500 py-4">보유 기록이 없습니다.</p>
+                  ) : (
+                    <div className="max-h-[300px] overflow-auto">
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>종목</TableHead>
+                            <TableHead className="text-center">보유 기간</TableHead>
+                            <TableHead className="text-right">수익률</TableHead>
                           </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </Box>
-                )}
-              </Paper>
+                        </TableHeader>
+                        <TableBody>
+                          {result.holdingPeriods.map((holding, index) => (
+                            <TableRow key={index}>
+                              <TableCell>
+                                <p className="font-medium text-slate-200">{holding.name}</p>
+                                <p className="text-xs text-slate-500">{holding.symbol}</p>
+                              </TableCell>
+                              <TableCell className="text-center">
+                                <Badge variant="outline">{holding.days}일</Badge>
+                              </TableCell>
+                              <TableCell className="text-right">
+                                <Badge variant={holding.return >= 0 ? 'success' : 'error'}>
+                                  {holding.return >= 0 ? (
+                                    <TrendingUp className="h-3 w-3 mr-1" />
+                                  ) : (
+                                    <TrendingDown className="h-3 w-3 mr-1" />
+                                  )}
+                                  {holding.return >= 0 ? '+' : ''}{holding.return.toFixed(1)}%
+                                </Badge>
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
 
               {/* 거래 내역 (접을 수 있음) */}
-              <Paper sx={{ overflow: 'hidden' }}>
-                <Box
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    cursor: 'pointer',
-                    '&:hover': { bgcolor: 'action.hover' },
-                  }}
+              <Card>
+                <button
                   onClick={() => setShowTradeHistory(!showTradeHistory)}
+                  className="w-full flex items-center justify-between p-4 hover:bg-slate-800/50 transition-colors"
                 >
-                  <Typography variant="subtitle1" fontWeight="bold">
+                  <span className="font-semibold text-slate-200">
                     전체 거래 내역 ({result.trades.length}건)
-                  </Typography>
-                  <IconButton size="small">
-                    {showTradeHistory ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                  </IconButton>
-                </Box>
-                <Collapse in={showTradeHistory}>
-                  <Divider />
-                  <Box sx={{ maxHeight: 400, overflow: 'auto' }}>
-                    <Table size="small" stickyHeader>
-                      <TableHead>
-                        <TableRow>
-                          <TableCell>날짜</TableCell>
-                          <TableCell>액션</TableCell>
-                          <TableCell>종목</TableCell>
-                          <TableCell align="right">가격</TableCell>
-                          <TableCell align="right">점수</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {result.trades.map((trade, index) => (
-                          <TableRow key={index} hover>
-                            <TableCell>
-                              <Typography variant="body2">{trade.date}</Typography>
-                            </TableCell>
-                            <TableCell>
-                              <Chip
-                                label={trade.action}
-                                size="small"
-                                color={
-                                  trade.action === 'BUY' ? 'success' :
-                                  trade.action === 'SELL' ? 'error' : 'default'
-                                }
-                                variant={trade.action === 'HOLD' ? 'outlined' : 'filled'}
-                              />
-                            </TableCell>
-                            <TableCell>{trade.name}</TableCell>
-                            <TableCell align="right">
-                              {trade.price.toLocaleString()}
-                            </TableCell>
-                            <TableCell align="right">
-                              {trade.action !== 'SELL' ? trade.score.toFixed(2) : '-'}
-                            </TableCell>
+                  </span>
+                  {showTradeHistory ? (
+                    <ChevronUp className="h-5 w-5 text-slate-500" />
+                  ) : (
+                    <ChevronDown className="h-5 w-5 text-slate-500" />
+                  )}
+                </button>
+                {showTradeHistory && (
+                  <>
+                    <div className="border-t border-slate-800" />
+                    <div className="max-h-[400px] overflow-auto">
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>날짜</TableHead>
+                            <TableHead>액션</TableHead>
+                            <TableHead>종목</TableHead>
+                            <TableHead className="text-right">가격</TableHead>
+                            <TableHead className="text-right">점수</TableHead>
                           </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </Box>
-                </Collapse>
-              </Paper>
-            </Stack>
+                        </TableHeader>
+                        <TableBody>
+                          {result.trades.map((trade, index) => (
+                            <TableRow key={index}>
+                              <TableCell>{trade.date}</TableCell>
+                              <TableCell>
+                                <Badge
+                                  variant={
+                                    trade.action === 'BUY' ? 'success' :
+                                    trade.action === 'SELL' ? 'error' : 'outline'
+                                  }
+                                >
+                                  {trade.action}
+                                </Badge>
+                              </TableCell>
+                              <TableCell>{trade.name}</TableCell>
+                              <TableCell className="text-right">
+                                {trade.price.toLocaleString()}
+                              </TableCell>
+                              <TableCell className="text-right">
+                                {trade.action !== 'SELL' ? trade.score.toFixed(2) : '-'}
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
+                  </>
+                )}
+              </Card>
+            </>
           )}
 
           {/* 초기 상태 */}
           {!result && !loading && !error && (
-            <Paper
-              sx={{
-                p: 6,
-                textAlign: 'center',
-                bgcolor: 'grey.50',
-                border: '2px dashed',
-                borderColor: 'grey.300',
-              }}
-            >
-              <ShowChartIcon sx={{ fontSize: 64, color: 'grey.400', mb: 2 }} />
-              <Typography variant="h6" color="text.secondary" gutterBottom>
-                전략을 설정하고 백테스트를 실행하세요
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                왼쪽에서 지표 가중치와 평가 설정을 조정한 후<br />
-                "백테스트 실행" 버튼을 클릭하세요.
-              </Typography>
-            </Paper>
+            <Card className="border-dashed border-2 border-slate-700 bg-slate-900/50">
+              <CardContent className="py-12 text-center">
+                <LineChart className="h-16 w-16 mx-auto mb-4 text-slate-600" />
+                <h3 className="text-lg font-medium text-slate-400 mb-2">
+                  전략을 설정하고 백테스트를 실행하세요
+                </h3>
+                <p className="text-sm text-slate-500">
+                  왼쪽에서 지표 가중치와 평가 설정을 조정한 후<br />
+                  "백테스트 실행" 버튼을 클릭하세요.
+                </p>
+              </CardContent>
+            </Card>
           )}
-        </Grid>
-      </Grid>
-    </Box>
+        </div>
+      </div>
+    </div>
   )
 }
