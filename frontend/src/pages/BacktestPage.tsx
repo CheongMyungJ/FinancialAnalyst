@@ -21,6 +21,9 @@ import {
   Card,
   CardContent,
   Divider,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
 } from '@mui/material'
 import {
   PlayArrow as PlayIcon,
@@ -40,6 +43,7 @@ export default function BacktestPage() {
   const [evaluationPeriod, setEvaluationPeriod] = useState<number>(90) // 일
   const [rebalanceCycle, setRebalanceCycle] = useState<number>(7) // 일
   const [topN, setTopN] = useState<number>(1) // 상위 N개 종목
+  const [selectedMarkets, setSelectedMarkets] = useState<string[]>(['KOSPI', 'KOSDAQ']) // 선택된 시장
 
   // 실행 상태
   const [loading, setLoading] = useState(false)
@@ -65,12 +69,16 @@ export default function BacktestPage() {
     setResult(null)
 
     try {
-      // 가격 히스토리 가져오기
-      setProgress('가격 데이터 수집 중...')
-      const stocksWithHistory: StockPriceData[] = []
+      // 선택된 시장의 종목만 필터링
+      const targetStocks = list.filter(stock => selectedMarkets.includes(stock.market))
 
-      // 최대 20개 종목으로 제한 (API 호출 제한)
-      const targetStocks = list.slice(0, 20)
+      if (targetStocks.length === 0) {
+        throw new Error('선택된 시장에 종목이 없습니다.')
+      }
+
+      // 가격 히스토리 가져오기
+      setProgress(`가격 데이터 수집 중... (0/${targetStocks.length})`)
+      const stocksWithHistory: StockPriceData[] = []
 
       for (let i = 0; i < targetStocks.length; i++) {
         const stock = targetStocks[i]
@@ -89,13 +97,16 @@ export default function BacktestPage() {
           console.warn(`Failed to fetch price history for ${stock.symbol}:`, err)
         }
 
-        // API 제한 방지
-        await new Promise(resolve => setTimeout(resolve, 500))
+        // API 제한 방지 (종목 수에 따라 딜레이 조정)
+        const delay = targetStocks.length > 50 ? 300 : 500
+        await new Promise(resolve => setTimeout(resolve, delay))
       }
 
       if (stocksWithHistory.length < 2) {
         throw new Error('충분한 가격 데이터를 가져오지 못했습니다.')
       }
+
+      setProgress(`${stocksWithHistory.length}개 종목 데이터 수집 완료. 백테스트 실행 중...`)
 
       setProgress('백테스트 실행 중...')
 
@@ -115,7 +126,7 @@ export default function BacktestPage() {
     } finally {
       setLoading(false)
     }
-  }, [list, weights, evaluationPeriod, rebalanceCycle, topN])
+  }, [list, weights, evaluationPeriod, rebalanceCycle, topN, selectedMarkets])
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('ko-KR', {
@@ -195,6 +206,81 @@ export default function BacktestPage() {
                 valueLabelDisplay="auto"
               />
             </Box>
+
+            <Divider sx={{ my: 3 }} />
+
+            <Typography variant="h6" gutterBottom>
+              대상 시장
+            </Typography>
+
+            <FormGroup sx={{ mb: 2 }}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={selectedMarkets.includes('KOSPI')}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setSelectedMarkets([...selectedMarkets, 'KOSPI'])
+                      } else {
+                        setSelectedMarkets(selectedMarkets.filter(m => m !== 'KOSPI'))
+                      }
+                    }}
+                  />
+                }
+                label={`KOSPI (${list.filter(s => s.market === 'KOSPI').length}개)`}
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={selectedMarkets.includes('KOSDAQ')}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setSelectedMarkets([...selectedMarkets, 'KOSDAQ'])
+                      } else {
+                        setSelectedMarkets(selectedMarkets.filter(m => m !== 'KOSDAQ'))
+                      }
+                    }}
+                  />
+                }
+                label={`KOSDAQ (${list.filter(s => s.market === 'KOSDAQ').length}개)`}
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={selectedMarkets.includes('NYSE')}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setSelectedMarkets([...selectedMarkets, 'NYSE'])
+                      } else {
+                        setSelectedMarkets(selectedMarkets.filter(m => m !== 'NYSE'))
+                      }
+                    }}
+                  />
+                }
+                label={`NYSE (${list.filter(s => s.market === 'NYSE').length}개)`}
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={selectedMarkets.includes('NASDAQ')}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setSelectedMarkets([...selectedMarkets, 'NASDAQ'])
+                      } else {
+                        setSelectedMarkets(selectedMarkets.filter(m => m !== 'NASDAQ'))
+                      }
+                    }}
+                  />
+                }
+                label={`NASDAQ (${list.filter(s => s.market === 'NASDAQ').length}개)`}
+              />
+            </FormGroup>
+
+            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2 }}>
+              선택: {list.filter(s => selectedMarkets.includes(s.market)).length}개 종목
+              {list.filter(s => selectedMarkets.includes(s.market)).length > 50 &&
+                ' (시간이 다소 걸릴 수 있습니다)'}
+            </Typography>
 
             <Divider sx={{ my: 3 }} />
 
