@@ -10,7 +10,7 @@ import { theme } from './theme'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename="/FinancialAnalyst">
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <App />
