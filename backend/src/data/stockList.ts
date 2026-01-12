@@ -7,9 +7,9 @@ import type { Market, StockListItem } from '../types/index.js'
 
 // KOSPI 200 주요 종목
 export const KOSPI_STOCKS: StockListItem[] = [
-  // 대형주 - 전기전자
-  { symbol: '005930', name: '삼성전자', market: 'KOSPI', sector: '전기전자' },
-  { symbol: '000660', name: 'SK하이닉스', market: 'KOSPI', sector: '전기전자' },
+  // AI/반도체
+  { symbol: '005930', name: '삼성전자', market: 'KOSPI', sector: 'AI/반도체' },
+  { symbol: '000660', name: 'SK하이닉스', market: 'KOSPI', sector: 'AI/반도체' },
   { symbol: '006400', name: '삼성SDI', market: 'KOSPI', sector: '전기전자' },
   { symbol: '066570', name: 'LG전자', market: 'KOSPI', sector: '전기전자' },
   { symbol: '009150', name: '삼성전기', market: 'KOSPI', sector: '전기전자' },
@@ -103,7 +103,7 @@ export const KOSPI_STOCKS: StockListItem[] = [
   { symbol: '282330', name: 'BGF리테일', market: 'KOSPI', sector: '유통업' },
 
   // 기계
-  { symbol: '042700', name: '한미반도체', market: 'KOSPI', sector: '기계' },
+  { symbol: '042700', name: '한미반도체', market: 'KOSPI', sector: 'AI/반도체' },
   { symbol: '298040', name: '효성중공업', market: 'KOSPI', sector: '기계' },
   { symbol: '241560', name: '두산밥캣', market: 'KOSPI', sector: '기계' },
   { symbol: '034220', name: 'LG디스플레이', market: 'KOSPI', sector: '기계' },
@@ -115,8 +115,8 @@ export const KOSPI_STOCKS: StockListItem[] = [
   { symbol: '036460', name: '한국가스공사', market: 'KOSPI', sector: '전기가스' },
   { symbol: '071050', name: '한국금융지주', market: 'KOSPI', sector: '금융' },
   { symbol: '000150', name: '두산', market: 'KOSPI', sector: '기계' },
-  { symbol: '047810', name: '한국항공우주', market: 'KOSPI', sector: '기계' },
-  { symbol: '012450', name: '한화에어로스페이스', market: 'KOSPI', sector: '기계' },
+  { symbol: '047810', name: '한국항공우주', market: 'KOSPI', sector: '방산' },
+  { symbol: '012450', name: '한화에어로스페이스', market: 'KOSPI', sector: '방산' },
   { symbol: '009830', name: '한화솔루션', market: 'KOSPI', sector: '화학' },
   { symbol: '000880', name: '한화', market: 'KOSPI', sector: '화학' },
   { symbol: '267250', name: '현대중공업', market: 'KOSPI', sector: '건설업' },
@@ -133,7 +133,7 @@ export const KOSPI_STOCKS: StockListItem[] = [
   { symbol: '011200', name: 'HMM', market: 'KOSPI', sector: '운수장비' },
   { symbol: '028050', name: '삼성엔지니어링', market: 'KOSPI', sector: '건설업' },
   { symbol: '000210', name: '대림산업', market: 'KOSPI', sector: '건설업' },
-  { symbol: '000990', name: 'DB하이텍', market: 'KOSPI', sector: '전기전자' },
+  { symbol: '000990', name: 'DB하이텍', market: 'KOSPI', sector: 'AI/반도체' },
   { symbol: '010140', name: '삼성중공업', market: 'KOSPI', sector: '건설업' },
   { symbol: '383220', name: 'F&F', market: 'KOSPI', sector: '유통업' },
   { symbol: '016360', name: '삼성증권', market: 'KOSPI', sector: '증권' },
@@ -152,49 +152,57 @@ export const KOSPI_STOCKS: StockListItem[] = [
   { symbol: '069620', name: '대웅제약', market: 'KOSPI', sector: '의약품' },
   { symbol: '011070', name: 'LG이노텍', market: 'KOSPI', sector: '전기전자' },
   { symbol: '000060', name: '메리츠화재', market: 'KOSPI', sector: '보험' },
-  { symbol: '079550', name: 'LIG넥스원', market: 'KOSPI', sector: '기계' },
+  { symbol: '079550', name: 'LIG넥스원', market: 'KOSPI', sector: '방산' },
+  { symbol: '064350', name: '현대로템', market: 'KOSPI', sector: '방산' },
+
+  // 암호화폐 관련
+  { symbol: '112040', name: '위메이드', market: 'KOSDAQ', sector: '암호화폐' },
+  { symbol: '058970', name: '엠로', market: 'KOSDAQ', sector: '암호화폐' },
+  { symbol: '032190', name: '다우데이타', market: 'KOSDAQ', sector: '암호화폐' },
 ]
 
 // S&P 500 종목
 export const SP500_STOCKS: StockListItem[] = [
+  // AI/Semiconductor
+  { symbol: 'NVDA', name: 'NVIDIA Corporation', market: 'NASDAQ', sector: 'AI/Semiconductor' },
+  { symbol: 'AVGO', name: 'Broadcom Inc.', market: 'NASDAQ', sector: 'AI/Semiconductor' },
+  { symbol: 'AMD', name: 'Advanced Micro Devices', market: 'NASDAQ', sector: 'AI/Semiconductor' },
+  { symbol: 'INTC', name: 'Intel Corporation', market: 'NASDAQ', sector: 'AI/Semiconductor' },
+  { symbol: 'TXN', name: 'Texas Instruments', market: 'NASDAQ', sector: 'AI/Semiconductor' },
+  { symbol: 'QCOM', name: 'Qualcomm Inc.', market: 'NASDAQ', sector: 'AI/Semiconductor' },
+  { symbol: 'AMAT', name: 'Applied Materials', market: 'NASDAQ', sector: 'AI/Semiconductor' },
+  { symbol: 'MU', name: 'Micron Technology', market: 'NASDAQ', sector: 'AI/Semiconductor' },
+  { symbol: 'ADI', name: 'Analog Devices', market: 'NASDAQ', sector: 'AI/Semiconductor' },
+  { symbol: 'LRCX', name: 'Lam Research', market: 'NASDAQ', sector: 'AI/Semiconductor' },
+  { symbol: 'SNPS', name: 'Synopsys Inc.', market: 'NASDAQ', sector: 'AI/Semiconductor' },
+  { symbol: 'KLAC', name: 'KLA Corporation', market: 'NASDAQ', sector: 'AI/Semiconductor' },
+  { symbol: 'CDNS', name: 'Cadence Design Systems', market: 'NASDAQ', sector: 'AI/Semiconductor' },
+  { symbol: 'MRVL', name: 'Marvell Technology', market: 'NASDAQ', sector: 'AI/Semiconductor' },
+  { symbol: 'NXPI', name: 'NXP Semiconductors', market: 'NASDAQ', sector: 'AI/Semiconductor' },
+  { symbol: 'ON', name: 'ON Semiconductor', market: 'NASDAQ', sector: 'AI/Semiconductor' },
+  { symbol: 'MPWR', name: 'Monolithic Power Systems', market: 'NASDAQ', sector: 'AI/Semiconductor' },
+
   // Technology
   { symbol: 'AAPL', name: 'Apple Inc.', market: 'NASDAQ', sector: 'Technology' },
   { symbol: 'MSFT', name: 'Microsoft Corporation', market: 'NASDAQ', sector: 'Technology' },
-  { symbol: 'NVDA', name: 'NVIDIA Corporation', market: 'NASDAQ', sector: 'Technology' },
   { symbol: 'GOOGL', name: 'Alphabet Inc. Class A', market: 'NASDAQ', sector: 'Technology' },
   { symbol: 'GOOG', name: 'Alphabet Inc. Class C', market: 'NASDAQ', sector: 'Technology' },
   { symbol: 'META', name: 'Meta Platforms Inc.', market: 'NASDAQ', sector: 'Technology' },
-  { symbol: 'AVGO', name: 'Broadcom Inc.', market: 'NASDAQ', sector: 'Technology' },
   { symbol: 'ORCL', name: 'Oracle Corporation', market: 'NYSE', sector: 'Technology' },
   { symbol: 'CSCO', name: 'Cisco Systems Inc.', market: 'NASDAQ', sector: 'Technology' },
   { symbol: 'CRM', name: 'Salesforce Inc.', market: 'NYSE', sector: 'Technology' },
   { symbol: 'ACN', name: 'Accenture plc', market: 'NYSE', sector: 'Technology' },
-  { symbol: 'AMD', name: 'Advanced Micro Devices', market: 'NASDAQ', sector: 'Technology' },
   { symbol: 'ADBE', name: 'Adobe Inc.', market: 'NASDAQ', sector: 'Technology' },
   { symbol: 'IBM', name: 'IBM Corporation', market: 'NYSE', sector: 'Technology' },
-  { symbol: 'INTC', name: 'Intel Corporation', market: 'NASDAQ', sector: 'Technology' },
   { symbol: 'INTU', name: 'Intuit Inc.', market: 'NASDAQ', sector: 'Technology' },
-  { symbol: 'TXN', name: 'Texas Instruments', market: 'NASDAQ', sector: 'Technology' },
-  { symbol: 'QCOM', name: 'Qualcomm Inc.', market: 'NASDAQ', sector: 'Technology' },
   { symbol: 'NOW', name: 'ServiceNow Inc.', market: 'NYSE', sector: 'Technology' },
-  { symbol: 'AMAT', name: 'Applied Materials', market: 'NASDAQ', sector: 'Technology' },
   { symbol: 'PANW', name: 'Palo Alto Networks', market: 'NASDAQ', sector: 'Technology' },
-  { symbol: 'MU', name: 'Micron Technology', market: 'NASDAQ', sector: 'Technology' },
-  { symbol: 'ADI', name: 'Analog Devices', market: 'NASDAQ', sector: 'Technology' },
-  { symbol: 'LRCX', name: 'Lam Research', market: 'NASDAQ', sector: 'Technology' },
-  { symbol: 'SNPS', name: 'Synopsys Inc.', market: 'NASDAQ', sector: 'Technology' },
-  { symbol: 'KLAC', name: 'KLA Corporation', market: 'NASDAQ', sector: 'Technology' },
-  { symbol: 'CDNS', name: 'Cadence Design Systems', market: 'NASDAQ', sector: 'Technology' },
-  { symbol: 'MRVL', name: 'Marvell Technology', market: 'NASDAQ', sector: 'Technology' },
   { symbol: 'CRWD', name: 'CrowdStrike Holdings', market: 'NASDAQ', sector: 'Technology' },
   { symbol: 'FTNT', name: 'Fortinet Inc.', market: 'NASDAQ', sector: 'Technology' },
-  { symbol: 'NXPI', name: 'NXP Semiconductors', market: 'NASDAQ', sector: 'Technology' },
-  { symbol: 'ON', name: 'ON Semiconductor', market: 'NASDAQ', sector: 'Technology' },
   { symbol: 'HPQ', name: 'HP Inc.', market: 'NYSE', sector: 'Technology' },
   { symbol: 'HPE', name: 'Hewlett Packard Enterprise', market: 'NYSE', sector: 'Technology' },
   { symbol: 'DELL', name: 'Dell Technologies', market: 'NYSE', sector: 'Technology' },
   { symbol: 'KEYS', name: 'Keysight Technologies', market: 'NYSE', sector: 'Technology' },
-  { symbol: 'MPWR', name: 'Monolithic Power Systems', market: 'NASDAQ', sector: 'Technology' },
   { symbol: 'CTSH', name: 'Cognizant', market: 'NASDAQ', sector: 'Technology' },
   { symbol: 'IT', name: 'Gartner Inc.', market: 'NYSE', sector: 'Technology' },
   { symbol: 'GLW', name: 'Corning Incorporated', market: 'NYSE', sector: 'Technology' },
@@ -343,20 +351,23 @@ export const SP500_STOCKS: StockListItem[] = [
   { symbol: 'KR', name: 'Kroger Company', market: 'NYSE', sector: 'Consumer Defensive' },
   { symbol: 'WBA', name: 'Walgreens Boots Alliance', market: 'NASDAQ', sector: 'Consumer Defensive' },
 
+  // Defense (방산)
+  { symbol: 'LMT', name: 'Lockheed Martin', market: 'NYSE', sector: 'Defense' },
+  { symbol: 'RTX', name: 'RTX Corporation', market: 'NYSE', sector: 'Defense' },
+  { symbol: 'NOC', name: 'Northrop Grumman', market: 'NYSE', sector: 'Defense' },
+  { symbol: 'GD', name: 'General Dynamics', market: 'NYSE', sector: 'Defense' },
+  { symbol: 'BA', name: 'Boeing Company', market: 'NYSE', sector: 'Defense' },
+  { symbol: 'LHX', name: 'L3Harris Technologies', market: 'NYSE', sector: 'Defense' },
+
   // Industrials
   { symbol: 'GE', name: 'GE Aerospace', market: 'NYSE', sector: 'Industrials' },
   { symbol: 'CAT', name: 'Caterpillar Inc.', market: 'NYSE', sector: 'Industrials' },
-  { symbol: 'RTX', name: 'RTX Corporation', market: 'NYSE', sector: 'Industrials' },
   { symbol: 'HON', name: 'Honeywell International', market: 'NASDAQ', sector: 'Industrials' },
   { symbol: 'UNP', name: 'Union Pacific', market: 'NYSE', sector: 'Industrials' },
   { symbol: 'UPS', name: 'United Parcel Service', market: 'NYSE', sector: 'Industrials' },
-  { symbol: 'BA', name: 'Boeing Company', market: 'NYSE', sector: 'Industrials' },
   { symbol: 'DE', name: 'Deere & Company', market: 'NYSE', sector: 'Industrials' },
-  { symbol: 'LMT', name: 'Lockheed Martin', market: 'NYSE', sector: 'Industrials' },
   { symbol: 'ETN', name: 'Eaton Corporation', market: 'NYSE', sector: 'Industrials' },
   { symbol: 'ADP', name: 'Automatic Data Processing', market: 'NASDAQ', sector: 'Industrials' },
-  { symbol: 'GD', name: 'General Dynamics', market: 'NYSE', sector: 'Industrials' },
-  { symbol: 'NOC', name: 'Northrop Grumman', market: 'NYSE', sector: 'Industrials' },
   { symbol: 'ITW', name: 'Illinois Tool Works', market: 'NYSE', sector: 'Industrials' },
   { symbol: 'WM', name: 'Waste Management', market: 'NYSE', sector: 'Industrials' },
   { symbol: 'CSX', name: 'CSX Corporation', market: 'NASDAQ', sector: 'Industrials' },
@@ -462,6 +473,12 @@ export const SP500_STOCKS: StockListItem[] = [
   { symbol: 'VTR', name: 'Ventas Inc.', market: 'NYSE', sector: 'Real Estate' },
   { symbol: 'IRM', name: 'Iron Mountain', market: 'NYSE', sector: 'Real Estate' },
   { symbol: 'CBRE', name: 'CBRE Group Inc.', market: 'NYSE', sector: 'Real Estate' },
+
+  // Cryptocurrency (암호화폐)
+  { symbol: 'COIN', name: 'Coinbase Global', market: 'NASDAQ', sector: 'Cryptocurrency' },
+  { symbol: 'MSTR', name: 'MicroStrategy', market: 'NASDAQ', sector: 'Cryptocurrency' },
+  { symbol: 'MARA', name: 'Marathon Digital', market: 'NASDAQ', sector: 'Cryptocurrency' },
+  { symbol: 'RIOT', name: 'Riot Platforms', market: 'NASDAQ', sector: 'Cryptocurrency' },
 ]
 
 // 전체 종목 목록
