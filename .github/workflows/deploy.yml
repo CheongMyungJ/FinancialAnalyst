@@ -32,13 +32,9 @@ jobs:
         working-directory: frontend
         run: npm install
 
-      - name: TypeScript Build
+      - name: Build
         working-directory: frontend
-        run: npx tsc -b 2>&1 || echo "TSC BUILD FAILED"
-
-      - name: Vite Build
-        working-directory: frontend
-        run: ./node_modules/.bin/vite build
+        run: npm run build
 
       - name: Verify dist folder
         run: ls -la frontend/dist
