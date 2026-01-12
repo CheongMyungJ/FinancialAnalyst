@@ -57,70 +57,105 @@ export async function fetchStockDetailFromGitHub(
 }
 
 /**
+ * 타임아웃이 있는 fetch
+ */
+async function fetchWithTimeout(url: string, timeout: number = 10000): Promise<Response> {
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), timeout)
+
+  try {
+    const response = await fetch(url, { signal: controller.signal })
+    clearTimeout(timeoutId)
+    return response
+  } catch (error) {
+    clearTimeout(timeoutId)
+    throw error
+  }
+}
+
+/**
+ * CORS 프록시 목록 (fallback용)
+ */
+const CORS_PROXIES = [
+  (url: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+  (url: string) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+  (url: string) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+]
+
+/**
  * Yahoo Finance에서 가격 히스토리 가져오기
  */
 async function fetchPriceHistory(symbol: string, market: string): Promise<PriceData[]> {
-  try {
-    // 한국 종목의 경우 .KS 또는 .KQ 추가
-    let yahooSymbol = symbol
-    if (market === 'KOSPI') {
-      yahooSymbol = `${symbol}.KS`
-    } else if (market === 'KOSDAQ') {
-      yahooSymbol = `${symbol}.KQ`
-    }
-
-    // CORS 우회를 위해 프록시 사용 또는 직접 호출
-    // 브라우저에서 직접 Yahoo Finance API 호출은 CORS로 막힘
-    // 대안: allorigins 프록시 사용
-    const yahooUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${yahooSymbol}?range=6mo&interval=1d`
-    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(yahooUrl)}`
-
-    const response = await fetch(proxyUrl)
-
-    if (!response.ok) {
-      console.warn(`[Yahoo] ${symbol} 가격 히스토리 조회 실패`)
-      return []
-    }
-
-    const data = await response.json()
-    const result = data.chart?.result?.[0]
-
-    if (!result || !result.timestamp) {
-      return []
-    }
-
-    const timestamps = result.timestamp
-    const quote = result.indicators?.quote?.[0]
-
-    if (!quote) {
-      return []
-    }
-
-    const prices: PriceData[] = []
-    for (let i = 0; i < timestamps.length; i++) {
-      if (
-        quote.open?.[i] != null &&
-        quote.high?.[i] != null &&
-        quote.low?.[i] != null &&
-        quote.close?.[i] != null &&
-        quote.volume?.[i] != null
-      ) {
-        prices.push({
-          date: new Date(timestamps[i] * 1000).toISOString().split('T')[0],
-          open: quote.open[i],
-          high: quote.high[i],
-          low: quote.low[i],
-          close: quote.close[i],
-          volume: quote.volume[i],
-        })
-      }
-    }
-
-    return prices
-  } catch (error) {
-    console.error(`[Yahoo] ${symbol} 가격 히스토리 조회 오류:`, error)
-    return []
+  // 한국 종목의 경우 .KS 또는 .KQ 추가
+  let yahooSymbol = symbol
+  if (market === 'KOSPI') {
+    yahooSymbol = `${symbol}.KS`
+  } else if (market === 'KOSDAQ') {
+    yahooSymbol = `${symbol}.KQ`
   }
+
+  const yahooUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${yahooSymbol}?range=6mo&interval=1d`
+
+  // 여러 프록시로 시도
+  for (let i = 0; i < CORS_PROXIES.length; i++) {
+    const proxyUrl = CORS_PROXIES[i](yahooUrl)
+
+    try {
+      console.log(`[Yahoo] ${symbol} 시도 ${i + 1}/${CORS_PROXIES.length}`)
+      const response = await fetchWithTimeout(proxyUrl, 8000)
+
+      if (!response.ok) {
+        console.warn(`[Yahoo] ${symbol} 프록시 ${i + 1} 실패: ${response.status}`)
+        continue
+      }
+
+      const data = await response.json()
+      const result = data.chart?.result?.[0]
+
+      if (!result || !result.timestamp) {
+        console.warn(`[Yahoo] ${symbol} 데이터 없음`)
+        continue
+      }
+
+      const timestamps = result.timestamp
+      const quote = result.indicators?.quote?.[0]
+
+      if (!quote) {
+        continue
+      }
+
+      const prices: PriceData[] = []
+      for (let j = 0; j < timestamps.length; j++) {
+        if (
+          quote.open?.[j] != null &&
+          quote.high?.[j] != null &&
+          quote.low?.[j] != null &&
+          quote.close?.[j] != null &&
+          quote.volume?.[j] != null
+        ) {
+          prices.push({
+            date: new Date(timestamps[j] * 1000).toISOString().split('T')[0],
+            open: quote.open[j],
+            high: quote.high[j],
+            low: quote.low[j],
+            close: quote.close[j],
+            volume: quote.volume[j],
+          })
+        }
+      }
+
+      if (prices.length > 0) {
+        console.log(`[Yahoo] ${symbol} 성공: ${prices.length}개 데이터`)
+        return prices
+      }
+    } catch (error) {
+      console.warn(`[Yahoo] ${symbol} 프록시 ${i + 1} 오류:`, error)
+      continue
+    }
+  }
+
+  console.error(`[Yahoo] ${symbol} 모든 프록시 실패`)
+  return []
 }
 
 /**
