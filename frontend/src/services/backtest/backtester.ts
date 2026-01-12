@@ -48,34 +48,71 @@ export interface BacktestConfig {
 }
 
 /**
+ * 특정 날짜 이전의 가장 가까운 데이터 인덱스 찾기
+ */
+function findClosestDateIndex(priceHistory: PriceData[], targetDate: string): number {
+  // 정확한 날짜 먼저 찾기
+  const exactIndex = priceHistory.findIndex(p => p.date === targetDate)
+  if (exactIndex >= 0) return exactIndex
+
+  // 없으면 targetDate 이전의 가장 가까운 날짜 찾기
+  for (let i = priceHistory.length - 1; i >= 0; i--) {
+    if (priceHistory[i].date <= targetDate) {
+      return i
+    }
+  }
+
+  return -1
+}
+
+/**
  * 백테스트 실행
  */
 export function runBacktest(config: BacktestConfig): BacktestResult {
   const { stocks, weights, evaluationPeriodDays, rebalanceCycleDays, initialCapital } = config
 
-  // 가장 긴 가격 히스토리 기준으로 날짜 인덱스 생성
-  const allDates = new Set<string>()
-  stocks.forEach(stock => {
-    stock.priceHistory.forEach(p => allDates.add(p.date))
-  })
-  const sortedDates = Array.from(allDates).sort()
+  console.log('[Backtest] Starting with', stocks.length, 'stocks')
+  console.log('[Backtest] Evaluation period:', evaluationPeriodDays, 'days, Rebalance cycle:', rebalanceCycleDays, 'days')
 
-  if (sortedDates.length < evaluationPeriodDays) {
+  // 모든 종목의 공통 거래일만 사용
+  // 가장 짧은 히스토리 기준으로 날짜 범위 결정
+  let minLength = Infinity
+  let shortestStock = stocks[0]
+
+  for (const stock of stocks) {
+    if (stock.priceHistory.length < minLength) {
+      minLength = stock.priceHistory.length
+      shortestStock = stock
+    }
+  }
+
+  if (minLength < 20) {
+    console.log('[Backtest] Not enough price data. Min length:', minLength)
     return createEmptyResult(initialCapital)
   }
 
+  // 기준 종목의 날짜 사용
+  const baseDates = shortestStock.priceHistory.map(p => p.date)
+  console.log('[Backtest] Using', baseDates.length, 'dates from', baseDates[0], 'to', baseDates[baseDates.length - 1])
+
   // 시작 인덱스 (평가 기간 이전부터)
-  const startDateIndex = Math.max(0, sortedDates.length - evaluationPeriodDays)
-  const startDate = sortedDates[startDateIndex]
+  const actualEvalPeriod = Math.min(evaluationPeriodDays, baseDates.length - 20) // 최소 20일 데이터 필요
+  const startDateIndex = Math.max(0, baseDates.length - actualEvalPeriod)
+  const startDate = baseDates[startDateIndex]
+
+  console.log('[Backtest] Start date index:', startDateIndex, 'Start date:', startDate)
 
   // 리밸런싱 날짜들 계산
   const rebalanceDates: string[] = []
-  for (let i = startDateIndex; i < sortedDates.length; i += rebalanceCycleDays) {
-    rebalanceDates.push(sortedDates[i])
+  for (let i = startDateIndex; i < baseDates.length; i += rebalanceCycleDays) {
+    rebalanceDates.push(baseDates[i])
   }
 
+  console.log('[Backtest] Rebalance dates:', rebalanceDates.length)
+
   // 벤치마크 수익률 계산 (첫 종목 기준 또는 평균)
-  const benchmarkReturn = calculateBenchmarkReturn(stocks, startDate, sortedDates[sortedDates.length - 1])
+  const endDate = baseDates[baseDates.length - 1]
+  const benchmarkReturn = calculateBenchmarkReturn(stocks, startDate, endDate)
 
   // 시뮬레이션 실행
   const trades: Trade[] = []
@@ -89,8 +126,8 @@ export function runBacktest(config: BacktestConfig): BacktestResult {
     const stockScores: { symbol: string; name: string; score: number; price: number }[] = []
 
     for (const stock of stocks) {
-      const dateIndex = stock.priceHistory.findIndex(p => p.date === rebalanceDate)
-      if (dateIndex < 0) continue
+      const dateIndex = findClosestDateIndex(stock.priceHistory, rebalanceDate)
+      if (dateIndex < 10) continue  // 최소 10일 데이터 필요
 
       // 해당 날짜까지의 데이터로 기술적 점수 계산
       const scores = calculateTechnicalScores(stock.priceHistory, dateIndex)
@@ -105,42 +142,49 @@ export function runBacktest(config: BacktestConfig): BacktestResult {
       })
     }
 
-    if (stockScores.length === 0) continue
+    if (stockScores.length === 0) {
+      console.log('[Backtest] No valid stocks for date:', rebalanceDate)
+      continue
+    }
 
     // 점수 기준 정렬하여 1위 찾기
     stockScores.sort((a, b) => b.score - a.score)
     const topStock = stockScores[0]
 
+    console.log('[Backtest]', rebalanceDate, 'Top stock:', topStock.name, 'Score:', topStock.score.toFixed(2))
+
     // 현재 보유 종목과 비교
     if (currentHolding) {
+      // 현재 보유 종목의 현재가 찾기
+      const holdingStock = stocks.find(s => s.symbol === currentHolding!.symbol)
+      const holdingPriceIdx = holdingStock ? findClosestDateIndex(holdingStock.priceHistory, rebalanceDate) : -1
+      const currentHoldingPrice = holdingPriceIdx >= 0
+        ? holdingStock!.priceHistory[holdingPriceIdx].close
+        : currentHolding.buyPrice
+
       if (currentHolding.symbol === topStock.symbol) {
         // 같은 종목이면 HOLD
-        const currentValue = currentHolding.shares * topStock.price
+        const currentValue = currentHolding.shares * currentHoldingPrice
         trades.push({
           date: rebalanceDate,
           action: 'HOLD',
-          symbol: topStock.symbol,
-          name: topStock.name,
-          price: topStock.price,
+          symbol: currentHolding.symbol,
+          name: currentHolding.name,
+          price: currentHoldingPrice,
           score: topStock.score,
           portfolioValue: currentValue,
         })
         portfolioValues.push(currentValue)
       } else {
         // 다른 종목이면 SELL 후 BUY
-        const sellPrice = topStock.price  // 현재 보유 종목의 현재가 찾기
-        const holdingStock = stocks.find(s => s.symbol === currentHolding!.symbol)
-        const holdingDateIndex = holdingStock?.priceHistory.findIndex(p => p.date === rebalanceDate) ?? -1
-        const actualSellPrice = holdingDateIndex >= 0
-          ? holdingStock!.priceHistory[holdingDateIndex].close
-          : currentHolding.buyPrice
+        const actualSellPrice = currentHoldingPrice
 
         const sellValue = currentHolding.shares * actualSellPrice
 
         // 보유 기간 기록
-        const buyDateIdx = sortedDates.indexOf(currentHolding.buyDate)
-        const sellDateIdx = sortedDates.indexOf(rebalanceDate)
-        const holdDays = sellDateIdx - buyDateIdx
+        const buyDateIdx = baseDates.indexOf(currentHolding.buyDate)
+        const sellDateIdx = baseDates.indexOf(rebalanceDate)
+        const holdDays = Math.max(1, sellDateIdx - buyDateIdx)
         const holdReturn = ((actualSellPrice - currentHolding.buyPrice) / currentHolding.buyPrice) * 100
 
         holdingPeriods.push({
@@ -218,9 +262,9 @@ export function runBacktest(config: BacktestConfig): BacktestResult {
       finalValue = currentHolding.shares * lastPrice
 
       // 마지막 보유 기간도 기록
-      const buyDateIdx = sortedDates.indexOf(currentHolding.buyDate)
-      const lastDateIdx = sortedDates.length - 1
-      const holdDays = lastDateIdx - buyDateIdx
+      const buyDateIdx = baseDates.indexOf(currentHolding.buyDate)
+      const lastDateIdx = baseDates.length - 1
+      const holdDays = Math.max(1, lastDateIdx - buyDateIdx)
       const holdReturn = ((lastPrice - currentHolding.buyPrice) / currentHolding.buyPrice) * 100
 
       holdingPeriods.push({
@@ -231,6 +275,8 @@ export function runBacktest(config: BacktestConfig): BacktestResult {
       })
     }
   }
+
+  console.log('[Backtest] Final value:', finalValue, 'Trades:', trades.length)
 
   portfolioValues.push(finalValue)
 
