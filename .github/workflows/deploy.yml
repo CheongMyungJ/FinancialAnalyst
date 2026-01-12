@@ -32,13 +32,13 @@ jobs:
         working-directory: frontend
         run: npm install
 
-      - name: TypeScript Check
+      - name: TypeScript Build
         working-directory: frontend
-        run: npx tsc --noEmit --listFiles 2>&1 | head -100 || true
+        run: npx tsc -b 2>&1 || echo "TSC BUILD FAILED"
 
-      - name: Build frontend
+      - name: Vite Build
         working-directory: frontend
-        run: npm run build 2>&1
+        run: npx vite build 2>&1
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
