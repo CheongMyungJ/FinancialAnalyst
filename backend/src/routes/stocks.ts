@@ -72,6 +72,12 @@ router.get('/', (_req: Request, res: Response) => {
 router.get('/:symbol', async (req: Request, res: Response) => {
   const { symbol } = req.params
 
+  // 입력 유효성 검사
+  if (!symbol || symbol.length > 20 || !/^[A-Za-z0-9.]+$/.test(symbol)) {
+    res.status(400).json({ error: '유효하지 않은 종목 코드입니다.' })
+    return
+  }
+
   try {
     const detail = await getStockDetail(symbol)
 

@@ -37,11 +37,18 @@ export async function getStockQuote(symbol: string, market: Market): Promise<{
 
   console.log(`[API] ${symbol} 시세 조회...`)
 
-  const response = await axios.get(url, {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-    },
-  })
+  let response
+  try {
+    response = await axios.get(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+      },
+      timeout: 10000,
+    })
+  } catch (error) {
+    console.error(`[API] ${symbol} 시세 조회 실패:`, error instanceof Error ? error.message : error)
+    throw new Error(`Failed to fetch quote for ${symbol}: ${error instanceof Error ? error.message : 'Unknown error'}`)
+  }
 
   const result = response.data.chart?.result?.[0]
   if (!result) {
@@ -52,10 +59,12 @@ export async function getStockQuote(symbol: string, market: Market): Promise<{
   const quote = result.indicators?.quote?.[0]
   const timestamps = result.timestamp || []
 
-  const lastIndex = timestamps.length - 1
-  const currentPrice = meta.regularMarketPrice || (quote?.close?.[lastIndex] ?? 0)
+  // 배열 범위 검사
+  const lastIndex = timestamps.length > 0 ? timestamps.length - 1 : -1
+  const currentPrice = meta.regularMarketPrice || (lastIndex >= 0 && quote?.close?.[lastIndex] != null ? quote.close[lastIndex] : 0)
   // 전일 종가: regularMarketPreviousClose 또는 previousClose 사용 (chartPreviousClose는 차트 범위 시작점이므로 제외)
-  const previousClose = meta.regularMarketPreviousClose || meta.previousClose || (quote?.close?.[lastIndex - 1] ?? currentPrice)
+  const previousClose = meta.regularMarketPreviousClose || meta.previousClose ||
+    (lastIndex >= 1 && quote?.close?.[lastIndex - 1] != null ? quote.close[lastIndex - 1] : currentPrice)
   const change = currentPrice - previousClose
   const changePercent = previousClose > 0 ? (change / previousClose) * 100 : 0
 
@@ -130,14 +139,22 @@ export async function getHistoricalPrices(
 
   console.log(`[API] ${symbol} 히스토리 조회 (${period})...`)
 
-  const response = await axios.get(url, {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-    },
-  })
+  let response
+  try {
+    response = await axios.get(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+      },
+      timeout: 15000,
+    })
+  } catch (error) {
+    console.error(`[API] ${symbol} 히스토리 조회 실패:`, error instanceof Error ? error.message : error)
+    return []
+  }
 
   const result = response.data.chart?.result?.[0]
   if (!result || !result.timestamp) {
+    console.warn(`[API] ${symbol} 히스토리 데이터 없음`)
     return []
   }
 
