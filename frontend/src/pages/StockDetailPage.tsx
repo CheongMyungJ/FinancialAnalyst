@@ -11,6 +11,8 @@ import {
   LineChart,
   Landmark,
   Gauge,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react'
 import { useAppDispatch, useAppSelector } from '../store'
 import { fetchStockDetail, clearSelectedStock } from '../store/stockSlice'
@@ -308,6 +310,8 @@ export default function StockDetailPage() {
 
   // 차트 기간 상태
   const [chartPeriod, setChartPeriod] = useState<ChartPeriod>('3M')
+  // 기술적 지표 차트 펼침 상태
+  const [showIndicators, setShowIndicators] = useState(false)
 
   // 종목 변경 시 이전 데이터 초기화 후 새 데이터 로드
   useEffect(() => {
@@ -565,12 +569,39 @@ export default function StockDetailPage() {
                   <PriceChart key={`price-${chartPeriod}`} data={filteredPriceHistory} currency={currency} showBollinger showPeriodSelector={false} />
                   <div className="border-t border-slate-800 my-4" />
                   <VolumeChart key={`volume-${chartPeriod}`} data={filteredPriceHistory} />
-                  <div className="border-t border-slate-800 my-4" />
-                  <RSIChart key={`rsi-${chartPeriod}`} data={filteredRsiData} />
-                  <div className="border-t border-slate-800 my-4" />
-                  <MACDChart key={`macd-${chartPeriod}`} data={filteredMacdData} />
-                  <div className="border-t border-slate-800 my-4" />
-                  <StochasticChart key={`stochastic-${chartPeriod}`} data={filteredStochasticData} />
+
+                  {/* 기술적 지표 펼치기/접기 버튼 */}
+                  <button
+                    onClick={() => setShowIndicators(!showIndicators)}
+                    className="w-full mt-4 py-2 px-4 flex items-center justify-center gap-2 bg-slate-800/50 hover:bg-slate-700/50 rounded-lg transition-colors text-slate-400 hover:text-slate-200"
+                  >
+                    {showIndicators ? (
+                      <>
+                        <ChevronUp className="h-4 w-4" />
+                        <span className="text-sm">기술적 지표 접기</span>
+                      </>
+                    ) : (
+                      <>
+                        <ChevronDown className="h-4 w-4" />
+                        <span className="text-sm">기술적 지표 펼치기 (RSI, MACD, Stochastic)</span>
+                      </>
+                    )}
+                  </button>
+
+                  {/* RSI, MACD, Stochastic 차트 (접기/펼치기) */}
+                  {showIndicators && (
+                    <div className="mt-4 space-y-4">
+                      <div className="border-t border-slate-800 pt-4">
+                        <RSIChart key={`rsi-${chartPeriod}`} data={filteredRsiData} />
+                      </div>
+                      <div className="border-t border-slate-800 pt-4">
+                        <MACDChart key={`macd-${chartPeriod}`} data={filteredMacdData} />
+                      </div>
+                      <div className="border-t border-slate-800 pt-4">
+                        <StochasticChart key={`stochastic-${chartPeriod}`} data={filteredStochasticData} />
+                      </div>
+                    </div>
+                  )}
                 </>
               )}
             </CardContent>
