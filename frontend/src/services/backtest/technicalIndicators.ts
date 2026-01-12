@@ -3,7 +3,7 @@
  * 과거 가격 데이터로부터 기술적 지표를 계산합니다.
  */
 
-import type { PriceData } from '../../types'
+import type { PriceData, SupplyDemandData } from '../../types'
 
 export interface TechnicalScores {
   rsi: number          // 0-10 (RSI 기반)
@@ -11,6 +11,8 @@ export interface TechnicalScores {
   maCrossover: number  // 0-10 (이동평균 크로스오버)
   momentum: number     // 0-10 (모멘텀)
   volumeTrend: number  // 0-10 (거래량 추세)
+  foreignFlow: number  // 0-10 (외국인 수급)
+  institutionFlow: number // 0-10 (기관 수급)
 }
 
 export interface IndicatorWeights {
@@ -19,14 +21,18 @@ export interface IndicatorWeights {
   maCrossover: number
   momentum: number
   volumeTrend: number
+  foreignFlow: number
+  institutionFlow: number
 }
 
 export const DEFAULT_WEIGHTS: IndicatorWeights = {
-  rsi: 20,
-  macd: 20,
-  maCrossover: 20,
-  momentum: 20,
-  volumeTrend: 20,
+  rsi: 15,
+  macd: 15,
+  maCrossover: 15,
+  momentum: 15,
+  volumeTrend: 10,
+  foreignFlow: 15,
+  institutionFlow: 15,
 }
 
 /**
@@ -190,18 +196,78 @@ function calculateVolumeTrendScore(volumes: number[]): number {
 }
 
 /**
+ * 외국인 수급 점수 계산
+ */
+function calculateForeignFlowScore(supplyDemand?: SupplyDemandData): number {
+  if (!supplyDemand) return 5
+
+  let score = 5
+
+  // 순매수 금액 기반
+  if (supplyDemand.foreignNetBuy != null) {
+    if (supplyDemand.foreignNetBuy > 50) score += 2
+    else if (supplyDemand.foreignNetBuy > 0) score += 1
+    else if (supplyDemand.foreignNetBuy < -50) score -= 2
+    else if (supplyDemand.foreignNetBuy < 0) score -= 1
+  }
+
+  // 연속 순매수 일수 기반
+  if (supplyDemand.foreignNetBuyDays != null) {
+    if (supplyDemand.foreignNetBuyDays >= 5) score += 2
+    else if (supplyDemand.foreignNetBuyDays >= 3) score += 1
+    else if (supplyDemand.foreignNetBuyDays <= -5) score -= 2
+    else if (supplyDemand.foreignNetBuyDays <= -3) score -= 1
+  }
+
+  // 외국인 지분율 높으면 가산점
+  if (supplyDemand.foreignOwnership != null && supplyDemand.foreignOwnership > 30) {
+    score += 1
+  }
+
+  return Math.max(0, Math.min(10, score))
+}
+
+/**
+ * 기관 수급 점수 계산
+ */
+function calculateInstitutionFlowScore(supplyDemand?: SupplyDemandData): number {
+  if (!supplyDemand) return 5
+
+  let score = 5
+
+  // 순매수 금액 기반
+  if (supplyDemand.institutionNetBuy != null) {
+    if (supplyDemand.institutionNetBuy > 50) score += 2
+    else if (supplyDemand.institutionNetBuy > 0) score += 1
+    else if (supplyDemand.institutionNetBuy < -50) score -= 2
+    else if (supplyDemand.institutionNetBuy < 0) score -= 1
+  }
+
+  // 연속 순매수 일수 기반
+  if (supplyDemand.institutionNetBuyDays != null) {
+    if (supplyDemand.institutionNetBuyDays >= 5) score += 2
+    else if (supplyDemand.institutionNetBuyDays >= 3) score += 1
+    else if (supplyDemand.institutionNetBuyDays <= -5) score -= 2
+    else if (supplyDemand.institutionNetBuyDays <= -3) score -= 1
+  }
+
+  return Math.max(0, Math.min(10, score))
+}
+
+/**
  * 특정 시점의 기술적 점수 계산
  */
 export function calculateTechnicalScores(
   priceData: PriceData[],
-  endIndex: number  // 이 인덱스까지의 데이터만 사용
+  endIndex: number,  // 이 인덱스까지의 데이터만 사용
+  supplyDemand?: SupplyDemandData  // 수급 데이터 (선택)
 ): TechnicalScores {
   const data = priceData.slice(0, endIndex + 1)
   const closes = data.map(d => d.close)
   const volumes = data.map(d => d.volume)
 
   if (closes.length < 5) {
-    return { rsi: 5, macd: 5, maCrossover: 5, momentum: 5, volumeTrend: 5 }
+    return { rsi: 5, macd: 5, maCrossover: 5, momentum: 5, volumeTrend: 5, foreignFlow: 5, institutionFlow: 5 }
   }
 
   const rsiValue = calculateRSI(closes)
@@ -214,6 +280,8 @@ export function calculateTechnicalScores(
     maCrossover: calculateMACrossoverScore(closes),
     momentum: calculateMomentumScore(closes),
     volumeTrend: calculateVolumeTrendScore(volumes),
+    foreignFlow: calculateForeignFlowScore(supplyDemand),
+    institutionFlow: calculateInstitutionFlowScore(supplyDemand),
   }
 }
 
@@ -224,7 +292,14 @@ export function calculateWeightedScore(
   scores: TechnicalScores,
   weights: IndicatorWeights
 ): number {
-  const totalWeight = weights.rsi + weights.macd + weights.maCrossover + weights.momentum + weights.volumeTrend
+  const totalWeight =
+    weights.rsi +
+    weights.macd +
+    weights.maCrossover +
+    weights.momentum +
+    weights.volumeTrend +
+    weights.foreignFlow +
+    weights.institutionFlow
 
   if (totalWeight === 0) return 0
 
@@ -233,7 +308,9 @@ export function calculateWeightedScore(
     scores.macd * weights.macd +
     scores.maCrossover * weights.maCrossover +
     scores.momentum * weights.momentum +
-    scores.volumeTrend * weights.volumeTrend
+    scores.volumeTrend * weights.volumeTrend +
+    scores.foreignFlow * weights.foreignFlow +
+    scores.institutionFlow * weights.institutionFlow
 
   return weightedSum / totalWeight
 }

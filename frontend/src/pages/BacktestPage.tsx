@@ -56,14 +56,22 @@ const INDICATOR_INFO: Record<keyof IndicatorWeights, { name: string; desc: strin
     name: '거래량 추세',
     desc: '최근 거래량이 평균 대비 증가하면 추세 신뢰도 상승',
   },
+  foreignFlow: {
+    name: '외국인 수급',
+    desc: '외국인 순매수/순매도 동향. 연속 순매수는 상승 신호',
+  },
+  institutionFlow: {
+    name: '기관 수급',
+    desc: '기관 순매수/순매도 동향. 연속 순매수는 상승 신호',
+  },
 }
 
 // 프리셋 전략
 const PRESETS: { name: string; weights: IndicatorWeights }[] = [
-  { name: '균형', weights: { rsi: 20, macd: 20, maCrossover: 20, momentum: 20, volumeTrend: 20 } },
-  { name: '추세추종', weights: { rsi: 10, macd: 30, maCrossover: 30, momentum: 20, volumeTrend: 10 } },
-  { name: '역추세', weights: { rsi: 40, macd: 10, maCrossover: 10, momentum: 30, volumeTrend: 10 } },
-  { name: '거래량중심', weights: { rsi: 15, macd: 15, maCrossover: 15, momentum: 15, volumeTrend: 40 } },
+  { name: '균형', weights: { rsi: 15, macd: 15, maCrossover: 15, momentum: 15, volumeTrend: 10, foreignFlow: 15, institutionFlow: 15 } },
+  { name: '추세추종', weights: { rsi: 10, macd: 25, maCrossover: 25, momentum: 15, volumeTrend: 5, foreignFlow: 10, institutionFlow: 10 } },
+  { name: '역추세', weights: { rsi: 35, macd: 10, maCrossover: 10, momentum: 25, volumeTrend: 5, foreignFlow: 7, institutionFlow: 8 } },
+  { name: '수급중심', weights: { rsi: 10, macd: 10, maCrossover: 10, momentum: 10, volumeTrend: 10, foreignFlow: 25, institutionFlow: 25 } },
 ]
 
 export default function BacktestPage() {
@@ -142,6 +150,7 @@ export default function BacktestPage() {
               symbol: stock.symbol,
               name: stock.name,
               priceHistory,
+              supplyDemand: stock.supplyDemand,  // 수급 데이터 포함
             })
           }
         } catch (err) {

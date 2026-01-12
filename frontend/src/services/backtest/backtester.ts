@@ -2,7 +2,7 @@
  * 백테스트 시뮬레이션 엔진
  */
 
-import type { PriceData } from '../../types'
+import type { PriceData, SupplyDemandData } from '../../types'
 import {
   calculateTechnicalScores,
   calculateWeightedScore,
@@ -13,6 +13,7 @@ export interface StockPriceData {
   symbol: string
   name: string
   priceHistory: PriceData[]
+  supplyDemand?: SupplyDemandData  // 수급 데이터 (선택)
 }
 
 export interface Trade {
@@ -159,8 +160,8 @@ export function runBacktest(config: BacktestConfig): BacktestResult {
       const dateIndex = findClosestDateIndex(stock.priceHistory, rebalanceDate)
       if (dateIndex < 10) continue  // 최소 10일 데이터 필요
 
-      // 해당 날짜까지의 데이터로 기술적 점수 계산
-      const scores = calculateTechnicalScores(stock.priceHistory, dateIndex)
+      // 해당 날짜까지의 데이터로 기술적 점수 계산 (수급 데이터 포함)
+      const scores = calculateTechnicalScores(stock.priceHistory, dateIndex, stock.supplyDemand)
       const weightedScore = calculateWeightedScore(scores, weights)
       const price = stock.priceHistory[dateIndex].close
 
