@@ -36,9 +36,25 @@ jobs:
         working-directory: frontend
         run: npx tsc -b 2>&1 || echo "TSC BUILD FAILED"
 
+      - name: Debug Info
+        working-directory: frontend
+        run: |
+          echo "=== Current directory ==="
+          pwd
+          echo "=== Directory contents ==="
+          ls -la
+          echo "=== Node version ==="
+          node --version
+          echo "=== NPM version ==="
+          npm --version
+          echo "=== Vite config ==="
+          cat vite.config.ts
+          echo "=== Package.json ==="
+          cat package.json
+
       - name: Vite Build
         working-directory: frontend
-        run: npx vite build 2>&1
+        run: npx vite build --debug 2>&1 || cat /home/runner/.npm/_logs/*.log 2>/dev/null || true
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
