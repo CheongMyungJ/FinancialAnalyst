@@ -15,12 +15,22 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Card,
+  CardContent,
+  Stack,
+  LinearProgress,
 } from '@mui/material'
 import {
   ArrowBack as ArrowBackIcon,
   Business as BusinessIcon,
   Newspaper as NewspaperIcon,
   OpenInNew as OpenInNewIcon,
+  TrendingUp as TrendingUpIcon,
+  TrendingDown as TrendingDownIcon,
+  Star as StarIcon,
+  ShowChart as ShowChartIcon,
+  AccountBalance as AccountBalanceIcon,
+  Speed as SpeedIcon,
 } from '@mui/icons-material'
 import { useAppDispatch, useAppSelector } from '../store'
 import { fetchStockDetail, clearSelectedStock } from '../store/stockSlice'
@@ -165,67 +175,122 @@ export default function StockDetailPage() {
       : '$' + price.toLocaleString('en-US', { minimumFractionDigits: 2 })
   }
 
+  const getScoreColor = (score: number) => {
+    if (score >= 7) return 'success'
+    if (score >= 4) return 'warning'
+    return 'error'
+  }
+
   return (
     <Box>
-      <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)} sx={{ mb: 2 }}>
+      <Button
+        startIcon={<ArrowBackIcon />}
+        onClick={() => navigate(-1)}
+        sx={{ mb: 2 }}
+        variant="text"
+        color="inherit"
+      >
         뒤로가기
       </Button>
 
       {/* 종목 헤더 */}
-      <Paper sx={{ p: 3, mb: 3 }}>
-        <Box display="flex" alignItems="center" gap={2} mb={2} flexWrap="wrap">
-          <Typography variant="h4">{name}</Typography>
-          <Chip label={symbol} size="small" variant="outlined" />
-          <Chip label={market} size="small" color="primary" />
-          <Chip label={sector} size="small" variant="outlined" />
+      <Paper
+        sx={{
+          p: 3,
+          mb: 3,
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          color: 'white',
+        }}
+      >
+        <Box display="flex" alignItems="center" gap={2} mb={3} flexWrap="wrap">
+          <Typography variant="h4" fontWeight="bold">{name}</Typography>
+          <Chip
+            label={symbol}
+            size="small"
+            sx={{ bgcolor: 'rgba(255,255,255,0.2)', color: 'white' }}
+          />
+          <Chip
+            label={market}
+            size="small"
+            sx={{ bgcolor: 'rgba(255,255,255,0.3)', color: 'white', fontWeight: 'bold' }}
+          />
+          <Chip
+            label={sector}
+            size="small"
+            sx={{ bgcolor: 'rgba(255,255,255,0.2)', color: 'white' }}
+          />
         </Box>
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" sx={{ opacity: 0.8 }}>
               현재가
             </Typography>
-            <Typography variant="h5">{formatPrice(currentPrice)}</Typography>
-            <Typography
-              variant="body1"
-              color={change >= 0 ? 'success.main' : 'error.main'}
+            <Typography variant="h4" fontWeight="bold">{formatPrice(currentPrice)}</Typography>
+            <Box
+              sx={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 0.5,
+                mt: 1,
+                px: 1.5,
+                py: 0.5,
+                borderRadius: 2,
+                bgcolor: change >= 0 ? 'rgba(76, 175, 80, 0.3)' : 'rgba(244, 67, 54, 0.3)',
+              }}
             >
-              {change >= 0 ? '+' : ''}
-              {formatPrice(change)} ({changePercent >= 0 ? '+' : ''}
-              {changePercent.toFixed(2)}%)
-            </Typography>
+              {change >= 0 ? <TrendingUpIcon fontSize="small" /> : <TrendingDownIcon fontSize="small" />}
+              <Typography variant="body1" fontWeight="bold">
+                {change >= 0 ? '+' : ''}{formatPrice(change)} ({changePercent >= 0 ? '+' : ''}{changePercent.toFixed(2)}%)
+              </Typography>
+            </Box>
           </Grid>
 
           <Grid item xs={12} sm={4}>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" sx={{ opacity: 0.8 }}>
               종합 점수
             </Typography>
-            <Typography variant="h3" color="primary">
-              {scores.total.toFixed(1)}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              / 10점
-            </Typography>
+            <Box display="flex" alignItems="baseline" gap={1}>
+              <StarIcon sx={{ fontSize: 32, color: 'gold' }} />
+              <Typography variant="h2" fontWeight="bold">
+                {scores.total.toFixed(1)}
+              </Typography>
+              <Typography variant="h6" sx={{ opacity: 0.7 }}>
+                / 10
+              </Typography>
+            </Box>
           </Grid>
 
           <Grid item xs={12} sm={4}>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" sx={{ opacity: 0.8, mb: 1 }}>
               카테고리별 점수
             </Typography>
-            <Box display="flex" gap={2} mt={1}>
-              <Box>
-                <Typography variant="caption" color="text.secondary">기본</Typography>
-                <Typography variant="h6">{scores.fundamental.average.toFixed(1)}</Typography>
-              </Box>
-              <Box>
-                <Typography variant="caption" color="text.secondary">기술</Typography>
-                <Typography variant="h6">{scores.technical.average.toFixed(1)}</Typography>
-              </Box>
-              <Box>
-                <Typography variant="caption" color="text.secondary">뉴스</Typography>
-                <Typography variant="h6">{scores.news.average.toFixed(1)}</Typography>
-              </Box>
-            </Box>
+            <Stack spacing={1}>
+              {[
+                { label: '기본', value: scores.fundamental.average },
+                { label: '기술', value: scores.technical.average },
+                { label: '뉴스', value: scores.news.average },
+              ].map((item) => (
+                <Box key={item.label}>
+                  <Box display="flex" justifyContent="space-between" mb={0.25}>
+                    <Typography variant="caption">{item.label}</Typography>
+                    <Typography variant="caption" fontWeight="bold">{item.value.toFixed(1)}</Typography>
+                  </Box>
+                  <LinearProgress
+                    variant="determinate"
+                    value={item.value * 10}
+                    sx={{
+                      height: 6,
+                      borderRadius: 1,
+                      bgcolor: 'rgba(255,255,255,0.2)',
+                      '& .MuiLinearProgress-bar': {
+                        bgcolor: 'white',
+                      },
+                    }}
+                  />
+                </Box>
+              ))}
+            </Stack>
           </Grid>
         </Grid>
       </Paper>
@@ -233,7 +298,18 @@ export default function StockDetailPage() {
       {/* 차트 섹션 */}
       <Grid container spacing={3} sx={{ mb: 3 }}>
         <Grid item xs={12} lg={8}>
-          <Paper sx={{ p: 3 }}>
+          <Paper
+            sx={{
+              p: 3,
+              transition: 'box-shadow 0.2s',
+              '&:hover': { boxShadow: 4 },
+            }}
+          >
+            <Box display="flex" alignItems="center" gap={1} mb={2}>
+              <ShowChartIcon color="primary" />
+              <Typography variant="h6" fontWeight="bold">가격 차트</Typography>
+            </Box>
+            <Divider sx={{ mb: 2 }} />
             {chartLoading ? (
               <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" height={400}>
                 <CircularProgress />
@@ -256,7 +332,19 @@ export default function StockDetailPage() {
         </Grid>
 
         <Grid item xs={12} lg={4}>
-          <Paper sx={{ p: 3, height: '100%' }}>
+          <Paper
+            sx={{
+              p: 3,
+              height: '100%',
+              transition: 'box-shadow 0.2s',
+              '&:hover': { boxShadow: 4 },
+            }}
+          >
+            <Box display="flex" alignItems="center" gap={1} mb={2}>
+              <SpeedIcon color="primary" />
+              <Typography variant="h6" fontWeight="bold">점수 분포</Typography>
+            </Box>
+            <Divider sx={{ mb: 2 }} />
             <ScoreRadarChart scores={scores} />
           </Paper>
         </Grid>
@@ -265,81 +353,106 @@ export default function StockDetailPage() {
       {/* 점수 상세 및 재무 정보 */}
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              점수 상세
-            </Typography>
+          <Paper
+            sx={{
+              p: 3,
+              transition: 'box-shadow 0.2s',
+              '&:hover': { boxShadow: 4 },
+            }}
+          >
+            <Box display="flex" alignItems="center" gap={1} mb={2}>
+              <StarIcon color="warning" />
+              <Typography variant="h6" fontWeight="bold">점수 상세</Typography>
+            </Box>
+            <Divider sx={{ mb: 2 }} />
             <ScoreBreakdown scores={scores} />
           </Paper>
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              재무 지표
-            </Typography>
+          <Paper
+            sx={{
+              p: 3,
+              transition: 'box-shadow 0.2s',
+              '&:hover': { boxShadow: 4 },
+            }}
+          >
+            <Box display="flex" alignItems="center" gap={1} mb={2}>
+              <AccountBalanceIcon color="primary" />
+              <Typography variant="h6" fontWeight="bold">재무 지표</Typography>
+            </Box>
+            <Divider sx={{ mb: 2 }} />
             <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Typography variant="body2" color="text.secondary">PER</Typography>
-                <Typography variant="h6">
-                  {selectedStock.fundamentals.per?.toFixed(2) || 'N/A'}
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body2" color="text.secondary">PBR</Typography>
-                <Typography variant="h6">
-                  {selectedStock.fundamentals.pbr?.toFixed(2) || 'N/A'}
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body2" color="text.secondary">ROE</Typography>
-                <Typography variant="h6">
-                  {selectedStock.fundamentals.roe?.toFixed(2) || 'N/A'}%
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body2" color="text.secondary">영업이익률</Typography>
-                <Typography variant="h6">
-                  {selectedStock.fundamentals.operatingMargin?.toFixed(2) || 'N/A'}%
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body2" color="text.secondary">EPS</Typography>
-                <Typography variant="h6">
-                  {selectedStock.fundamentals.eps?.toFixed(2) || 'N/A'}
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body2" color="text.secondary">시가총액</Typography>
-                <Typography variant="h6">
-                  {selectedStock.fundamentals.marketCap
+              {[
+                { label: 'PER', value: selectedStock.fundamentals.per?.toFixed(2) || 'N/A' },
+                { label: 'PBR', value: selectedStock.fundamentals.pbr?.toFixed(2) || 'N/A' },
+                { label: 'ROE', value: selectedStock.fundamentals.roe ? `${selectedStock.fundamentals.roe.toFixed(2)}%` : 'N/A' },
+                { label: '영업이익률', value: selectedStock.fundamentals.operatingMargin ? `${selectedStock.fundamentals.operatingMargin.toFixed(2)}%` : 'N/A' },
+                { label: 'EPS', value: selectedStock.fundamentals.eps?.toFixed(2) || 'N/A' },
+                {
+                  label: '시가총액',
+                  value: selectedStock.fundamentals.marketCap
                     ? currency === 'KRW'
                       ? `${(selectedStock.fundamentals.marketCap / 1e12).toFixed(1)}조`
                       : `$${(selectedStock.fundamentals.marketCap / 1e9).toFixed(1)}B`
-                    : 'N/A'}
-                </Typography>
-              </Grid>
+                    : 'N/A'
+                },
+              ].map((item) => (
+                <Grid item xs={6} key={item.label}>
+                  <Card variant="outlined" sx={{ p: 1.5, bgcolor: 'grey.50' }}>
+                    <Typography variant="caption" color="text.secondary">{item.label}</Typography>
+                    <Typography variant="h6" fontWeight="bold">{item.value}</Typography>
+                  </Card>
+                </Grid>
+              ))}
             </Grid>
 
             <Divider sx={{ my: 2 }} />
 
-            <Typography variant="h6" gutterBottom>
-              기술적 지표
-            </Typography>
+            <Box display="flex" alignItems="center" gap={1} mb={2}>
+              <ShowChartIcon color="secondary" />
+              <Typography variant="subtitle1" fontWeight="bold">기술적 지표</Typography>
+            </Box>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <Typography variant="body2" color="text.secondary">RSI</Typography>
-                <Typography variant="h6">
-                  {selectedStock.technicals.rsi?.toFixed(1) || 'N/A'}
-                </Typography>
+                <Card variant="outlined" sx={{ p: 1.5, bgcolor: 'grey.50' }}>
+                  <Typography variant="caption" color="text.secondary">RSI</Typography>
+                  <Typography
+                    variant="h6"
+                    fontWeight="bold"
+                    color={
+                      selectedStock.technicals.rsi
+                        ? selectedStock.technicals.rsi > 70
+                          ? 'error.main'
+                          : selectedStock.technicals.rsi < 30
+                          ? 'success.main'
+                          : 'text.primary'
+                        : 'text.primary'
+                    }
+                  >
+                    {selectedStock.technicals.rsi?.toFixed(1) || 'N/A'}
+                  </Typography>
+                </Card>
               </Grid>
               <Grid item xs={6}>
-                <Typography variant="body2" color="text.secondary">거래량 변화</Typography>
-                <Typography variant="h6">
-                  {selectedStock.technicals.volumeChange
-                    ? `${selectedStock.technicals.volumeChange > 0 ? '+' : ''}${selectedStock.technicals.volumeChange.toFixed(1)}%`
-                    : 'N/A'}
-                </Typography>
+                <Card variant="outlined" sx={{ p: 1.5, bgcolor: 'grey.50' }}>
+                  <Typography variant="caption" color="text.secondary">거래량 변화</Typography>
+                  <Typography
+                    variant="h6"
+                    fontWeight="bold"
+                    color={
+                      selectedStock.technicals.volumeChange
+                        ? selectedStock.technicals.volumeChange > 0
+                          ? 'success.main'
+                          : 'error.main'
+                        : 'text.primary'
+                    }
+                  >
+                    {selectedStock.technicals.volumeChange
+                      ? `${selectedStock.technicals.volumeChange > 0 ? '+' : ''}${selectedStock.technicals.volumeChange.toFixed(1)}%`
+                      : 'N/A'}
+                  </Typography>
+                </Card>
               </Grid>
             </Grid>
           </Paper>
@@ -350,33 +463,49 @@ export default function StockDetailPage() {
       <Grid container spacing={3} sx={{ mt: 1 }}>
         {/* 기업 정보 */}
         <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 3, height: '100%' }}>
+          <Paper
+            sx={{
+              p: 3,
+              height: '100%',
+              transition: 'box-shadow 0.2s',
+              '&:hover': { boxShadow: 4 },
+            }}
+          >
             <Box display="flex" alignItems="center" gap={1} mb={2}>
               <BusinessIcon color="primary" />
-              <Typography variant="h6">기업 정보</Typography>
+              <Typography variant="h6" fontWeight="bold">기업 정보</Typography>
             </Box>
             <Divider sx={{ mb: 2 }} />
 
             <Grid container spacing={2}>
-              <Grid item xs={4}>
-                <Typography variant="body2" color="text.secondary">종목코드</Typography>
-                <Typography variant="body1" fontWeight="medium">{symbol}</Typography>
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant="body2" color="text.secondary">시장</Typography>
-                <Typography variant="body1" fontWeight="medium">{market}</Typography>
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant="body2" color="text.secondary">섹터</Typography>
-                <Typography variant="body1" fontWeight="medium">{sector}</Typography>
-              </Grid>
+              {[
+                { label: '종목코드', value: symbol },
+                { label: '시장', value: market },
+                { label: '섹터', value: sector },
+              ].map((item) => (
+                <Grid item xs={4} key={item.label}>
+                  <Card variant="outlined" sx={{ p: 1.5, bgcolor: 'grey.50', textAlign: 'center' }}>
+                    <Typography variant="caption" color="text.secondary">{item.label}</Typography>
+                    <Typography variant="body1" fontWeight="bold">{item.value}</Typography>
+                  </Card>
+                </Grid>
+              ))}
             </Grid>
 
-            <Box sx={{ mt: 3, p: 2, bgcolor: 'grey.50', borderRadius: 1 }}>
-              <Typography variant="body2" color="text.secondary" gutterBottom>
+            <Box
+              sx={{
+                mt: 3,
+                p: 2,
+                bgcolor: 'primary.50',
+                borderRadius: 2,
+                borderLeft: 4,
+                borderColor: 'primary.main',
+              }}
+            >
+              <Typography variant="body2" color="primary.dark" fontWeight="bold" gutterBottom>
                 업종 설명
               </Typography>
-              <Typography variant="body1">
+              <Typography variant="body2" color="text.secondary">
                 {sectorDescription}
               </Typography>
             </Box>
@@ -385,10 +514,17 @@ export default function StockDetailPage() {
 
         {/* 관련 뉴스 링크 */}
         <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 3, height: '100%' }}>
+          <Paper
+            sx={{
+              p: 3,
+              height: '100%',
+              transition: 'box-shadow 0.2s',
+              '&:hover': { boxShadow: 4 },
+            }}
+          >
             <Box display="flex" alignItems="center" gap={1} mb={2}>
               <NewspaperIcon color="primary" />
-              <Typography variant="h6">관련 뉴스 및 정보</Typography>
+              <Typography variant="h6" fontWeight="bold">관련 뉴스 및 정보</Typography>
             </Box>
             <Divider sx={{ mb: 2 }} />
 
@@ -401,20 +537,28 @@ export default function StockDetailPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   sx={{
-                    borderRadius: 1,
+                    borderRadius: 2,
                     mb: 1,
                     bgcolor: 'grey.50',
-                    '&:hover': { bgcolor: 'primary.light', color: 'primary.contrastText' },
+                    transition: 'all 0.2s',
+                    '&:hover': {
+                      bgcolor: 'primary.main',
+                      color: 'white',
+                      transform: 'translateX(4px)',
+                      '& .MuiListItemIcon-root': { color: 'white' },
+                      '& .MuiListItemText-secondary': { color: 'rgba(255,255,255,0.7)' },
+                    },
                     textDecoration: 'none',
                     color: 'inherit',
                   }}
                 >
-                  <ListItemIcon sx={{ minWidth: 36 }}>
+                  <ListItemIcon sx={{ minWidth: 36, transition: 'color 0.2s' }}>
                     <OpenInNewIcon fontSize="small" />
                   </ListItemIcon>
                   <ListItemText
                     primary={link.name}
                     secondary={`${name} 관련 뉴스 보기`}
+                    primaryTypographyProps={{ fontWeight: 'medium' }}
                   />
                 </ListItem>
               ))}
