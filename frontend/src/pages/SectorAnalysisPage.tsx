@@ -18,6 +18,7 @@ interface SectorStats {
   avgFundamental: number
   avgTechnical: number
   avgNews: number
+  avgSupplyDemand: number
   avgChangePercent: number
   topStocks: Stock[]
 }
@@ -56,6 +57,7 @@ export default function SectorAnalysisPage() {
       const avgFundamental = stocks.reduce((sum, s) => sum + s.scores.fundamental.average, 0) / count
       const avgTechnical = stocks.reduce((sum, s) => sum + s.scores.technical.average, 0) / count
       const avgNews = stocks.reduce((sum, s) => sum + s.scores.news.average, 0) / count
+      const avgSupplyDemand = stocks.reduce((sum, s) => sum + (s.scores.supplyDemand?.average ?? 5), 0) / count
       const avgChangePercent = stocks.reduce((sum, s) => sum + s.changePercent, 0) / count
 
       const topStocks = [...stocks]
@@ -70,6 +72,7 @@ export default function SectorAnalysisPage() {
         avgFundamental,
         avgTechnical,
         avgNews,
+        avgSupplyDemand,
         avgChangePercent,
         topStocks,
       })
@@ -128,9 +131,10 @@ export default function SectorAnalysisPage() {
         {/* Score bars */}
         <div className="space-y-2 mb-3">
           {[
-            { label: '기본', value: sector.avgFundamental, variant: 'default' as const },
-            { label: '기술', value: sector.avgTechnical, variant: 'default' as const },
-            { label: '뉴스', value: sector.avgNews, variant: 'default' as const },
+            { label: '기본', value: sector.avgFundamental },
+            { label: '기술', value: sector.avgTechnical },
+            { label: '뉴스', value: sector.avgNews },
+            { label: '수급', value: sector.avgSupplyDemand },
           ].map((item) => (
             <div key={item.label}>
               <div className="flex justify-between text-xs mb-1">
