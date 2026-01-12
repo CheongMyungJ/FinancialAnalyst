@@ -5,6 +5,7 @@ import Header from './components/common/Header'
 import HomePage from './pages/HomePage'
 import StockDetailPage from './pages/StockDetailPage'
 import SectorAnalysisPage from './pages/SectorAnalysisPage'
+import BacktestPage from './pages/BacktestPage'
 import { useAppDispatch, useAppSelector } from './store'
 import { refreshStocks } from './store/stockSlice'
 
@@ -34,6 +35,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/sector" element={<SectorAnalysisPage />} />
+          <Route path="/backtest" element={<BacktestPage />} />
           <Route path="/stock/:symbol" element={<StockDetailPage />} />
         </Routes>
       </Container>

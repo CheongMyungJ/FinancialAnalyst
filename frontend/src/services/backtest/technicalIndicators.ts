@@ -1,0 +1,239 @@
+/**
+ * 기술적 지표 계산 서비스
+ * 과거 가격 데이터로부터 기술적 지표를 계산합니다.
+ */
+
+import type { PriceData } from '../../types'
+
+export interface TechnicalScores {
+  rsi: number          // 0-10 (RSI 기반)
+  macd: number         // 0-10 (MACD 시그널)
+  maCrossover: number  // 0-10 (이동평균 크로스오버)
+  momentum: number     // 0-10 (모멘텀)
+  volumeTrend: number  // 0-10 (거래량 추세)
+}
+
+export interface IndicatorWeights {
+  rsi: number
+  macd: number
+  maCrossover: number
+  momentum: number
+  volumeTrend: number
+}
+
+export const DEFAULT_WEIGHTS: IndicatorWeights = {
+  rsi: 20,
+  macd: 20,
+  maCrossover: 20,
+  momentum: 20,
+  volumeTrend: 20,
+}
+
+/**
+ * RSI (Relative Strength Index) 계산
+ */
+function calculateRSI(prices: number[], period: number = 14): number {
+  if (prices.length < period + 1) return 50
+
+  let gains = 0
+  let losses = 0
+
+  for (let i = prices.length - period; i < prices.length; i++) {
+    const change = prices[i] - prices[i - 1]
+    if (change > 0) gains += change
+    else losses -= change
+  }
+
+  const avgGain = gains / period
+  const avgLoss = losses / period
+
+  if (avgLoss === 0) return 100
+  const rs = avgGain / avgLoss
+  return 100 - (100 / (1 + rs))
+}
+
+/**
+ * RSI를 0-10 점수로 변환
+ * RSI 30 이하: 과매도 (매수 신호) -> 높은 점수
+ * RSI 70 이상: 과매수 (매도 신호) -> 낮은 점수
+ */
+function rsiToScore(rsi: number): number {
+  if (rsi <= 30) return 10
+  if (rsi >= 70) return 0
+  if (rsi <= 50) return 5 + (50 - rsi) / 4  // 30-50: 5-10
+  return 5 - (rsi - 50) / 4                  // 50-70: 0-5
+}
+
+/**
+ * EMA (Exponential Moving Average) 계산
+ */
+function calculateEMA(prices: number[], period: number): number[] {
+  const ema: number[] = []
+  const multiplier = 2 / (period + 1)
+
+  // 첫 EMA는 SMA로 시작
+  let sum = 0
+  for (let i = 0; i < Math.min(period, prices.length); i++) {
+    sum += prices[i]
+  }
+  ema.push(sum / Math.min(period, prices.length))
+
+  // 이후 EMA 계산
+  for (let i = period; i < prices.length; i++) {
+    const newEma = (prices[i] - ema[ema.length - 1]) * multiplier + ema[ema.length - 1]
+    ema.push(newEma)
+  }
+
+  return ema
+}
+
+/**
+ * MACD 계산
+ */
+function calculateMACD(prices: number[]): { macd: number; signal: number; histogram: number } {
+  if (prices.length < 26) {
+    return { macd: 0, signal: 0, histogram: 0 }
+  }
+
+  const ema12 = calculateEMA(prices, 12)
+  const ema26 = calculateEMA(prices, 26)
+
+  // MACD Line = EMA12 - EMA26
+  const macdLine: number[] = []
+  const offset = ema12.length - ema26.length
+  for (let i = 0; i < ema26.length; i++) {
+    macdLine.push(ema12[i + offset] - ema26[i])
+  }
+
+  // Signal Line = 9일 EMA of MACD
+  const signalLine = calculateEMA(macdLine, 9)
+
+  const macd = macdLine[macdLine.length - 1] || 0
+  const signal = signalLine[signalLine.length - 1] || 0
+  const histogram = macd - signal
+
+  return { macd, signal, histogram }
+}
+
+/**
+ * MACD를 0-10 점수로 변환
+ */
+function macdToScore(histogram: number, price: number): number {
+  // 히스토그램을 가격 대비 비율로 정규화
+  const normalizedHist = (histogram / price) * 100
+
+  if (normalizedHist > 2) return 10
+  if (normalizedHist < -2) return 0
+  return 5 + normalizedHist * 2.5
+}
+
+/**
+ * 이동평균 크로스오버 점수
+ */
+function calculateMACrossoverScore(prices: number[]): number {
+  if (prices.length < 50) return 5
+
+  // 20일, 50일 이동평균
+  const ma20 = prices.slice(-20).reduce((a, b) => a + b, 0) / 20
+  const ma50 = prices.slice(-50).reduce((a, b) => a + b, 0) / 50
+  const currentPrice = prices[prices.length - 1]
+
+  // 현재가가 두 MA 위에 있고, 단기 MA가 장기 MA 위에 있으면 강세
+  let score = 5
+
+  if (currentPrice > ma20) score += 1.5
+  if (currentPrice > ma50) score += 1.5
+  if (ma20 > ma50) score += 2
+
+  // 반대의 경우
+  if (currentPrice < ma20) score -= 1.5
+  if (currentPrice < ma50) score -= 1.5
+  if (ma20 < ma50) score -= 2
+
+  return Math.max(0, Math.min(10, score))
+}
+
+/**
+ * 모멘텀 점수 (최근 N일 수익률)
+ */
+function calculateMomentumScore(prices: number[], period: number = 20): number {
+  if (prices.length < period) return 5
+
+  const oldPrice = prices[prices.length - period]
+  const currentPrice = prices[prices.length - 1]
+  const change = ((currentPrice - oldPrice) / oldPrice) * 100
+
+  // -20% ~ +20% 를 0-10으로 매핑
+  if (change >= 20) return 10
+  if (change <= -20) return 0
+  return 5 + change / 4
+}
+
+/**
+ * 거래량 추세 점수
+ */
+function calculateVolumeTrendScore(volumes: number[]): number {
+  if (volumes.length < 20) return 5
+
+  // 최근 5일 평균 vs 20일 평균
+  const recent5 = volumes.slice(-5).reduce((a, b) => a + b, 0) / 5
+  const avg20 = volumes.slice(-20).reduce((a, b) => a + b, 0) / 20
+
+  if (avg20 === 0) return 5
+
+  const ratio = recent5 / avg20
+
+  // 거래량 증가는 긍정적 신호
+  if (ratio >= 2) return 10
+  if (ratio <= 0.5) return 2
+  return 2 + (ratio - 0.5) * (8 / 1.5)
+}
+
+/**
+ * 특정 시점의 기술적 점수 계산
+ */
+export function calculateTechnicalScores(
+  priceData: PriceData[],
+  endIndex: number  // 이 인덱스까지의 데이터만 사용
+): TechnicalScores {
+  const data = priceData.slice(0, endIndex + 1)
+  const closes = data.map(d => d.close)
+  const volumes = data.map(d => d.volume)
+
+  if (closes.length < 5) {
+    return { rsi: 5, macd: 5, maCrossover: 5, momentum: 5, volumeTrend: 5 }
+  }
+
+  const rsiValue = calculateRSI(closes)
+  const macdData = calculateMACD(closes)
+  const currentPrice = closes[closes.length - 1]
+
+  return {
+    rsi: rsiToScore(rsiValue),
+    macd: macdToScore(macdData.histogram, currentPrice),
+    maCrossover: calculateMACrossoverScore(closes),
+    momentum: calculateMomentumScore(closes),
+    volumeTrend: calculateVolumeTrendScore(volumes),
+  }
+}
+
+/**
+ * 가중 평균 점수 계산
+ */
+export function calculateWeightedScore(
+  scores: TechnicalScores,
+  weights: IndicatorWeights
+): number {
+  const totalWeight = weights.rsi + weights.macd + weights.maCrossover + weights.momentum + weights.volumeTrend
+
+  if (totalWeight === 0) return 0
+
+  const weightedSum =
+    scores.rsi * weights.rsi +
+    scores.macd * weights.macd +
+    scores.maCrossover * weights.maCrossover +
+    scores.momentum * weights.momentum +
+    scores.volumeTrend * weights.volumeTrend
+
+  return weightedSum / totalWeight
+}

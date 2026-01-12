@@ -11,6 +11,7 @@ import {
   Refresh as RefreshIcon,
   Assessment as AssessmentIcon,
   PieChart as PieChartIcon,
+  Science as ScienceIcon,
 } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../store'
@@ -69,6 +70,15 @@ export default function Header() {
             sx={{ opacity: 0.9 }}
           >
             섹터분석
+          </Button>
+          <Button
+            color="inherit"
+            size="small"
+            startIcon={<ScienceIcon />}
+            onClick={() => navigate('/backtest')}
+            sx={{ opacity: 0.9 }}
+          >
+            전략검증
           </Button>
         </Box>
 
