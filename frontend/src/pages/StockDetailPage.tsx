@@ -58,33 +58,53 @@ function calculateBollingerBands(prices: PriceData[], period: number = 20, multi
   })
 }
 
-// RSI 계산
+// RSI 계산 (Wilder's Smoothing Method - 백엔드와 동일)
 function calculateRSI(prices: PriceData[], period: number = 14): (number | null)[] {
   const result: (number | null)[] = []
+  const gains: number[] = []
+  const losses: number[] = []
 
   for (let i = 0; i < prices.length; i++) {
+    if (i === 0) {
+      result.push(null)
+      continue
+    }
+
+    const change = prices[i].close - prices[i - 1].close
+    gains.push(change > 0 ? change : 0)
+    losses.push(change < 0 ? Math.abs(change) : 0)
+
     if (i < period) {
       result.push(null)
       continue
     }
 
-    let gains = 0
-    let losses = 0
+    let avgGain: number
+    let avgLoss: number
 
-    for (let j = i - period + 1; j <= i; j++) {
-      const change = prices[j].close - prices[j - 1].close
-      if (change > 0) gains += change
-      else losses += Math.abs(change)
+    if (i === period) {
+      // 첫 번째 평균은 SMA
+      avgGain = gains.slice(-period).reduce((a, b) => a + b, 0) / period
+      avgLoss = losses.slice(-period).reduce((a, b) => a + b, 0) / period
+    } else {
+      // 이후는 Wilder's Smoothing (EMA)
+      const prevRsi = result[i - 1]
+      if (prevRsi === null) {
+        avgGain = gains.slice(-period).reduce((a, b) => a + b, 0) / period
+        avgLoss = losses.slice(-period).reduce((a, b) => a + b, 0) / period
+      } else {
+        const prevAvgLoss = losses.slice(-period - 1, -1).reduce((a, b) => a + b, 0) / period
+        const prevAvgGain = gains.slice(-period - 1, -1).reduce((a, b) => a + b, 0) / period
+        avgGain = (prevAvgGain * (period - 1) + gains[gains.length - 1]) / period
+        avgLoss = (prevAvgLoss * (period - 1) + losses[losses.length - 1]) / period
+      }
     }
-
-    const avgGain = gains / period
-    const avgLoss = losses / period
 
     if (avgLoss === 0) {
       result.push(100)
     } else {
       const rs = avgGain / avgLoss
-      result.push(100 - (100 / (1 + rs)))
+      result.push(100 - 100 / (1 + rs))
     }
   }
 
