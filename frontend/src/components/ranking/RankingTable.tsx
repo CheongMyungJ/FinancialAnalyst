@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { DataGrid, GridColDef, GridRenderCellParams, GridPaginationModel } from '@mui/x-data-grid'
-import { Box, Chip, Typography } from '@mui/material'
+import { Alert, Box, Chip, Typography } from '@mui/material'
 import { useAppSelector } from '../../store'
 import type { Stock } from '../../types'
 import ScoreBadge from '../scoring/ScoreBadge'
@@ -9,7 +9,7 @@ import { recalculateScoresWithWeights } from '../../services/scoring/totalScorin
 
 export default function RankingTable() {
   const navigate = useNavigate()
-  const { list, loading } = useAppSelector((state) => state.stocks)
+  const { list, loading, error } = useAppSelector((state) => state.stocks)
   const filters = useAppSelector((state) => state.filters)
   const weights = useAppSelector((state) => state.weights.config)
 
@@ -217,6 +217,19 @@ export default function RankingTable() {
 
   const handleRowClick = (params: { row: Stock }) => {
     navigate(`/stock/${params.row.symbol}`)
+  }
+
+  if (error) {
+    return (
+      <Box sx={{ p: 2 }}>
+        <Alert severity="error" sx={{ mb: 2 }}>
+          데이터 로딩 오류: {error}
+        </Alert>
+        <Typography variant="body2" color="text.secondary">
+          새로고침 버튼을 눌러 다시 시도해주세요.
+        </Typography>
+      </Box>
+    )
   }
 
   return (
