@@ -67,6 +67,9 @@ function calculateRSI(prices: PriceData[], period: number = 14): (number | null)
   const gains: number[] = []
   const losses: number[] = []
 
+  let prevAvgGain = 0
+  let prevAvgLoss = 0
+
   for (let i = 0; i < prices.length; i++) {
     if (i === 0) {
       result.push(null)
@@ -74,8 +77,10 @@ function calculateRSI(prices: PriceData[], period: number = 14): (number | null)
     }
 
     const change = prices[i].close - prices[i - 1].close
-    gains.push(change > 0 ? change : 0)
-    losses.push(change < 0 ? Math.abs(change) : 0)
+    const gain = change > 0 ? change : 0
+    const loss = change < 0 ? Math.abs(change) : 0
+    gains.push(gain)
+    losses.push(loss)
 
     if (i < period) {
       result.push(null)
@@ -87,21 +92,16 @@ function calculateRSI(prices: PriceData[], period: number = 14): (number | null)
 
     if (i === period) {
       // 첫 번째 평균은 SMA
-      avgGain = gains.slice(-period).reduce((a, b) => a + b, 0) / period
-      avgLoss = losses.slice(-period).reduce((a, b) => a + b, 0) / period
+      avgGain = gains.reduce((a, b) => a + b, 0) / period
+      avgLoss = losses.reduce((a, b) => a + b, 0) / period
     } else {
       // 이후는 Wilder's Smoothing (EMA)
-      const prevRsi = result[i - 1]
-      if (prevRsi === null) {
-        avgGain = gains.slice(-period).reduce((a, b) => a + b, 0) / period
-        avgLoss = losses.slice(-period).reduce((a, b) => a + b, 0) / period
-      } else {
-        const prevAvgLoss = losses.slice(-period - 1, -1).reduce((a, b) => a + b, 0) / period
-        const prevAvgGain = gains.slice(-period - 1, -1).reduce((a, b) => a + b, 0) / period
-        avgGain = (prevAvgGain * (period - 1) + gains[gains.length - 1]) / period
-        avgLoss = (prevAvgLoss * (period - 1) + losses[losses.length - 1]) / period
-      }
+      avgGain = (prevAvgGain * (period - 1) + gain) / period
+      avgLoss = (prevAvgLoss * (period - 1) + loss) / period
     }
+
+    prevAvgGain = avgGain
+    prevAvgLoss = avgLoss
 
     if (avgLoss === 0) {
       result.push(100)

@@ -44,12 +44,15 @@ export function calculateEMA(values: number[], period: number): number[] {
 }
 
 /**
- * RSI (상대강도지수) 계산
+ * RSI (상대강도지수) 계산 - Wilder's Smoothing Method
  */
 export function calculateRSI(prices: number[], period: number = 14): number[] {
   const result: number[] = []
   const gains: number[] = []
   const losses: number[] = []
+
+  let prevAvgGain = 0
+  let prevAvgLoss = 0
 
   for (let i = 0; i < prices.length; i++) {
     if (i === 0) {
@@ -58,8 +61,10 @@ export function calculateRSI(prices: number[], period: number = 14): number[] {
     }
 
     const change = prices[i] - prices[i - 1]
-    gains.push(change > 0 ? change : 0)
-    losses.push(change < 0 ? Math.abs(change) : 0)
+    const gain = change > 0 ? change : 0
+    const loss = change < 0 ? Math.abs(change) : 0
+    gains.push(gain)
+    losses.push(loss)
 
     if (i < period) {
       result.push(NaN)
@@ -70,17 +75,17 @@ export function calculateRSI(prices: number[], period: number = 14): number[] {
     let avgLoss: number
 
     if (i === period) {
-      avgGain = gains.slice(-period).reduce((a, b) => a + b, 0) / period
-      avgLoss = losses.slice(-period).reduce((a, b) => a + b, 0) / period
+      // 첫 번째 평균은 SMA
+      avgGain = gains.reduce((a, b) => a + b, 0) / period
+      avgLoss = losses.reduce((a, b) => a + b, 0) / period
     } else {
-      const prevAvgGain = result[i - 1] !== 50
-        ? (100 - result[i - 1]) / result[i - 1] * (losses.slice(-period - 1, -1).reduce((a, b) => a + b, 0) / period)
-        : gains.slice(-period - 1, -1).reduce((a, b) => a + b, 0) / period
-      const prevAvgLoss = losses.slice(-period - 1, -1).reduce((a, b) => a + b, 0) / period
-
-      avgGain = (prevAvgGain * (period - 1) + gains[gains.length - 1]) / period
-      avgLoss = (prevAvgLoss * (period - 1) + losses[losses.length - 1]) / period
+      // 이후는 Wilder's Smoothing (EMA)
+      avgGain = (prevAvgGain * (period - 1) + gain) / period
+      avgLoss = (prevAvgLoss * (period - 1) + loss) / period
     }
+
+    prevAvgGain = avgGain
+    prevAvgLoss = avgLoss
 
     if (avgLoss === 0) {
       result.push(100)
