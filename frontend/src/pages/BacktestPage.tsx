@@ -4,14 +4,18 @@ import {
   TrendingUp,
   TrendingDown,
   Info,
-  ChevronDown,
-  ChevronUp,
   Landmark,
   LineChart,
   Gauge,
   DollarSign,
   ArrowUpDown,
   FlaskConical,
+  BarChart3,
+  Filter,
+  ArrowDownAZ,
+  ArrowUpAZ,
+  ListFilter,
+  PieChart,
 } from 'lucide-react'
 import { useAppSelector } from '../store'
 import { fetchPriceHistoryForBacktest } from '../services/api/backtestApi'
@@ -136,13 +140,66 @@ export default function BacktestPage() {
   const [progressPercent, setProgressPercent] = useState<number>(0)
 
   // UI 상태
-  const [showTradeHistory, setShowTradeHistory] = useState(false)
+  const [resultTab, setResultTab] = useState<'summary' | 'holdings' | 'trades'>('summary')
+  const [holdingSortBy, setHoldingSortBy] = useState<'return' | 'days' | 'name'>('return')
+  const [holdingSortDesc, setHoldingSortDesc] = useState(true)
+  const [holdingFilter, setHoldingFilter] = useState<'all' | 'profit' | 'loss'>('all')
+  const [tradeFilter, setTradeFilter] = useState<'all' | 'BUY' | 'SELL' | 'HOLD'>('all')
 
   // 선택된 종목 수 계산
   const selectedStockCount = useMemo(() =>
     list.filter(s => selectedMarkets.includes(s.market)).length,
     [list, selectedMarkets]
   )
+
+  // 종목별 수익 요약 통계
+  const holdingStats = useMemo(() => {
+    if (!result) return null
+    const holdings = result.holdingPeriods
+    const profitCount = holdings.filter(h => h.return > 0).length
+    const lossCount = holdings.filter(h => h.return < 0).length
+    const evenCount = holdings.filter(h => h.return === 0).length
+    const avgReturn = holdings.length > 0
+      ? holdings.reduce((sum, h) => sum + h.return, 0) / holdings.length
+      : 0
+    const maxProfit = holdings.length > 0 ? Math.max(...holdings.map(h => h.return)) : 0
+    const maxLoss = holdings.length > 0 ? Math.min(...holdings.map(h => h.return)) : 0
+    const avgDays = holdings.length > 0
+      ? holdings.reduce((sum, h) => sum + h.days, 0) / holdings.length
+      : 0
+    return { profitCount, lossCount, evenCount, avgReturn, maxProfit, maxLoss, avgDays }
+  }, [result])
+
+  // 정렬/필터된 종목별 수익
+  const filteredHoldings = useMemo(() => {
+    if (!result) return []
+    let holdings = [...result.holdingPeriods]
+
+    // 필터 적용
+    if (holdingFilter === 'profit') {
+      holdings = holdings.filter(h => h.return > 0)
+    } else if (holdingFilter === 'loss') {
+      holdings = holdings.filter(h => h.return < 0)
+    }
+
+    // 정렬 적용
+    holdings.sort((a, b) => {
+      let cmp = 0
+      if (holdingSortBy === 'return') cmp = a.return - b.return
+      else if (holdingSortBy === 'days') cmp = a.days - b.days
+      else cmp = a.name.localeCompare(b.name)
+      return holdingSortDesc ? -cmp : cmp
+    })
+
+    return holdings
+  }, [result, holdingFilter, holdingSortBy, holdingSortDesc])
+
+  // 필터된 거래 내역
+  const filteredTrades = useMemo(() => {
+    if (!result) return []
+    if (tradeFilter === 'all') return result.trades
+    return result.trades.filter(t => t.action === tradeFilter)
+  }, [result, tradeFilter])
 
   const handleWeightChange = (indicator: keyof IndicatorWeights, value: number) => {
     setWeights(prev => ({ ...prev, [indicator]: value }))
@@ -483,7 +540,12 @@ export default function BacktestPage() {
                     )}>
                       {result.excessReturn >= 0 ? '+' : ''}{result.excessReturn.toFixed(1)}%
                     </p>
-                    <p className="text-xs text-slate-400">벤치마크 대비</p>
+                    <div className="flex items-center justify-center gap-1">
+                      <p className="text-xs text-slate-400">벤치마크 대비</p>
+                      <Tooltip content="선택한 종목들을 동일 비중으로 보유했을 때의 평균 수익률 대비 초과/미달 성과">
+                        <Info className="h-3 w-3 text-slate-500 cursor-help" />
+                      </Tooltip>
+                    </div>
                   </CardContent>
                 </Card>
 
@@ -493,7 +555,12 @@ export default function BacktestPage() {
                     <p className="text-2xl font-bold text-slate-200">
                       {result.winRate.toFixed(0)}%
                     </p>
-                    <p className="text-xs text-slate-400">승률</p>
+                    <div className="flex items-center justify-center gap-1">
+                      <p className="text-xs text-slate-400">승률</p>
+                      <Tooltip content="수익으로 마감한 거래 수 / 전체 거래 수. 높을수록 좋지만 수익 크기도 중요">
+                        <Info className="h-3 w-3 text-slate-500 cursor-help" />
+                      </Tooltip>
+                    </div>
                   </CardContent>
                 </Card>
 
@@ -503,7 +570,12 @@ export default function BacktestPage() {
                     <p className="text-2xl font-bold text-rose-400">
                       -{result.maxDrawdown.toFixed(1)}%
                     </p>
-                    <p className="text-xs text-slate-400">최대 낙폭</p>
+                    <div className="flex items-center justify-center gap-1">
+                      <p className="text-xs text-slate-400">최대 낙폭</p>
+                      <Tooltip content="최고점 대비 최대 하락폭(MDD). 낮을수록 안정적인 전략. 심리적 손실 한계 파악에 중요">
+                        <Info className="h-3 w-3 text-slate-500 cursor-help" />
+                      </Tooltip>
+                    </div>
                   </CardContent>
                 </Card>
               </div>
@@ -542,7 +614,12 @@ export default function BacktestPage() {
                     <div className="flex items-center gap-2">
                       <LineChart className="h-5 w-5 text-slate-500" />
                       <div>
-                        <p className="text-xs text-slate-500">샤프 비율</p>
+                        <div className="flex items-center gap-1">
+                          <p className="text-xs text-slate-500">샤프 비율</p>
+                          <Tooltip content="위험 대비 수익률. 1 이상이면 양호, 2 이상이면 우수. 변동성 대비 얼마나 효율적으로 수익을 냈는지 측정">
+                            <Info className="h-3 w-3 text-slate-500 cursor-help" />
+                          </Tooltip>
+                        </div>
                         <p className="font-bold text-slate-200">{result.sharpeRatio.toFixed(2)}</p>
                       </div>
                     </div>
@@ -550,110 +627,341 @@ export default function BacktestPage() {
                 </CardContent>
               </Card>
 
-              {/* 종목별 보유 기록 */}
+              {/* 탭 UI - 상세 분석 */}
               <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-base">종목별 수익</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {result.holdingPeriods.length === 0 ? (
-                    <p className="text-center text-slate-500 py-4">보유 기록이 없습니다.</p>
-                  ) : (
-                    <div className="max-h-[300px] overflow-auto">
-                      <Table>
-                        <TableHeader>
-                          <TableRow>
-                            <TableHead>종목</TableHead>
-                            <TableHead className="text-center">보유 기간</TableHead>
-                            <TableHead className="text-right">수익률</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          {result.holdingPeriods.map((holding, index) => (
-                            <TableRow key={index}>
-                              <TableCell>
+                {/* 탭 헤더 */}
+                <div className="flex border-b border-slate-800">
+                  <button
+                    onClick={() => setResultTab('summary')}
+                    className={cn(
+                      'flex-1 px-4 py-3 text-sm font-medium transition-colors flex items-center justify-center gap-2',
+                      resultTab === 'summary'
+                        ? 'text-cyan-400 border-b-2 border-cyan-400 bg-cyan-500/10'
+                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                    )}
+                  >
+                    <PieChart className="h-4 w-4" />
+                    요약
+                  </button>
+                  <button
+                    onClick={() => setResultTab('holdings')}
+                    className={cn(
+                      'flex-1 px-4 py-3 text-sm font-medium transition-colors flex items-center justify-center gap-2',
+                      resultTab === 'holdings'
+                        ? 'text-cyan-400 border-b-2 border-cyan-400 bg-cyan-500/10'
+                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                    )}
+                  >
+                    <BarChart3 className="h-4 w-4" />
+                    종목별 ({result.holdingPeriods.length})
+                  </button>
+                  <button
+                    onClick={() => setResultTab('trades')}
+                    className={cn(
+                      'flex-1 px-4 py-3 text-sm font-medium transition-colors flex items-center justify-center gap-2',
+                      resultTab === 'trades'
+                        ? 'text-cyan-400 border-b-2 border-cyan-400 bg-cyan-500/10'
+                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                    )}
+                  >
+                    <ListFilter className="h-4 w-4" />
+                    거래내역 ({result.trades.length})
+                  </button>
+                </div>
+
+                {/* 탭 컨텐츠 */}
+                <CardContent className="pt-4">
+                  {/* 요약 탭 */}
+                  {resultTab === 'summary' && holdingStats && (
+                    <div className="space-y-6">
+                      {/* 수익/손실 통계 */}
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div className="bg-emerald-500/10 rounded-lg p-3 text-center">
+                          <p className="text-2xl font-bold text-emerald-400">{holdingStats.profitCount}</p>
+                          <p className="text-xs text-slate-400">수익 종목</p>
+                        </div>
+                        <div className="bg-rose-500/10 rounded-lg p-3 text-center">
+                          <p className="text-2xl font-bold text-rose-400">{holdingStats.lossCount}</p>
+                          <p className="text-xs text-slate-400">손실 종목</p>
+                        </div>
+                        <div className={cn(
+                          'rounded-lg p-3 text-center',
+                          holdingStats.avgReturn >= 0 ? 'bg-emerald-500/10' : 'bg-rose-500/10'
+                        )}>
+                          <p className={cn(
+                            'text-2xl font-bold',
+                            holdingStats.avgReturn >= 0 ? 'text-emerald-400' : 'text-rose-400'
+                          )}>
+                            {holdingStats.avgReturn >= 0 ? '+' : ''}{holdingStats.avgReturn.toFixed(1)}%
+                          </p>
+                          <p className="text-xs text-slate-400">평균 수익률</p>
+                        </div>
+                        <div className="bg-slate-800/50 rounded-lg p-3 text-center">
+                          <p className="text-2xl font-bold text-slate-200">{holdingStats.avgDays.toFixed(0)}일</p>
+                          <p className="text-xs text-slate-400">평균 보유기간</p>
+                        </div>
+                      </div>
+
+                      {/* 수익/손실 비율 바 */}
+                      <div>
+                        <div className="flex justify-between text-xs text-slate-400 mb-2">
+                          <span>수익 {holdingStats.profitCount}건</span>
+                          <span>손실 {holdingStats.lossCount}건</span>
+                        </div>
+                        <div className="h-4 bg-slate-800 rounded-full overflow-hidden flex">
+                          {result.holdingPeriods.length > 0 && (
+                            <>
+                              <div
+                                className="bg-emerald-500 h-full transition-all"
+                                style={{ width: `${(holdingStats.profitCount / result.holdingPeriods.length) * 100}%` }}
+                              />
+                              <div
+                                className="bg-rose-500 h-full transition-all"
+                                style={{ width: `${(holdingStats.lossCount / result.holdingPeriods.length) * 100}%` }}
+                              />
+                            </>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* 종목별 수익률 막대 차트 */}
+                      <div>
+                        <h4 className="text-sm font-medium text-slate-300 mb-3">종목별 수익률</h4>
+                        <div className="space-y-2 max-h-[300px] overflow-auto">
+                          {[...result.holdingPeriods]
+                            .sort((a, b) => b.return - a.return)
+                            .map((holding, index) => {
+                              const maxAbs = Math.max(
+                                Math.abs(holdingStats.maxProfit),
+                                Math.abs(holdingStats.maxLoss),
+                                1
+                              )
+                              const barWidth = Math.abs(holding.return) / maxAbs * 100
+                              const isProfit = holding.return >= 0
+
+                              return (
+                                <div key={index} className="flex items-center gap-2">
+                                  <div className="w-24 text-xs text-slate-400 truncate" title={holding.name}>
+                                    {holding.name}
+                                  </div>
+                                  <div className="flex-1 flex items-center">
+                                    {/* 음수 영역 */}
+                                    <div className="w-1/2 flex justify-end">
+                                      {!isProfit && (
+                                        <div
+                                          className="bg-rose-500 h-5 rounded-l transition-all"
+                                          style={{ width: `${barWidth}%` }}
+                                        />
+                                      )}
+                                    </div>
+                                    {/* 중앙선 */}
+                                    <div className="w-px h-6 bg-slate-600" />
+                                    {/* 양수 영역 */}
+                                    <div className="w-1/2">
+                                      {isProfit && (
+                                        <div
+                                          className="bg-emerald-500 h-5 rounded-r transition-all"
+                                          style={{ width: `${barWidth}%` }}
+                                        />
+                                      )}
+                                    </div>
+                                  </div>
+                                  <div className={cn(
+                                    'w-16 text-xs text-right font-medium',
+                                    isProfit ? 'text-emerald-400' : 'text-rose-400'
+                                  )}>
+                                    {isProfit ? '+' : ''}{holding.return.toFixed(1)}%
+                                  </div>
+                                </div>
+                              )
+                            })}
+                        </div>
+                      </div>
+
+                      {/* 최고/최저 */}
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3">
+                          <p className="text-xs text-slate-400 mb-1">최고 수익</p>
+                          <p className="text-xl font-bold text-emerald-400">+{holdingStats.maxProfit.toFixed(1)}%</p>
+                        </div>
+                        <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-3">
+                          <p className="text-xs text-slate-400 mb-1">최대 손실</p>
+                          <p className="text-xl font-bold text-rose-400">{holdingStats.maxLoss.toFixed(1)}%</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 종목별 탭 */}
+                  {resultTab === 'holdings' && (
+                    <div className="space-y-4">
+                      {/* 필터/정렬 컨트롤 */}
+                      <div className="flex flex-wrap gap-2 items-center justify-between">
+                        <div className="flex gap-2">
+                          <select
+                            value={holdingFilter}
+                            onChange={(e) => setHoldingFilter(e.target.value as typeof holdingFilter)}
+                            className="bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-200"
+                          >
+                            <option value="all">전체</option>
+                            <option value="profit">수익만</option>
+                            <option value="loss">손실만</option>
+                          </select>
+                          <select
+                            value={holdingSortBy}
+                            onChange={(e) => setHoldingSortBy(e.target.value as typeof holdingSortBy)}
+                            className="bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-200"
+                          >
+                            <option value="return">수익률순</option>
+                            <option value="days">보유기간순</option>
+                            <option value="name">종목명순</option>
+                          </select>
+                          <button
+                            onClick={() => setHoldingSortDesc(!holdingSortDesc)}
+                            className="p-1.5 rounded-lg border border-slate-700 hover:bg-slate-800"
+                          >
+                            {holdingSortDesc ? (
+                              <ArrowDownAZ className="h-4 w-4 text-slate-400" />
+                            ) : (
+                              <ArrowUpAZ className="h-4 w-4 text-slate-400" />
+                            )}
+                          </button>
+                        </div>
+                        <span className="text-xs text-slate-500">
+                          {filteredHoldings.length}건 표시
+                        </span>
+                      </div>
+
+                      {/* 종목 리스트 */}
+                      {filteredHoldings.length === 0 ? (
+                        <p className="text-center text-slate-500 py-8">해당하는 거래가 없습니다.</p>
+                      ) : (
+                        <div className="space-y-2 max-h-[400px] overflow-auto">
+                          {filteredHoldings.map((holding, index) => (
+                            <div
+                              key={index}
+                              className={cn(
+                                'flex items-center justify-between p-3 rounded-lg border',
+                                holding.return >= 0
+                                  ? 'bg-emerald-500/5 border-emerald-500/20'
+                                  : 'bg-rose-500/5 border-rose-500/20'
+                              )}
+                            >
+                              <div className="flex-1">
                                 <p className="font-medium text-slate-200">{holding.name}</p>
                                 <p className="text-xs text-slate-500">{holding.symbol}</p>
-                              </TableCell>
-                              <TableCell className="text-center">
+                              </div>
+                              <div className="text-center px-4">
                                 <Badge variant="outline">{holding.days}일</Badge>
-                              </TableCell>
-                              <TableCell className="text-right">
-                                <Badge variant={holding.return >= 0 ? 'success' : 'error'}>
-                                  {holding.return >= 0 ? (
-                                    <TrendingUp className="h-3 w-3 mr-1" />
-                                  ) : (
-                                    <TrendingDown className="h-3 w-3 mr-1" />
-                                  )}
+                              </div>
+                              <div className="w-24 text-right">
+                                <span className={cn(
+                                  'text-lg font-bold',
+                                  holding.return >= 0 ? 'text-emerald-400' : 'text-rose-400'
+                                )}>
                                   {holding.return >= 0 ? '+' : ''}{holding.return.toFixed(1)}%
-                                </Badge>
-                              </TableCell>
-                            </TableRow>
+                                </span>
+                              </div>
+                              {/* 미니 바 */}
+                              <div className="w-20 ml-3">
+                                <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+                                  <div
+                                    className={cn(
+                                      'h-full rounded-full',
+                                      holding.return >= 0 ? 'bg-emerald-500' : 'bg-rose-500'
+                                    )}
+                                    style={{
+                                      width: `${Math.min(Math.abs(holding.return) * 2, 100)}%`
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                            </div>
                           ))}
-                        </TableBody>
-                      </Table>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* 거래내역 탭 */}
+                  {resultTab === 'trades' && (
+                    <div className="space-y-4">
+                      {/* 필터 컨트롤 */}
+                      <div className="flex gap-2 items-center">
+                        <Filter className="h-4 w-4 text-slate-500" />
+                        <div className="flex gap-1">
+                          {(['all', 'BUY', 'SELL', 'HOLD'] as const).map((filter) => (
+                            <button
+                              key={filter}
+                              onClick={() => setTradeFilter(filter)}
+                              className={cn(
+                                'px-3 py-1 text-xs rounded-full transition-colors',
+                                tradeFilter === filter
+                                  ? filter === 'BUY' ? 'bg-emerald-500 text-white'
+                                    : filter === 'SELL' ? 'bg-rose-500 text-white'
+                                    : filter === 'HOLD' ? 'bg-amber-500 text-white'
+                                    : 'bg-cyan-500 text-white'
+                                  : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                              )}
+                            >
+                              {filter === 'all' ? '전체' : filter}
+                            </button>
+                          ))}
+                        </div>
+                        <span className="text-xs text-slate-500 ml-auto">
+                          {filteredTrades.length}건
+                        </span>
+                      </div>
+
+                      {/* 거래 내역 테이블 */}
+                      {filteredTrades.length === 0 ? (
+                        <p className="text-center text-slate-500 py-8">해당하는 거래가 없습니다.</p>
+                      ) : (
+                        <div className="max-h-[400px] overflow-auto">
+                          <Table>
+                            <TableHeader>
+                              <TableRow>
+                                <TableHead>날짜</TableHead>
+                                <TableHead>액션</TableHead>
+                                <TableHead>종목</TableHead>
+                                <TableHead className="text-right">가격</TableHead>
+                                <TableHead className="text-right">점수</TableHead>
+                              </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                              {filteredTrades.map((trade, index) => (
+                                <TableRow key={index}>
+                                  <TableCell className="text-slate-400">{trade.date}</TableCell>
+                                  <TableCell>
+                                    <Badge
+                                      variant={
+                                        trade.action === 'BUY' ? 'success' :
+                                        trade.action === 'SELL' ? 'destructive' : 'outline'
+                                      }
+                                    >
+                                      {trade.action}
+                                    </Badge>
+                                  </TableCell>
+                                  <TableCell>
+                                    <p className="font-medium text-slate-200">{trade.name}</p>
+                                  </TableCell>
+                                  <TableCell className="text-right text-slate-300">
+                                    {trade.price.toLocaleString()}
+                                  </TableCell>
+                                  <TableCell className="text-right">
+                                    {trade.action !== 'SELL' ? (
+                                      <span className="text-cyan-400">{trade.score.toFixed(2)}</span>
+                                    ) : '-'}
+                                  </TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </div>
+                      )}
                     </div>
                   )}
                 </CardContent>
-              </Card>
-
-              {/* 거래 내역 (접을 수 있음) */}
-              <Card>
-                <button
-                  onClick={() => setShowTradeHistory(!showTradeHistory)}
-                  className="w-full flex items-center justify-between p-4 hover:bg-slate-800/50 transition-colors"
-                >
-                  <span className="font-semibold text-slate-200">
-                    전체 거래 내역 ({result.trades.length}건)
-                  </span>
-                  {showTradeHistory ? (
-                    <ChevronUp className="h-5 w-5 text-slate-500" />
-                  ) : (
-                    <ChevronDown className="h-5 w-5 text-slate-500" />
-                  )}
-                </button>
-                {showTradeHistory && (
-                  <>
-                    <div className="border-t border-slate-800" />
-                    <div className="max-h-[400px] overflow-auto">
-                      <Table>
-                        <TableHeader>
-                          <TableRow>
-                            <TableHead>날짜</TableHead>
-                            <TableHead>액션</TableHead>
-                            <TableHead>종목</TableHead>
-                            <TableHead className="text-right">가격</TableHead>
-                            <TableHead className="text-right">점수</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          {result.trades.map((trade, index) => (
-                            <TableRow key={index}>
-                              <TableCell>{trade.date}</TableCell>
-                              <TableCell>
-                                <Badge
-                                  variant={
-                                    trade.action === 'BUY' ? 'success' :
-                                    trade.action === 'SELL' ? 'error' : 'outline'
-                                  }
-                                >
-                                  {trade.action}
-                                </Badge>
-                              </TableCell>
-                              <TableCell>{trade.name}</TableCell>
-                              <TableCell className="text-right">
-                                {trade.price.toLocaleString()}
-                              </TableCell>
-                              <TableCell className="text-right">
-                                {trade.action !== 'SELL' ? trade.score.toFixed(2) : '-'}
-                              </TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </div>
-                  </>
-                )}
               </Card>
             </>
           )}

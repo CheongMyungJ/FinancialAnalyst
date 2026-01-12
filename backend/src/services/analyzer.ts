@@ -91,90 +91,15 @@ function generateSampleSupplyDemandData(symbol: string): SupplyDemandData {
 }
 
 /**
- * 단일 종목 분석 (시세만 - 메인 화면용)
- * 히스토리 데이터 없이 빠르게 분석
+ * 단일 종목 분석 (기술적 지표 포함)
+ * 히스토리 데이터를 가져와 모든 기술적 지표를 계산
  */
-async function analyzeStockQuoteOnly(stockInfo: typeof ALL_STOCKS[0]): Promise<Stock | null> {
-  try {
-    // 1. 시세 및 기본 정보만 가져오기
-    const quote = await getStockQuote(stockInfo.symbol, stockInfo.market)
-
-    // 2. 뉴스 데이터 (샘플)
-    const newsData = generateSampleNewsData(stockInfo.symbol)
-
-    // 3. 수급 데이터 (샘플)
-    const supplyDemand = generateSampleSupplyDemandData(stockInfo.symbol)
-
-    // 4. 기본 기술적 지표 (히스토리 없이 기본값)
-    const technicals = {
-      ma20: quote.currentPrice,
-      ma50: quote.currentPrice,
-      ma120: quote.currentPrice,
-      rsi: 50,
-      macdLine: 0,
-      signalLine: 0,
-      histogram: 0,
-      volumeAvg20: null,
-      volumeChange: 0,
-      bollingerUpper: null,
-      bollingerMiddle: null,
-      bollingerLower: null,
-      bollingerWidth: null,
-      bollingerPercentB: null,
-      stochasticK: null,
-      stochasticD: null,
-      adx: null,
-      plusDI: null,
-      minusDI: null,
-      rsiDivergence: null,
-      macdDivergence: null,
-    }
-
-    // 5. 점수 계산
-    const scores = calculateAllScores(
-      quote.fundamentals,
-      technicals,
-      newsData,
-      supplyDemand,
-      quote.currentPrice,
-      quote.changePercent,
-      stockInfo.sector
-    )
-
-    const stock: Stock = {
-      symbol: stockInfo.symbol,
-      name: quote.name,
-      market: stockInfo.market,
-      sector: stockInfo.sector,
-      currentPrice: quote.currentPrice,
-      previousClose: quote.previousClose,
-      change: quote.change,
-      changePercent: quote.changePercent,
-      currency: quote.currency,
-      lastUpdated: new Date().toISOString(),
-      fundamentals: quote.fundamentals,
-      technicals,
-      newsData,
-      supplyDemand,
-      scores,
-    }
-
-    return stock
-  } catch (error) {
-    console.error(`[오류] ${stockInfo.name} 분석 실패:`, error)
-    return null
-  }
-}
-
-/**
- * 단일 종목 전체 분석 (히스토리 포함 - 상세 페이지용)
- */
-async function analyzeStockFull(stockInfo: typeof ALL_STOCKS[0]): Promise<Stock | null> {
+async function analyzeStockWithTechnicals(stockInfo: typeof ALL_STOCKS[0]): Promise<Stock | null> {
   try {
     // 1. 시세 및 기본 정보 가져오기
     const quote = await getStockQuote(stockInfo.symbol, stockInfo.market)
 
-    // 2. 과거 가격 데이터 가져오기
+    // 2. 과거 가격 데이터 가져오기 (기술적 지표 계산용)
     const priceHistory = await getHistoricalPrices(stockInfo.symbol, stockInfo.market, '6mo')
 
     // 3. 기술적 지표 계산
@@ -222,12 +147,13 @@ async function analyzeStockFull(stockInfo: typeof ALL_STOCKS[0]): Promise<Stock 
   }
 }
 
+
 /**
- * 배치 병렬 처리로 전체 종목 분석 (시세만 - 빠른 분석)
- * @param batchSize 동시에 분석할 종목 수 (기본: 30)
- * @param batchDelay 배치 간 딜레이 ms (기본: 500)
+ * 배치 병렬 처리로 전체 종목 분석 (기술적 지표 포함)
+ * @param batchSize 동시에 분석할 종목 수 (기본: 10, 히스토리 API 호출 포함)
+ * @param batchDelay 배치 간 딜레이 ms (기본: 1000)
  */
-export async function analyzeAllStocks(batchSize: number = 30, batchDelay: number = 500): Promise<StocksResponse> {
+export async function analyzeAllStocks(batchSize: number = 10, batchDelay: number = 1000): Promise<StocksResponse> {
   if (isAnalyzing) {
     console.log('[분석] 이미 분석 중입니다.')
     return lastAnalyzedData || {
@@ -239,7 +165,7 @@ export async function analyzeAllStocks(batchSize: number = 30, batchDelay: numbe
 
   isAnalyzing = true
   const startTime = Date.now()
-  console.log(`[분석] 전체 종목 시세 분석 시작 (${ALL_STOCKS.length}개, 배치 크기: ${batchSize})...`)
+  console.log(`[분석] 전체 종목 분석 시작 (${ALL_STOCKS.length}개, 배치 크기: ${batchSize}, 기술적 지표 포함)...`)
 
   const stocks: Stock[] = []
   const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
@@ -259,9 +185,9 @@ export async function analyzeAllStocks(batchSize: number = 30, batchDelay: numbe
     console.log(`[분석] 배치 ${i + 1}/${batches.length} (${progress}%) - ${batch.length}개 종목`)
 
     try {
-      // 배치 내 종목들을 병렬로 분석 (시세만)
+      // 배치 내 종목들을 병렬로 분석 (기술적 지표 포함)
       const results = await Promise.all(
-        batch.map(stockInfo => analyzeStockQuoteOnly(stockInfo).catch(err => {
+        batch.map(stockInfo => analyzeStockWithTechnicals(stockInfo).catch(err => {
           console.error(`[오류] ${stockInfo.symbol} 실패:`, err.message)
           return null
         }))
@@ -341,8 +267,8 @@ export async function getStockDetail(symbol: string): Promise<{
   try {
     console.log(`[상세] ${stockInfo.name} (${symbol}) 전체 분석 시작...`)
 
-    // 전체 분석 (히스토리 포함)
-    const stock = await analyzeStockFull(stockInfo)
+    // 전체 분석 (기술적 지표 포함)
+    const stock = await analyzeStockWithTechnicals(stockInfo)
 
     // 가격 히스토리
     const priceHistory = await getHistoricalPrices(symbol, stockInfo.market, '6mo')
