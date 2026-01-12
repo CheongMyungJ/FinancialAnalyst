@@ -32,26 +32,21 @@ export default function RankingTable() {
     return recalculateScoresWithWeights(list, weights)
   }, [list, weights])
 
-  const filteredData = useMemo(() => {
+  // 시장/섹터 필터와 정렬을 적용하고 순위를 부여 (검색어 필터 제외)
+  const rankedData = useMemo(() => {
     let result = [...stocksWithRecalculatedScores]
 
+    // 시장 필터 적용
     if (filters.markets.length > 0) {
       result = result.filter((stock) => filters.markets.includes(stock.market))
     }
 
+    // 섹터 필터 적용
     if (filters.sectors.length > 0) {
       result = result.filter((stock) => filters.sectors.includes(stock.sector))
     }
 
-    if (filters.searchQuery) {
-      const query = filters.searchQuery.toLowerCase()
-      result = result.filter(
-        (stock) =>
-          stock.name.toLowerCase().includes(query) ||
-          stock.symbol.toLowerCase().includes(query)
-      )
-    }
-
+    // 정렬 적용
     result.sort((a, b) => {
       let aValue: number | string
       let bValue: number | string
@@ -97,11 +92,26 @@ export default function RankingTable() {
         : (bValue as number) - (aValue as number)
     })
 
+    // 시장/섹터 필터 기준으로 순위 부여
     return result.map((stock, index) => ({
       ...stock,
       rank: index + 1,
     }))
-  }, [stocksWithRecalculatedScores, filters])
+  }, [stocksWithRecalculatedScores, filters.markets, filters.sectors, filters.sortBy, filters.sortOrder])
+
+  // 검색어 필터 적용 (순위는 유지)
+  const filteredData = useMemo(() => {
+    if (!filters.searchQuery) {
+      return rankedData
+    }
+
+    const query = filters.searchQuery.toLowerCase()
+    return rankedData.filter(
+      (stock) =>
+        stock.name.toLowerCase().includes(query) ||
+        stock.symbol.toLowerCase().includes(query)
+    )
+  }, [rankedData, filters.searchQuery])
 
   const columns: ColumnDef<StockWithRank>[] = [
     {
