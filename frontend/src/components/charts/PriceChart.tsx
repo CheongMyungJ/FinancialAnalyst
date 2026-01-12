@@ -27,21 +27,38 @@ interface PriceData {
   bollingerLower?: number
 }
 
+export type ChartPeriod = '1M' | '3M' | '6M'
+
 interface PriceChartProps {
   data: PriceData[]
   currency: 'KRW' | 'USD'
   showBollinger?: boolean
+  period?: ChartPeriod
+  onPeriodChange?: (period: ChartPeriod) => void
+  showPeriodSelector?: boolean
 }
 
-export default function PriceChart({ data, currency, showBollinger = false }: PriceChartProps) {
-  const [period, setPeriod] = useState<'1M' | '3M' | '6M'>('3M')
+export default function PriceChart({
+  data,
+  currency,
+  showBollinger = false,
+  period: externalPeriod,
+  onPeriodChange,
+  showPeriodSelector = true,
+}: PriceChartProps) {
+  const [internalPeriod, setInternalPeriod] = useState<ChartPeriod>('3M')
 
-  const getFilteredData = () => {
-    const days = period === '1M' ? 30 : period === '3M' ? 90 : 180
-    return data.slice(-days)
-  }
+  // 외부 period가 있으면 사용, 없으면 내부 상태 사용
+  const period = externalPeriod ?? internalPeriod
+  const setPeriod = onPeriodChange ?? setInternalPeriod
 
-  const filteredData = getFilteredData()
+  // showPeriodSelector가 false면 이미 필터링된 데이터가 전달되므로 그대로 사용
+  const filteredData = showPeriodSelector
+    ? (() => {
+        const days = period === '1M' ? 30 : period === '3M' ? 90 : 180
+        return data.slice(-days)
+      })()
+    : data
 
   const formatPrice = (value: number) => {
     if (currency === 'KRW') {
@@ -81,26 +98,31 @@ export default function PriceChart({ data, currency, showBollinger = false }: Pr
     )
   }
 
+  // 볼린저밴드가 있는 데이터가 하나라도 있는지 확인
+  const hasBollingerData = filteredData.some(d => d.bollingerUpper != null)
+
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
         <h4 className="text-sm font-medium text-slate-200">주가 추이</h4>
-        <div className="flex gap-1">
-          {(['1M', '3M', '6M'] as const).map((p) => (
-            <button
-              key={p}
-              onClick={() => setPeriod(p)}
-              className={cn(
-                'px-3 py-1 text-xs rounded-md transition-colors',
-                period === p
-                  ? 'bg-cyan-500/20 text-cyan-400'
-                  : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
-              )}
-            >
-              {p === '1M' ? '1개월' : p === '3M' ? '3개월' : '6개월'}
-            </button>
-          ))}
-        </div>
+        {showPeriodSelector && (
+          <div className="flex gap-1">
+            {(['1M', '3M', '6M'] as const).map((p) => (
+              <button
+                key={p}
+                onClick={() => setPeriod(p)}
+                className={cn(
+                  'px-3 py-1 text-xs rounded-md transition-colors',
+                  period === p
+                    ? 'bg-cyan-500/20 text-cyan-400'
+                    : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                )}
+              >
+                {p === '1M' ? '1개월' : p === '3M' ? '3개월' : '6개월'}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       <ResponsiveContainer width="100%" height={300}>
@@ -160,7 +182,7 @@ export default function PriceChart({ data, currency, showBollinger = false }: Pr
               strokeWidth={1.5}
             />
           )}
-          {showBollinger && filteredData[0]?.bollingerUpper && (
+          {showBollinger && hasBollingerData && (
             <>
               <Line
                 type="monotone"

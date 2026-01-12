@@ -55,9 +55,6 @@ export default function VolumeChart({ data }: VolumeChartProps) {
     return null
   }
 
-  // 최근 30일 데이터만 표시
-  const recentData = data.slice(-30)
-
   if (!data || data.length === 0) {
     return (
       <div className="h-[150px] flex items-center justify-center">
@@ -70,7 +67,7 @@ export default function VolumeChart({ data }: VolumeChartProps) {
     <div>
       <h4 className="text-sm font-medium text-slate-200 mb-2">거래량</h4>
       <ResponsiveContainer width="100%" height={150}>
-        <BarChart data={recentData}>
+        <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
           <XAxis
             dataKey="date"
