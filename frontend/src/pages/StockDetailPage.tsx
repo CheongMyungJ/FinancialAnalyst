@@ -19,6 +19,7 @@ import PriceChart, { type ChartPeriod } from '../components/charts/PriceChart'
 import VolumeChart from '../components/charts/VolumeChart'
 import RSIChart from '../components/charts/RSIChart'
 import MACDChart from '../components/charts/MACDChart'
+import StochasticChart from '../components/charts/StochasticChart'
 import ScoreRadarChart from '../components/charts/ScoreRadarChart'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Badge } from '../components/ui/badge'
@@ -182,6 +183,66 @@ function calculateMACD(prices: PriceData[], fastPeriod: number = 12, slowPeriod:
   return result
 }
 
+// SMA 계산 (숫자 배열용)
+function calculateSMANumeric(values: number[], period: number): number[] {
+  const result: number[] = []
+  for (let i = 0; i < values.length; i++) {
+    if (i < period - 1) {
+      result.push(NaN)
+    } else {
+      const slice = values.slice(i - period + 1, i + 1)
+      result.push(slice.reduce((a, b) => a + b, 0) / period)
+    }
+  }
+  return result
+}
+
+// 스토캐스틱 계산 (백엔드와 동일)
+function calculateStochastic(
+  prices: PriceData[],
+  kPeriod: number = 14,
+  dPeriod: number = 3
+): { k: (number | null)[]; d: (number | null)[] } {
+  const k: (number | null)[] = []
+
+  for (let i = 0; i < prices.length; i++) {
+    if (i < kPeriod - 1) {
+      k.push(null)
+    } else {
+      const highSlice = prices.slice(i - kPeriod + 1, i + 1).map(p => p.high)
+      const lowSlice = prices.slice(i - kPeriod + 1, i + 1).map(p => p.low)
+      const highestHigh = Math.max(...highSlice)
+      const lowestLow = Math.min(...lowSlice)
+      const range = highestHigh - lowestLow
+
+      if (range === 0) {
+        k.push(50) // 변동 없으면 중립
+      } else {
+        k.push(((prices[i].close - lowestLow) / range) * 100)
+      }
+    }
+  }
+
+  // %D는 %K의 SMA
+  const validK = k.filter((v): v is number => v !== null)
+  const d = calculateSMANumeric(validK, dPeriod)
+
+  // d 배열을 k와 같은 길이로 맞춤
+  const dAligned: (number | null)[] = []
+  let dIndex = 0
+  for (let i = 0; i < k.length; i++) {
+    if (k[i] === null) {
+      dAligned.push(null)
+    } else {
+      const dVal = d[dIndex]
+      dAligned.push(isNaN(dVal) ? null : dVal)
+      dIndex++
+    }
+  }
+
+  return { k, d: dAligned }
+}
+
 // 섹터별 기업 설명
 const SECTOR_DESCRIPTIONS: Record<string, string> = {
   // 한국 섹터
@@ -300,6 +361,19 @@ export default function StockDetailPage() {
     }))
   }, [selectedStockPriceHistory])
 
+  // 스토캐스틱 데이터
+  const stochasticData = useMemo(() => {
+    if (selectedStockPriceHistory.length === 0) return []
+
+    const stochasticValues = calculateStochastic(selectedStockPriceHistory)
+
+    return selectedStockPriceHistory.map((p, i) => ({
+      date: p.date,
+      k: stochasticValues.k[i],
+      d: stochasticValues.d[i],
+    }))
+  }, [selectedStockPriceHistory])
+
   // 기간에 따라 필터링된 데이터
   const filteredPriceHistory = useMemo(() => {
     const days = chartPeriod === '1M' ? 30 : chartPeriod === '3M' ? 90 : 180
@@ -315,6 +389,11 @@ export default function StockDetailPage() {
     const days = chartPeriod === '1M' ? 30 : chartPeriod === '3M' ? 90 : 180
     return macdData.slice(-days)
   }, [macdData, chartPeriod])
+
+  const filteredStochasticData = useMemo(() => {
+    const days = chartPeriod === '1M' ? 30 : chartPeriod === '3M' ? 90 : 180
+    return stochasticData.slice(-days)
+  }, [stochasticData, chartPeriod])
 
   const chartLoading = loading && selectedStockPriceHistory.length === 0
 
@@ -490,6 +569,8 @@ export default function StockDetailPage() {
                   <RSIChart key={`rsi-${chartPeriod}`} data={filteredRsiData} />
                   <div className="border-t border-slate-800 my-4" />
                   <MACDChart key={`macd-${chartPeriod}`} data={filteredMacdData} />
+                  <div className="border-t border-slate-800 my-4" />
+                  <StochasticChart key={`stochastic-${chartPeriod}`} data={filteredStochasticData} />
                 </>
               )}
             </CardContent>
