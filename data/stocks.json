@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-01-23T08:34:38.193Z",
+  "lastUpdated": "2026-01-23T13:49:29.390Z",
   "isAnalyzing": false,
   "stocks": [
     {
@@ -12,7 +12,7 @@
       "change": -200,
       "changePercent": -0.13131976362442546,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:43.764Z",
+      "lastUpdated": "2026-01-23T13:48:35.387Z",
       "fundamentals": {
         "per": 33,
         "pbr": 1.3,
@@ -33,8 +33,8 @@
         "macdLine": 10273.436262107862,
         "signalLine": 9771.863934560519,
         "histogram": 501.57232754734287,
-        "volumeAvg20": 29065422.9,
-        "volumeChange": -5.290821693153481,
+        "volumeAvg20": 28983839.4,
+        "volumeChange": -6.150152074055446,
         "bollingerUpper": 161173.24814121972,
         "bollingerMiddle": 137485,
         "bollingerLower": 113796.75185878028,
@@ -110,7 +110,7 @@
       "change": 12000,
       "changePercent": 1.5894039735099337,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:43.808Z",
+      "lastUpdated": "2026-01-23T13:48:35.513Z",
       "fundamentals": {
         "per": 28,
         "pbr": 0.8,
@@ -131,8 +131,8 @@
         "macdLine": 44072.706046164385,
         "signalLine": 46149.77775123987,
         "histogram": -2077.071705075483,
-        "volumeAvg20": 4071678.8,
-        "volumeChange": -10.733769078248502,
+        "volumeAvg20": 4078840.25,
+        "volumeChange": -10.188196264857394,
         "bollingerUpper": 823639.5741111151,
         "bollingerMiddle": 716100,
         "bollingerLower": 608560.4258888849,
@@ -208,7 +208,7 @@
       "change": -11500,
       "changePercent": -2.990897269180754,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:43.819Z",
+      "lastUpdated": "2026-01-23T13:48:35.442Z",
       "fundamentals": {
         "per": 26,
         "pbr": 0.6,
@@ -306,7 +306,7 @@
       "change": -600,
       "changePercent": -0.5649717514124294,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:43.704Z",
+      "lastUpdated": "2026-01-23T13:48:35.379Z",
       "fundamentals": {
         "per": 40,
         "pbr": 2,
@@ -404,7 +404,7 @@
       "change": -11000,
       "changePercent": -3.8869257950530036,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:43.771Z",
+      "lastUpdated": "2026-01-23T13:48:35.381Z",
       "fundamentals": {
         "per": 31,
         "pbr": 1.1,
@@ -425,8 +425,8 @@
         "macdLine": 7276.198624857934,
         "signalLine": 8385.436687390527,
         "histogram": -1109.2380625325932,
-        "volumeAvg20": 624438.2,
-        "volumeChange": 5.634120398143499,
+        "volumeAvg20": 624474.9,
+        "volumeChange": 5.65142009710878,
         "bollingerUpper": 297641.55967850157,
         "bollingerMiddle": 273950,
         "bollingerLower": 250258.44032149846,
@@ -502,7 +502,7 @@
       "change": 5000,
       "changePercent": 1.7152658662092626,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:43.748Z",
+      "lastUpdated": "2026-01-23T13:48:35.370Z",
       "fundamentals": {
         "per": 33,
         "pbr": 1.3,
@@ -523,8 +523,8 @@
         "macdLine": 9851.403965649195,
         "signalLine": 9063.639219408882,
         "histogram": 787.7647462403129,
-        "volumeAvg20": 222508.15,
-        "volumeChange": 3.070381916347786,
+        "volumeAvg20": 221765.4,
+        "volumeChange": 2.0758874017317424,
         "bollingerUpper": 314829.8740444967,
         "bollingerMiddle": 279500,
         "bollingerLower": 244170.12595550332,
@@ -600,7 +600,7 @@
       "change": 8000,
       "changePercent": 2.689075630252101,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:43.774Z",
+      "lastUpdated": "2026-01-23T13:48:35.339Z",
       "fundamentals": {
         "per": 34,
         "pbr": 1.4,
@@ -698,7 +698,7 @@
       "change": 4000,
       "changePercent": 0.8820286659316428,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:43.743Z",
+      "lastUpdated": "2026-01-23T13:48:35.344Z",
       "fundamentals": {
         "per": 25,
         "pbr": 0.5,
@@ -719,8 +719,8 @@
         "macdLine": 29976.67771150492,
         "signalLine": 26617.934091323456,
         "histogram": 3358.7436201814635,
-        "volumeAvg20": 619700.95,
-        "volumeChange": 42.992164204363434,
+        "volumeAvg20": 618394.45,
+        "volumeChange": 42.44917624988389,
         "bollingerUpper": 493622.001931021,
         "bollingerMiddle": 411800,
         "bollingerLower": 329977.998068979,
@@ -796,7 +796,7 @@
       "change": 20500,
       "changePercent": 8.350305498981669,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:43.784Z",
+      "lastUpdated": "2026-01-23T13:48:35.422Z",
       "fundamentals": {
         "per": 30,
         "pbr": 1,
@@ -817,8 +817,8 @@
         "macdLine": 1178.254900497297,
         "signalLine": 702.694282287602,
         "histogram": 475.560618209695,
-        "volumeAvg20": 1560753.95,
-        "volumeChange": 31.898086818873672,
+        "volumeAvg20": 1561154.55,
+        "volumeChange": 31.966883099434323,
         "bollingerUpper": 266885.48472225375,
         "bollingerMiddle": 248550,
         "bollingerLower": 230214.51527774628,
@@ -894,7 +894,7 @@
       "change": 2600,
       "changePercent": 4.4520547945205475,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:43.719Z",
+      "lastUpdated": "2026-01-23T13:48:35.358Z",
       "fundamentals": {
         "per": 33,
         "pbr": 1.3,
@@ -992,7 +992,7 @@
       "change": 2000,
       "changePercent": 0.8456659619450317,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:44.978Z",
+      "lastUpdated": "2026-01-23T13:48:36.576Z",
       "fundamentals": {
         "per": 7,
         "pbr": 2.7,
@@ -1013,8 +1013,8 @@
         "macdLine": -3594.9625153221423,
         "signalLine": -4410.6139352364235,
         "histogram": 815.6514199142812,
-        "volumeAvg20": 91327.35,
-        "volumeChange": 1.037640969545261,
+        "volumeAvg20": 91352.5,
+        "volumeChange": 1.1199474562819909,
         "bollingerUpper": 250642.4771419551,
         "bollingerMiddle": 238475,
         "bollingerLower": 226307.5228580449,
@@ -1090,7 +1090,7 @@
       "change": 3100,
       "changePercent": 7.217694994179278,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:45.016Z",
+      "lastUpdated": "2026-01-23T13:48:36.609Z",
       "fundamentals": {
         "per": 39,
         "pbr": 1.9,
@@ -1188,7 +1188,7 @@
       "change": -1500,
       "changePercent": -0.6564551422319475,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:45.021Z",
+      "lastUpdated": "2026-01-23T13:48:36.624Z",
       "fundamentals": {
         "per": 37,
         "pbr": 1.7,
@@ -1209,8 +1209,8 @@
         "macdLine": 6291.073590675776,
         "signalLine": 6796.077609948667,
         "histogram": -505.0040192728902,
-        "volumeAvg20": 159824.05,
-        "volumeChange": -12.867556541083763,
+        "volumeAvg20": 159589.15,
+        "volumeChange": -13.328067728915153,
         "bollingerUpper": 251274.3670813637,
         "bollingerMiddle": 223625,
         "bollingerLower": 195975.6329186363,
@@ -1286,7 +1286,7 @@
       "change": 900,
       "changePercent": 1.768172888015717,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:44.915Z",
+      "lastUpdated": "2026-01-23T13:48:36.716Z",
       "fundamentals": {
         "per": 33,
         "pbr": 1.3,
@@ -1384,7 +1384,7 @@
       "change": -700,
       "changePercent": -1.2750455373406193,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:45.018Z",
+      "lastUpdated": "2026-01-23T13:48:36.638Z",
       "fundamentals": {
         "per": 21,
         "pbr": 5.1,
@@ -1405,8 +1405,8 @@
         "macdLine": 694.2955600364658,
         "signalLine": 514.5662460873733,
         "histogram": 179.72931394909244,
-        "volumeAvg20": 428329.5,
-        "volumeChange": 43.746391504671045,
+        "volumeAvg20": 442774.1,
+        "volumeChange": 52.10614170973415,
         "bollingerUpper": 55420.34480196371,
         "bollingerMiddle": 53100,
         "bollingerLower": 50779.65519803629,
@@ -1450,13 +1450,13 @@
         "technical": {
           "maPosition": 10,
           "rsi": 5,
-          "volumeTrend": 3,
+          "volumeTrend": 2,
           "macd": 8,
           "bollingerBand": 5,
           "stochastic": 5,
           "adx": 8,
           "divergence": 3,
-          "average": 6.1
+          "average": 6
         },
         "news": {
           "sentiment": 6,
@@ -1482,7 +1482,7 @@
       "change": 1000,
       "changePercent": 1.6207455429497568,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:45.038Z",
+      "lastUpdated": "2026-01-23T13:48:36.745Z",
       "fundamentals": {
         "per": 37,
         "pbr": 1.7,
@@ -1503,8 +1503,8 @@
         "macdLine": 2095.8571392975646,
         "signalLine": 1094.5172602512114,
         "histogram": 1001.3398790463532,
-        "volumeAvg20": 1030702.25,
-        "volumeChange": 104.5269620785246,
+        "volumeAvg20": 1034381.35,
+        "volumeChange": 105.22222292580969,
         "bollingerUpper": 62506.60606034244,
         "bollingerMiddle": 55540,
         "bollingerLower": 48573.39393965756,
@@ -1580,7 +1580,7 @@
       "change": -40,
       "changePercent": -0.26007802340702213,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:44.974Z",
+      "lastUpdated": "2026-01-23T13:48:36.717Z",
       "fundamentals": {
         "per": 31,
         "pbr": 1.1,
@@ -1678,7 +1678,7 @@
       "change": -19000,
       "changePercent": -3.5916824196597354,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:44.986Z",
+      "lastUpdated": "2026-01-23T13:48:36.755Z",
       "fundamentals": {
         "per": 32,
         "pbr": 1.2,
@@ -1776,7 +1776,7 @@
       "change": -5600,
       "changePercent": -3.402187120291616,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:45.000Z",
+      "lastUpdated": "2026-01-23T13:48:36.795Z",
       "fundamentals": {
         "per": 25,
         "pbr": 0.5,
@@ -1874,7 +1874,7 @@
       "change": -10,
       "changePercent": -0.29411764705882354,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:44.980Z",
+      "lastUpdated": "2026-01-23T13:48:36.776Z",
       "fundamentals": {
         "per": 41,
         "pbr": 2.1,
@@ -1895,8 +1895,8 @@
         "macdLine": -4.207807812806095,
         "signalLine": -78.81187087008355,
         "histogram": 74.60406305727746,
-        "volumeAvg20": 10110948.65,
-        "volumeChange": 75.17237415699861,
+        "volumeAvg20": 10126546.45,
+        "volumeChange": 75.51867349603675,
         "bollingerUpper": 3395.889548871884,
         "bollingerMiddle": 3052.75,
         "bollingerLower": 2709.610451128116,
@@ -1972,7 +1972,7 @@
       "change": -1800,
       "changePercent": -2.011173184357542,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:46.141Z",
+      "lastUpdated": "2026-01-23T13:48:37.896Z",
       "fundamentals": {
         "per": 21,
         "pbr": 5.1,
@@ -2070,7 +2070,7 @@
       "change": -2400,
       "changePercent": -3.5346097201767304,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:46.206Z",
+      "lastUpdated": "2026-01-23T13:48:37.886Z",
       "fundamentals": {
         "per": 27,
         "pbr": 0.7,
@@ -2168,7 +2168,7 @@
       "change": 7500,
       "changePercent": 2.1398002853067046,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:46.261Z",
+      "lastUpdated": "2026-01-23T13:48:37.970Z",
       "fundamentals": {
         "per": 32,
         "pbr": 1.2,
@@ -2189,8 +2189,8 @@
         "macdLine": -2394.929063756834,
         "signalLine": -6868.1256111554,
         "histogram": 4473.1965473985665,
-        "volumeAvg20": 291594.8,
-        "volumeChange": 34.23874499819613,
+        "volumeAvg20": 292551.9,
+        "volumeChange": 35.10819789582633,
         "bollingerUpper": 355451.94125657034,
         "bollingerMiddle": 333075,
         "bollingerLower": 310698.05874342966,
@@ -2266,7 +2266,7 @@
       "change": 1000,
       "changePercent": 1.015228426395939,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:46.245Z",
+      "lastUpdated": "2026-01-23T13:48:37.931Z",
       "fundamentals": {
         "per": 31,
         "pbr": 1.1,
@@ -2287,8 +2287,8 @@
         "macdLine": 3685.551269389558,
         "signalLine": 2402.7640282104567,
         "histogram": 1282.7872411791013,
-        "volumeAvg20": 319919.8,
-        "volumeChange": 5.235687194103022,
+        "volumeAvg20": 319215.95,
+        "volumeChange": 4.585751432533371,
         "bollingerUpper": 97820.90190502162,
         "bollingerMiddle": 87010,
         "bollingerLower": 76199.09809497838,
@@ -2364,7 +2364,7 @@
       "change": 3300,
       "changePercent": 4.285714285714286,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:46.283Z",
+      "lastUpdated": "2026-01-23T13:48:38.040Z",
       "fundamentals": {
         "per": 26,
         "pbr": 0.6,
@@ -2385,8 +2385,8 @@
         "macdLine": 939.6914179264568,
         "signalLine": -123.60483497591522,
         "histogram": 1063.296252902372,
-        "volumeAvg20": 158117.6,
-        "volumeChange": 25.380349815580296,
+        "volumeAvg20": 157782.65,
+        "volumeChange": 24.797371574124284,
         "bollingerUpper": 78181.35056682222,
         "bollingerMiddle": 71850,
         "bollingerLower": 65518.64943317779,
@@ -2462,7 +2462,7 @@
       "change": -800,
       "changePercent": -0.7130124777183601,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:46.259Z",
+      "lastUpdated": "2026-01-23T13:48:37.966Z",
       "fundamentals": {
         "per": 5,
         "pbr": 2.5,
@@ -2560,7 +2560,7 @@
       "change": 0,
       "changePercent": 0,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:46.192Z",
+      "lastUpdated": "2026-01-23T13:48:37.987Z",
       "fundamentals": {
         "per": 31,
         "pbr": 1.1,
@@ -2581,8 +2581,8 @@
         "macdLine": 347.8857597960741,
         "signalLine": -1524.9965113280173,
         "histogram": 1872.8822711240914,
-        "volumeAvg20": 63124.55,
-        "volumeChange": 6.786662241552617,
+        "volumeAvg20": 63136.25,
+        "volumeChange": 6.840998633906819,
         "bollingerUpper": 273829.95016597543,
         "bollingerMiddle": 264800,
         "bollingerLower": 255770.04983402457,
@@ -2658,7 +2658,7 @@
       "change": 6600,
       "changePercent": 5.209155485398579,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:46.284Z",
+      "lastUpdated": "2026-01-23T13:48:37.954Z",
       "fundamentals": {
         "per": 32,
         "pbr": 1.2,
@@ -2679,8 +2679,8 @@
         "macdLine": 748.0398371148913,
         "signalLine": -413.0164544757183,
         "histogram": 1161.0562915906096,
-        "volumeAvg20": 284356.35,
-        "volumeChange": 63.61020248009234,
+        "volumeAvg20": 284516.25,
+        "volumeChange": 63.74305509790741,
         "bollingerUpper": 129036.8486223074,
         "bollingerMiddle": 121625,
         "bollingerLower": 114213.1513776926,
@@ -2756,7 +2756,7 @@
       "change": 4950,
       "changePercent": 16.582914572864322,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:46.317Z",
+      "lastUpdated": "2026-01-23T13:48:37.995Z",
       "fundamentals": {
         "per": 30,
         "pbr": 1,
@@ -2777,8 +2777,8 @@
         "macdLine": 2308.9732369358644,
         "signalLine": 1941.5736317606707,
         "histogram": 367.39960517519376,
-        "volumeAvg20": 6502084.55,
-        "volumeChange": 23.209735868476216,
+        "volumeAvg20": 6485214.1,
+        "volumeChange": 22.48970161216421,
         "bollingerUpper": 34415.47654475821,
         "bollingerMiddle": 28015,
         "bollingerLower": 21614.52345524179,
@@ -2854,7 +2854,7 @@
       "change": 8500,
       "changePercent": 2.364394993045897,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:46.153Z",
+      "lastUpdated": "2026-01-23T13:48:38.034Z",
       "fundamentals": {
         "per": 34,
         "pbr": 1.4,
@@ -2875,8 +2875,8 @@
         "macdLine": 13572.83833133179,
         "signalLine": 8844.066215987445,
         "histogram": 4728.772115344345,
-        "volumeAvg20": 740773.8,
-        "volumeChange": 48.99123052138182,
+        "volumeAvg20": 738460.1,
+        "volumeChange": 48.204784523903186,
         "bollingerUpper": 374163.96853865474,
         "bollingerMiddle": 326550,
         "bollingerLower": 278936.03146134526,
@@ -2952,7 +2952,7 @@
       "change": -3000,
       "changePercent": -1.3824884792626728,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:47.536Z",
+      "lastUpdated": "2026-01-23T13:48:39.142Z",
       "fundamentals": {
         "per": 32,
         "pbr": 1.2,
@@ -3050,7 +3050,7 @@
       "change": 1050,
       "changePercent": 3.0973451327433628,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:47.562Z",
+      "lastUpdated": "2026-01-23T13:48:39.367Z",
       "fundamentals": {
         "per": 22,
         "pbr": 5.2,
@@ -3148,7 +3148,7 @@
       "change": 25000,
       "changePercent": 1.607717041800643,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:47.568Z",
+      "lastUpdated": "2026-01-23T13:48:39.353Z",
       "fundamentals": {
         "per": 21,
         "pbr": 5.1,
@@ -3246,7 +3246,7 @@
       "change": 6300,
       "changePercent": 3.3689839572192515,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:47.538Z",
+      "lastUpdated": "2026-01-23T13:48:39.181Z",
       "fundamentals": {
         "per": 21,
         "pbr": 5.1,
@@ -3344,7 +3344,7 @@
       "change": 900,
       "changePercent": 0.6681514476614699,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:47.471Z",
+      "lastUpdated": "2026-01-23T13:48:39.243Z",
       "fundamentals": {
         "per": 33,
         "pbr": 1.3,
@@ -3365,8 +3365,8 @@
         "macdLine": 2521.5229045277665,
         "signalLine": 1573.200470537479,
         "histogram": 948.3224339902874,
-        "volumeAvg20": 769087.45,
-        "volumeChange": 26.42577901901794,
+        "volumeAvg20": 761275.1,
+        "volumeChange": 23.618308283037244,
         "bollingerUpper": 136266.81911485703,
         "bollingerMiddle": 128295,
         "bollingerLower": 120323.18088514297,
@@ -3442,7 +3442,7 @@
       "change": 1000,
       "changePercent": 1.2062726176115801,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:47.601Z",
+      "lastUpdated": "2026-01-23T13:48:39.277Z",
       "fundamentals": {
         "per": 36,
         "pbr": 1.6,
@@ -3463,8 +3463,8 @@
         "macdLine": 1260.528126063131,
         "signalLine": 749.5340933755001,
         "histogram": 510.9940326876308,
-        "volumeAvg20": 1073154.95,
-        "volumeChange": 39.45827673813553,
+        "volumeAvg20": 1058777.75,
+        "volumeChange": 35.92036666807553,
         "bollingerUpper": 83167.56269791353,
         "bollingerMiddle": 79230,
         "bollingerLower": 75292.43730208647,
@@ -3540,7 +3540,7 @@
       "change": 600,
       "changePercent": 0.5970149253731344,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:47.521Z",
+      "lastUpdated": "2026-01-23T13:48:39.181Z",
       "fundamentals": {
         "per": 6,
         "pbr": 2.6,
@@ -3638,7 +3638,7 @@
       "change": 450,
       "changePercent": 1.5463917525773196,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:47.445Z",
+      "lastUpdated": "2026-01-23T13:48:39.136Z",
       "fundamentals": {
         "per": 31,
         "pbr": 1.1,
@@ -3659,8 +3659,8 @@
         "macdLine": 354.29532489299163,
         "signalLine": 214.83685181286515,
         "histogram": 139.45847308012648,
-        "volumeAvg20": 1605148.85,
-        "volumeChange": 31.851036743414777,
+        "volumeAvg20": 1586940.65,
+        "volumeChange": 28.774355865167372,
         "bollingerUpper": 29242.3444336885,
         "bollingerMiddle": 28117.5,
         "bollingerLower": 26992.6555663115,
@@ -3736,7 +3736,7 @@
       "change": 50,
       "changePercent": 0.2380952380952381,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:47.455Z",
+      "lastUpdated": "2026-01-23T13:48:39.161Z",
       "fundamentals": {
         "per": 24,
         "pbr": 5.4,
@@ -3834,7 +3834,7 @@
       "change": 50,
       "changePercent": 0.34843205574912894,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:47.416Z",
+      "lastUpdated": "2026-01-23T13:48:39.218Z",
       "fundamentals": {
         "per": 33,
         "pbr": 1.3,
@@ -3855,8 +3855,8 @@
         "macdLine": -126.07801353247487,
         "signalLine": -64.23170735627582,
         "histogram": -61.84630617619905,
-        "volumeAvg20": 522837.3,
-        "volumeChange": 28.100386104816927,
+        "volumeAvg20": 518859.2,
+        "volumeChange": 26.0157283517378,
         "bollingerUpper": 15925.834456423541,
         "bollingerMiddle": 14751,
         "bollingerLower": 13576.165543576459,
@@ -3932,7 +3932,7 @@
       "change": 230,
       "changePercent": 1.467772814294831,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:48.850Z",
+      "lastUpdated": "2026-01-23T13:48:40.570Z",
       "fundamentals": {
         "per": 40,
         "pbr": 2,
@@ -4030,7 +4030,7 @@
       "change": 0,
       "changePercent": 0,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:48.885Z",
+      "lastUpdated": "2026-01-23T13:48:40.619Z",
       "fundamentals": {
         "per": 32,
         "pbr": 1.2,
@@ -4128,7 +4128,7 @@
       "change": 2500,
       "changePercent": 0.5107252298263534,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:48.836Z",
+      "lastUpdated": "2026-01-23T13:48:40.661Z",
       "fundamentals": {
         "per": 25,
         "pbr": 0.5,
@@ -4226,7 +4226,7 @@
       "change": 6300,
       "changePercent": 3.523489932885906,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:48.805Z",
+      "lastUpdated": "2026-01-23T13:48:40.462Z",
       "fundamentals": {
         "per": 32,
         "pbr": 1.2,
@@ -4247,8 +4247,8 @@
         "macdLine": 5551.53259778471,
         "signalLine": 3362.4641916192295,
         "histogram": 2189.06840616548,
-        "volumeAvg20": 309920.4,
-        "volumeChange": 33.68142271370325,
+        "volumeAvg20": 310411.4,
+        "volumeChange": 34.10267792999869,
         "bollingerUpper": 180481.04512605522,
         "bollingerMiddle": 164980,
         "bollingerLower": 149478.95487394478,
@@ -4324,7 +4324,7 @@
       "change": 235,
       "changePercent": 7.332293291731669,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:48.766Z",
+      "lastUpdated": "2026-01-23T13:48:40.592Z",
       "fundamentals": {
         "per": 40,
         "pbr": 2,
@@ -4422,7 +4422,7 @@
       "change": 1000,
       "changePercent": 0.7751937984496124,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:48.745Z",
+      "lastUpdated": "2026-01-23T13:48:40.613Z",
       "fundamentals": {
         "per": 32,
         "pbr": 1.2,
@@ -4443,8 +4443,8 @@
         "macdLine": 510.14503630246327,
         "signalLine": -187.73131862010365,
         "histogram": 697.8763549225669,
-        "volumeAvg20": 179628.6,
-        "volumeChange": -0.8634482482188248,
+        "volumeAvg20": 179746.6,
+        "volumeChange": -0.6659374920026303,
         "bollingerUpper": 132601.92278068225,
         "bollingerMiddle": 126360,
         "bollingerLower": 120118.07721931775,
@@ -4520,7 +4520,7 @@
       "change": 2400,
       "changePercent": 2.3928215353938187,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:48.788Z",
+      "lastUpdated": "2026-01-23T13:48:40.428Z",
       "fundamentals": {
         "per": 19,
         "pbr": 4.9,
@@ -4541,8 +4541,8 @@
         "macdLine": 1520.1190189377958,
         "signalLine": 1091.266735534074,
         "histogram": 428.8522834037217,
-        "volumeAvg20": 81617,
-        "volumeChange": -5.261158827205117,
+        "volumeAvg20": 81433.35,
+        "volumeChange": -5.949589449531441,
         "bollingerUpper": 101544.0181210439,
         "bollingerMiddle": 96605,
         "bollingerLower": 91665.9818789561,
@@ -4618,7 +4618,7 @@
       "change": 5200,
       "changePercent": 5,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:48.712Z",
+      "lastUpdated": "2026-01-23T13:48:40.463Z",
       "fundamentals": {
         "per": 25,
         "pbr": 0.5,
@@ -4716,7 +4716,7 @@
       "change": 550,
       "changePercent": 2.9506437768240343,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:48.757Z",
+      "lastUpdated": "2026-01-23T13:48:40.519Z",
       "fundamentals": {
         "per": 31,
         "pbr": 1.1,
@@ -4737,8 +4737,8 @@
         "macdLine": -142.77716883030735,
         "signalLine": -141.26860013009744,
         "histogram": -1.5085687002099064,
-        "volumeAvg20": 605274.45,
-        "volumeChange": 38.59164218810163,
+        "volumeAvg20": 603733.8,
+        "volumeChange": 37.92456211661495,
         "bollingerUpper": 19670.88918128649,
         "bollingerMiddle": 18979.5,
         "bollingerLower": 18288.11081871351,
@@ -4814,7 +4814,7 @@
       "change": 200,
       "changePercent": 4.0241448692152915,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:48.696Z",
+      "lastUpdated": "2026-01-23T13:48:40.439Z",
       "fundamentals": {
         "per": 31,
         "pbr": 1.1,
@@ -4835,8 +4835,8 @@
         "macdLine": 329.87160932949246,
         "signalLine": 197.75228253698253,
         "histogram": 132.11932679250992,
-        "volumeAvg20": 6214422.85,
-        "volumeChange": 151.70022667511273,
+        "volumeAvg20": 6216297.85,
+        "volumeChange": 151.74495781279208,
         "bollingerUpper": 5095.822921852781,
         "bollingerMiddle": 4102,
         "bollingerLower": 3108.1770781472183,
@@ -4912,7 +4912,7 @@
       "change": 3300,
       "changePercent": 3.6666666666666665,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:50.070Z",
+      "lastUpdated": "2026-01-23T13:48:41.804Z",
       "fundamentals": {
         "per": 25,
         "pbr": 0.5,
@@ -5010,7 +5010,7 @@
       "change": 0,
       "changePercent": 0,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:50.104Z",
+      "lastUpdated": "2026-01-23T13:48:41.823Z",
       "fundamentals": {
         "per": 25,
         "pbr": 0.5,
@@ -5108,7 +5108,7 @@
       "change": 11500,
       "changePercent": 2.7090694935217905,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:50.025Z",
+      "lastUpdated": "2026-01-23T13:48:41.935Z",
       "fundamentals": {
         "per": 34,
         "pbr": 1.4,
@@ -5129,8 +5129,8 @@
         "macdLine": 3173.1933449864155,
         "signalLine": 3025.7080850466396,
         "histogram": 147.48525993977591,
-        "volumeAvg20": 238177.35,
-        "volumeChange": -14.125335595513178,
+        "volumeAvg20": 240605.1,
+        "volumeChange": -10.955752808232248,
         "bollingerUpper": 462789.11682584736,
         "bollingerMiddle": 426500,
         "bollingerLower": 390210.88317415264,
@@ -5206,7 +5206,7 @@
       "change": 2600,
       "changePercent": 1.888162672476398,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:50.041Z",
+      "lastUpdated": "2026-01-23T13:48:41.747Z",
       "fundamentals": {
         "per": 34,
         "pbr": 1.4,
@@ -5304,7 +5304,7 @@
       "change": 4000,
       "changePercent": 1.9230769230769231,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:50.224Z",
+      "lastUpdated": "2026-01-23T13:48:41.859Z",
       "fundamentals": {
         "per": 39,
         "pbr": 1.9,
@@ -5325,8 +5325,8 @@
         "macdLine": 5460.100196304207,
         "signalLine": 6245.10665742652,
         "histogram": -785.0064611223124,
-        "volumeAvg20": 913543.6,
-        "volumeChange": -29.19505976507306,
+        "volumeAvg20": 913605.65,
+        "volumeChange": -29.17270159176446,
         "bollingerUpper": 229650.0400640704,
         "bollingerMiddle": 204690,
         "bollingerLower": 179729.9599359296,
@@ -5402,7 +5402,7 @@
       "change": 24000,
       "changePercent": 1.3498312710911136,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:50.075Z",
+      "lastUpdated": "2026-01-23T13:48:41.824Z",
       "fundamentals": {
         "per": 38,
         "pbr": 1.8,
@@ -5423,8 +5423,8 @@
         "macdLine": 33460.98008149816,
         "signalLine": 40757.729551259974,
         "histogram": -7296.749469761817,
-        "volumeAvg20": 63638.3,
-        "volumeChange": 22.399875546644072,
+        "volumeAvg20": 63783.75,
+        "volumeChange": 23.032904148783977,
         "bollingerUpper": 2013928.2916128316,
         "bollingerMiddle": 1816550,
         "bollingerLower": 1619171.7083871684,
@@ -5500,7 +5500,7 @@
       "change": 35000,
       "changePercent": 8.130081300813007,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:50.119Z",
+      "lastUpdated": "2026-01-23T13:48:41.817Z",
       "fundamentals": {
         "per": 40,
         "pbr": 2,
@@ -5521,8 +5521,8 @@
         "macdLine": -433.34928332210984,
         "signalLine": 780.292740593902,
         "histogram": -1213.6420239160118,
-        "volumeAvg20": 147678.7,
-        "volumeChange": 31.31710937325422,
+        "volumeAvg20": 147398.05,
+        "volumeChange": 30.80552965252933,
         "bollingerUpper": 482784.73506923026,
         "bollingerMiddle": 448625,
         "bollingerLower": 414465.26493076974,
@@ -5598,7 +5598,7 @@
       "change": 3400,
       "changePercent": 3.2442748091603053,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:50.114Z",
+      "lastUpdated": "2026-01-23T13:48:41.763Z",
       "fundamentals": {
         "per": 17,
         "pbr": 4.7,
@@ -5619,8 +5619,8 @@
         "macdLine": -2651.121883741638,
         "signalLine": -2222.856278588643,
         "histogram": -428.26560515299525,
-        "volumeAvg20": 401811.05,
-        "volumeChange": 33.813542459820354,
+        "volumeAvg20": 400258.25,
+        "volumeChange": 32.780873348644285,
         "bollingerUpper": 117612.61445148301,
         "bollingerMiddle": 110650,
         "bollingerLower": 103687.38554851699,
@@ -5696,7 +5696,7 @@
       "change": -31500,
       "changePercent": -12.352941176470589,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:50.064Z",
+      "lastUpdated": "2026-01-23T13:48:41.853Z",
       "fundamentals": {
         "per": 28,
         "pbr": 0.8,
@@ -5794,7 +5794,7 @@
       "change": 8800,
       "changePercent": 5.762933857236411,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:50.083Z",
+      "lastUpdated": "2026-01-23T13:48:41.900Z",
       "fundamentals": {
         "per": 32,
         "pbr": 1.2,
@@ -5815,8 +5815,8 @@
         "macdLine": 1828.6875439826108,
         "signalLine": 3091.9537708346943,
         "histogram": -1263.2662268520835,
-        "volumeAvg20": 81383.95,
-        "volumeChange": -15.913395700257848,
+        "volumeAvg20": 81265.45,
+        "volumeChange": -16.374055641111934,
         "bollingerUpper": 167705.0316107202,
         "bollingerMiddle": 158610,
         "bollingerLower": 149514.9683892798,
@@ -5892,7 +5892,7 @@
       "change": 0,
       "changePercent": 0,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:51.408Z",
+      "lastUpdated": "2026-01-23T13:48:43.033Z",
       "fundamentals": {
         "per": 6,
         "pbr": 2.6,
@@ -5913,8 +5913,8 @@
         "macdLine": 548.0784277805942,
         "signalLine": -587.9386282265203,
         "histogram": 1136.0170560071147,
-        "volumeAvg20": 62783.25,
-        "volumeChange": 4.524375530097602,
+        "volumeAvg20": 62846.65,
+        "volumeChange": 4.822452748078048,
         "bollingerUpper": 216625.66722810012,
         "bollingerMiddle": 209600,
         "bollingerLower": 202574.33277189988,
@@ -5990,7 +5990,7 @@
       "change": -200,
       "changePercent": -0.1520912547528517,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:51.404Z",
+      "lastUpdated": "2026-01-23T13:48:43.231Z",
       "fundamentals": {
         "per": 24,
         "pbr": 5.4,
@@ -6011,8 +6011,8 @@
         "macdLine": -84.15006257570349,
         "signalLine": -203.42316302837207,
         "histogram": 119.27310045266859,
-        "volumeAvg20": 31878.65,
-        "volumeChange": -20.732527883081623,
+        "volumeAvg20": 31888.65,
+        "volumeChange": -20.631948984983683,
         "bollingerUpper": 141690.25298693642,
         "bollingerMiddle": 130820,
         "bollingerLower": 119949.74701306359,
@@ -6088,7 +6088,7 @@
       "change": 2000,
       "changePercent": 0.4878048780487805,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:51.428Z",
+      "lastUpdated": "2026-01-23T13:48:43.086Z",
       "fundamentals": {
         "per": 30,
         "pbr": 1,
@@ -6109,8 +6109,8 @@
         "macdLine": -5890.479407389008,
         "signalLine": -5951.869678085374,
         "histogram": 61.390270696366315,
-        "volumeAvg20": 30732.2,
-        "volumeChange": 2.8979376679834132,
+        "volumeAvg20": 30807.6,
+        "volumeChange": 3.6250795258312976,
         "bollingerUpper": 440002.0300667942,
         "bollingerMiddle": 418450,
         "bollingerLower": 396897.9699332058,
@@ -6186,7 +6186,7 @@
       "change": 2100,
       "changePercent": 1.866666666666667,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:51.457Z",
+      "lastUpdated": "2026-01-23T13:48:43.121Z",
       "fundamentals": {
         "per": 35,
         "pbr": 1.5,
@@ -6207,8 +6207,8 @@
         "macdLine": -1742.1320114788832,
         "signalLine": -2595.819993159658,
         "histogram": 853.687981680775,
-        "volumeAvg20": 14889.3,
-        "volumeChange": 24.838642515094726,
+        "volumeAvg20": 15108.85,
+        "volumeChange": 28.837072311923134,
         "bollingerUpper": 117991.50819243949,
         "bollingerMiddle": 110805,
         "bollingerLower": 103618.49180756051,
@@ -6284,7 +6284,7 @@
       "change": 200,
       "changePercent": 0.9174311926605505,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:51.350Z",
+      "lastUpdated": "2026-01-23T13:48:43.058Z",
       "fundamentals": {
         "per": 31,
         "pbr": 1.1,
@@ -6382,7 +6382,7 @@
       "change": 800,
       "changePercent": 0.6920415224913495,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:51.377Z",
+      "lastUpdated": "2026-01-23T13:48:43.021Z",
       "fundamentals": {
         "per": 37,
         "pbr": 1.7,
@@ -6480,7 +6480,7 @@
       "change": 3500,
       "changePercent": 1.2216404886561953,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:51.547Z",
+      "lastUpdated": "2026-01-23T13:48:43.063Z",
       "fundamentals": {
         "per": 28,
         "pbr": 0.8,
@@ -6578,7 +6578,7 @@
       "change": 1200,
       "changePercent": 1.3953488372093024,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:51.464Z",
+      "lastUpdated": "2026-01-23T13:48:43.133Z",
       "fundamentals": {
         "per": 41,
         "pbr": 2.1,
@@ -6676,7 +6676,7 @@
       "change": 0,
       "changePercent": 0,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:51.439Z",
+      "lastUpdated": "2026-01-23T13:48:43.108Z",
       "fundamentals": {
         "per": 6,
         "pbr": 2.6,
@@ -6697,8 +6697,8 @@
         "macdLine": 501.1272058139002,
         "signalLine": 486.6336512507944,
         "histogram": 14.493554563105818,
-        "volumeAvg20": 86585,
-        "volumeChange": 2.897037593116584,
+        "volumeAvg20": 86439.4,
+        "volumeChange": 2.396592294717462,
         "bollingerUpper": 97099.73892496573,
         "bollingerMiddle": 91115,
         "bollingerLower": 85130.26107503427,
@@ -6774,7 +6774,7 @@
       "change": 1800,
       "changePercent": 2.3346303501945527,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:51.348Z",
+      "lastUpdated": "2026-01-23T13:48:43.199Z",
       "fundamentals": {
         "per": 29,
         "pbr": 0.9,
@@ -6872,7 +6872,7 @@
       "change": 1350,
       "changePercent": 4.671280276816609,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:52.781Z",
+      "lastUpdated": "2026-01-23T13:48:44.488Z",
       "fundamentals": {
         "per": 38,
         "pbr": 1.8,
@@ -6970,7 +6970,7 @@
       "change": -50,
       "changePercent": -0.2364066193853428,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:52.684Z",
+      "lastUpdated": "2026-01-23T13:48:44.322Z",
       "fundamentals": {
         "per": 30,
         "pbr": 1,
@@ -7068,7 +7068,7 @@
       "change": -2400,
       "changePercent": -2.0066889632107023,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:52.716Z",
+      "lastUpdated": "2026-01-23T13:48:44.412Z",
       "fundamentals": {
         "per": 34,
         "pbr": 1.4,
@@ -7166,7 +7166,7 @@
       "change": 700,
       "changePercent": 0.41079812206572774,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:52.736Z",
+      "lastUpdated": "2026-01-23T13:48:44.461Z",
       "fundamentals": {
         "per": 29,
         "pbr": 0.9,
@@ -7264,7 +7264,7 @@
       "change": -2000,
       "changePercent": -0.08514261387824607,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:52.775Z",
+      "lastUpdated": "2026-01-23T13:48:44.382Z",
       "fundamentals": {
         "per": 39,
         "pbr": 1.9,
@@ -7285,8 +7285,8 @@
         "macdLine": 123639.44396881154,
         "signalLine": 81446.02474317249,
         "histogram": 42193.41922563905,
-        "volumeAvg20": 67158.5,
-        "volumeChange": -20.029780295867237,
+        "volumeAvg20": 67037.55,
+        "volumeChange": -20.607182094214366,
         "bollingerUpper": 2497497.040361419,
         "bollingerMiddle": 2039250,
         "bollingerLower": 1581002.959638581,
@@ -7362,7 +7362,7 @@
       "change": 1300,
       "changePercent": 2.166666666666667,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:52.759Z",
+      "lastUpdated": "2026-01-23T13:48:44.328Z",
       "fundamentals": {
         "per": 34,
         "pbr": 1.4,
@@ -7383,8 +7383,8 @@
         "macdLine": 574.4360627628776,
         "signalLine": 528.2947508287742,
         "histogram": 46.14131193410333,
-        "volumeAvg20": 278736.65,
-        "volumeChange": 9.470426655411115,
+        "volumeAvg20": 277492,
+        "volumeChange": 8.167298516713988,
         "bollingerUpper": 63420.76615753281,
         "bollingerMiddle": 59570,
         "bollingerLower": 55719.23384246719,
@@ -7460,7 +7460,7 @@
       "change": -130,
       "changePercent": -1.0268562401263823,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:52.710Z",
+      "lastUpdated": "2026-01-23T13:48:44.445Z",
       "fundamentals": {
         "per": 27,
         "pbr": 0.7,
@@ -7481,8 +7481,8 @@
         "macdLine": 24.54170698330927,
         "signalLine": -55.290132850279306,
         "histogram": 79.83183983358857,
-        "volumeAvg20": 1986539.2,
-        "volumeChange": 9.061960619755208,
+        "volumeAvg20": 1978234.7,
+        "volumeChange": 7.8406217422027895,
         "bollingerUpper": 12727.217595854188,
         "bollingerMiddle": 12178.5,
         "bollingerLower": 11629.782404145812,
@@ -7558,7 +7558,7 @@
       "change": 4600,
       "changePercent": 5.186020293122886,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:52.714Z",
+      "lastUpdated": "2026-01-23T13:48:44.472Z",
       "fundamentals": {
         "per": 29,
         "pbr": 0.9,
@@ -7579,8 +7579,8 @@
         "macdLine": 2180.8207636869483,
         "signalLine": 1192.534371409635,
         "histogram": 988.2863922773133,
-        "volumeAvg20": 274527.65,
-        "volumeChange": 22.74741724558526,
+        "volumeAvg20": 274712.1,
+        "volumeChange": 22.933573002426925,
         "bollingerUpper": 91534.63757507705,
         "bollingerMiddle": 84085,
         "bollingerLower": 76635.36242492295,
@@ -7656,7 +7656,7 @@
       "change": -4800,
       "changePercent": -7.2727272727272725,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:52.685Z",
+      "lastUpdated": "2026-01-23T13:48:44.436Z",
       "fundamentals": {
         "per": 35,
         "pbr": 1.5,
@@ -7677,8 +7677,8 @@
         "macdLine": 3833.5984031935222,
         "signalLine": 2422.6904330780344,
         "histogram": 1410.9079701154878,
-        "volumeAvg20": 4749190.2,
-        "volumeChange": 105.97604197869354,
+        "volumeAvg20": 4739033.65,
+        "volumeChange": 105.56021584695858,
         "bollingerUpper": 66542.43415958577,
         "bollingerMiddle": 53585,
         "bollingerLower": 40627.56584041424,
@@ -7754,7 +7754,7 @@
       "change": -400,
       "changePercent": -0.9696969696969697,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:53.968Z",
+      "lastUpdated": "2026-01-23T13:48:45.760Z",
       "fundamentals": {
         "per": 35,
         "pbr": 1.5,
@@ -7852,7 +7852,7 @@
       "change": 9200,
       "changePercent": 4.930332261521972,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:53.980Z",
+      "lastUpdated": "2026-01-23T13:48:45.739Z",
       "fundamentals": {
         "per": 29,
         "pbr": 0.9,
@@ -7873,8 +7873,8 @@
         "macdLine": 6512.313515669346,
         "signalLine": 4427.906417476384,
         "histogram": 2084.4070981929617,
-        "volumeAvg20": 256852.65,
-        "volumeChange": 21.01615459291544,
+        "volumeAvg20": 258892.65,
+        "volumeChange": 23.214467463637927,
         "bollingerUpper": 192092.49051138395,
         "bollingerMiddle": 173320,
         "bollingerLower": 154547.50948861605,
@@ -7950,7 +7950,7 @@
       "change": 46000,
       "changePercent": 5.111111111111112,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:53.996Z",
+      "lastUpdated": "2026-01-23T13:48:45.632Z",
       "fundamentals": {
         "per": 22,
         "pbr": 5.2,
@@ -8048,7 +8048,7 @@
       "change": -2800,
       "changePercent": -1.6898008449004225,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:54.002Z",
+      "lastUpdated": "2026-01-23T13:48:45.583Z",
       "fundamentals": {
         "per": 36,
         "pbr": 1.6,
@@ -8146,7 +8146,7 @@
       "change": -34000,
       "changePercent": -2.6377036462373935,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:53.984Z",
+      "lastUpdated": "2026-01-23T13:48:45.770Z",
       "fundamentals": {
         "per": 28,
         "pbr": 0.8,
@@ -8167,8 +8167,8 @@
         "macdLine": 99722.77330660657,
         "signalLine": 91602.97483812811,
         "histogram": 8119.798468478461,
-        "volumeAvg20": 263338.8,
-        "volumeChange": -14.279323821632058,
+        "volumeAvg20": 264244.85,
+        "volumeChange": -13.20171424343747,
         "bollingerUpper": 1465531.267661455,
         "bollingerMiddle": 1139300,
         "bollingerLower": 813068.7323385449,
@@ -8244,7 +8244,7 @@
       "change": 1600,
       "changePercent": 5.6939501779359425,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:53.925Z",
+      "lastUpdated": "2026-01-23T13:48:45.644Z",
       "fundamentals": {
         "per": 36,
         "pbr": 1.6,
@@ -8265,8 +8265,8 @@
         "macdLine": 294.6749582257107,
         "signalLine": 122.44341403159012,
         "histogram": 172.2315441941206,
-        "volumeAvg20": 1406390.65,
-        "volumeChange": 26.649363034374563,
+        "volumeAvg20": 1403492.85,
+        "volumeChange": 26.08497435523095,
         "bollingerUpper": 29653.00362318518,
         "bollingerMiddle": 27617.5,
         "bollingerLower": 25581.99637681482,
@@ -8342,7 +8342,7 @@
       "change": 4200,
       "changePercent": 3.6521739130434785,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:53.910Z",
+      "lastUpdated": "2026-01-23T13:48:45.769Z",
       "fundamentals": {
         "per": 32,
         "pbr": 1.2,
@@ -8440,7 +8440,7 @@
       "change": 6500,
       "changePercent": 2.674897119341564,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:53.885Z",
+      "lastUpdated": "2026-01-23T13:48:45.567Z",
       "fundamentals": {
         "per": 38,
         "pbr": 1.8,
@@ -8538,7 +8538,7 @@
       "change": 14000,
       "changePercent": 2.2838499184339316,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:53.864Z",
+      "lastUpdated": "2026-01-23T13:48:45.629Z",
       "fundamentals": {
         "per": 39,
         "pbr": 1.9,
@@ -8636,7 +8636,7 @@
       "change": 2000,
       "changePercent": 1.3774104683195594,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:53.924Z",
+      "lastUpdated": "2026-01-23T13:48:45.727Z",
       "fundamentals": {
         "per": 33,
         "pbr": 1.3,
@@ -8734,7 +8734,7 @@
       "change": 700,
       "changePercent": 1.1382113821138211,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:55.133Z",
+      "lastUpdated": "2026-01-23T13:48:47.003Z",
       "fundamentals": {
         "per": 43,
         "pbr": 2.3,
@@ -8755,8 +8755,8 @@
         "macdLine": 1443.6941175119646,
         "signalLine": 1044.4561258640595,
         "histogram": 399.2379916479051,
-        "volumeAvg20": 229600.85,
-        "volumeChange": -3.1320659309405863,
+        "volumeAvg20": 228643.7,
+        "volumeChange": -4.401039696261043,
         "bollingerUpper": 63224.70529598719,
         "bollingerMiddle": 58135,
         "bollingerLower": 53045.29470401281,
@@ -8832,7 +8832,7 @@
       "change": 400,
       "changePercent": 0.5988023952095809,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:55.143Z",
+      "lastUpdated": "2026-01-23T13:48:46.911Z",
       "fundamentals": {
         "per": 36,
         "pbr": 1.6,
@@ -8853,8 +8853,8 @@
         "macdLine": 2007.3368555495326,
         "signalLine": 1097.9415525309353,
         "histogram": 909.3953030185974,
-        "volumeAvg20": 288010,
-        "volumeChange": 43.10676712614145,
+        "volumeAvg20": 286311.1,
+        "volumeChange": 41.58242555038908,
         "bollingerUpper": 67054.2016954071,
         "bollingerMiddle": 60165,
         "bollingerLower": 53275.79830459291,
@@ -8930,7 +8930,7 @@
       "change": 0,
       "changePercent": 0,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:55.287Z",
+      "lastUpdated": "2026-01-23T13:48:46.973Z",
       "fundamentals": {
         "per": 24,
         "pbr": 5.4,
@@ -9028,7 +9028,7 @@
       "change": 800,
       "changePercent": 1.0443864229765014,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:55.255Z",
+      "lastUpdated": "2026-01-23T13:48:46.962Z",
       "fundamentals": {
         "per": 25,
         "pbr": 0.5,
@@ -9126,7 +9126,7 @@
       "change": 4200,
       "changePercent": 3.614457831325301,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:55.098Z",
+      "lastUpdated": "2026-01-23T13:48:46.903Z",
       "fundamentals": {
         "per": 30,
         "pbr": 1,
@@ -9147,8 +9147,8 @@
         "macdLine": -2838.5954221528373,
         "signalLine": -2368.6866172245836,
         "histogram": -469.90880492825363,
-        "volumeAvg20": 202304.1,
-        "volumeChange": 27.329401628538424,
+        "volumeAvg20": 201506.15,
+        "volumeChange": 26.249645482284283,
         "bollingerUpper": 129230.66470795978,
         "bollingerMiddle": 122310,
         "bollingerLower": 115389.33529204022,
@@ -9224,7 +9224,7 @@
       "change": 2250,
       "changePercent": 4.568527918781726,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:55.112Z",
+      "lastUpdated": "2026-01-23T13:48:46.828Z",
       "fundamentals": {
         "per": 29,
         "pbr": 0.9,
@@ -9245,8 +9245,8 @@
         "macdLine": -329.18982286946994,
         "signalLine": -730.9345530366068,
         "histogram": 401.7447301671368,
-        "volumeAvg20": 154587.6,
-        "volumeChange": 41.354804654448344,
+        "volumeAvg20": 154824.65,
+        "volumeChange": 41.750812935795445,
         "bollingerUpper": 50728.86902535084,
         "bollingerMiddle": 48740,
         "bollingerLower": 46751.13097464916,
@@ -9322,7 +9322,7 @@
       "change": 900,
       "changePercent": 0.69713400464756,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:55.140Z",
+      "lastUpdated": "2026-01-23T13:48:46.927Z",
       "fundamentals": {
         "per": 35,
         "pbr": 1.5,
@@ -9343,8 +9343,8 @@
         "macdLine": 4163.571943392788,
         "signalLine": 3540.398437690458,
         "histogram": 623.1735057023297,
-        "volumeAvg20": 106259.5,
-        "volumeChange": -22.671196457728488,
+        "volumeAvg20": 105816.05,
+        "volumeChange": -24.023435008205286,
         "bollingerUpper": 133613.5869646003,
         "bollingerMiddle": 122645,
         "bollingerLower": 111676.41303539969,
@@ -9420,7 +9420,7 @@
       "change": 25,
       "changePercent": 0.7142857142857143,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:55.089Z",
+      "lastUpdated": "2026-01-23T13:48:46.959Z",
       "fundamentals": {
         "per": 27,
         "pbr": 0.7,
@@ -9441,8 +9441,8 @@
         "macdLine": 0.1484157656827847,
         "signalLine": -2.338721285508939,
         "histogram": 2.487137051191724,
-        "volumeAvg20": 612332.75,
-        "volumeChange": 38.88494450117195,
+        "volumeAvg20": 611510.2,
+        "volumeChange": 38.533715382016545,
         "bollingerUpper": 3608.0568612000206,
         "bollingerMiddle": 3513.5,
         "bollingerLower": 3418.9431387999794,
@@ -9518,7 +9518,7 @@
       "change": -200,
       "changePercent": -0.9732360097323601,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:55.203Z",
+      "lastUpdated": "2026-01-23T13:48:46.955Z",
       "fundamentals": {
         "per": 20,
         "pbr": 5,
@@ -9539,8 +9539,8 @@
         "macdLine": 39.97911783788004,
         "signalLine": 31.5093950109753,
         "histogram": 8.46972282690474,
-        "volumeAvg20": 1716536.5,
-        "volumeChange": 49.90496269668602,
+        "volumeAvg20": 1710590.45,
+        "volumeChange": 49.035626850366214,
         "bollingerUpper": 20947.537592922385,
         "bollingerMiddle": 20282.5,
         "bollingerLower": 19617.462407077615,
@@ -9616,7 +9616,7 @@
       "change": 2150,
       "changePercent": 8.651911468812877,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:55.288Z",
+      "lastUpdated": "2026-01-23T13:48:47.002Z",
       "fundamentals": {
         "per": 31,
         "pbr": 1.1,
@@ -9714,7 +9714,7 @@
       "change": 2200,
       "changePercent": 6.043956043956044,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:56.451Z",
+      "lastUpdated": "2026-01-23T13:48:48.260Z",
       "fundamentals": {
         "per": 19,
         "pbr": 4.9,
@@ -9812,7 +9812,7 @@
       "change": -2100,
       "changePercent": -2.2556390977443606,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:56.434Z",
+      "lastUpdated": "2026-01-23T13:48:48.210Z",
       "fundamentals": {
         "per": 34,
         "pbr": 1.4,
@@ -9833,8 +9833,8 @@
         "macdLine": 6171.634039561133,
         "signalLine": 4713.875723665487,
         "histogram": 1457.7583158956459,
-        "volumeAvg20": 472332.2,
-        "volumeChange": 20.328192742311458,
+        "volumeAvg20": 473307.2,
+        "volumeChange": 20.90430908298036,
         "bollingerUpper": 94016.0557270757,
         "bollingerMiddle": 77830,
         "bollingerLower": 61643.9442729243,
@@ -9910,7 +9910,7 @@
       "change": 300,
       "changePercent": 0.9966777408637874,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:56.472Z",
+      "lastUpdated": "2026-01-23T13:48:48.233Z",
       "fundamentals": {
         "per": 22,
         "pbr": 5.2,
@@ -9931,8 +9931,8 @@
         "macdLine": 1464.1941988157596,
         "signalLine": 1151.2267750050896,
         "histogram": 312.96742381066997,
-        "volumeAvg20": 7443519.25,
-        "volumeChange": 8.815383261083124,
+        "volumeAvg20": 7428902.85,
+        "volumeChange": 8.242476208986913,
         "bollingerUpper": 32914.88688709192,
         "bollingerMiddle": 27500,
         "bollingerLower": 22085.113112908082,
@@ -10008,7 +10008,7 @@
       "change": 400,
       "changePercent": 0.6060606060606061,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:56.375Z",
+      "lastUpdated": "2026-01-23T13:48:48.115Z",
       "fundamentals": {
         "per": 34,
         "pbr": 1.4,
@@ -10029,8 +10029,8 @@
         "macdLine": -1645.559305600982,
         "signalLine": -1904.858540828447,
         "histogram": 259.29923522746503,
-        "volumeAvg20": 101967.45,
-        "volumeChange": -13.286641962704767,
+        "volumeAvg20": 102090.45,
+        "volumeChange": -12.909189840969457,
         "bollingerUpper": 72292.08748063486,
         "bollingerMiddle": 66285,
         "bollingerLower": 60277.91251936515,
@@ -10106,7 +10106,7 @@
       "change": 2300,
       "changePercent": 2.7446300715990453,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:56.450Z",
+      "lastUpdated": "2026-01-23T13:48:48.129Z",
       "fundamentals": {
         "per": 32,
         "pbr": 1.2,
@@ -10204,7 +10204,7 @@
       "change": 400,
       "changePercent": 0.641025641025641,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:56.586Z",
+      "lastUpdated": "2026-01-23T13:48:48.173Z",
       "fundamentals": {
         "per": 25,
         "pbr": 0.5,
@@ -10302,7 +10302,7 @@
       "change": 1350,
       "changePercent": 3.061224489795918,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:56.401Z",
+      "lastUpdated": "2026-01-23T13:48:48.275Z",
       "fundamentals": {
         "per": 31,
         "pbr": 1.1,
@@ -10400,7 +10400,7 @@
       "change": -7000,
       "changePercent": -2.536231884057971,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:56.640Z",
+      "lastUpdated": "2026-01-23T13:48:48.146Z",
       "fundamentals": {
         "per": 35,
         "pbr": 1.5,
@@ -10421,8 +10421,8 @@
         "macdLine": 9497.552659663517,
         "signalLine": 6101.292772691353,
         "histogram": 3396.259886972164,
-        "volumeAvg20": 70575.95,
-        "volumeChange": 40.459179082959565,
+        "volumeAvg20": 71032.95,
+        "volumeChange": 42.12896972461371,
         "bollingerUpper": 273402.009414052,
         "bollingerMiddle": 243075,
         "bollingerLower": 212747.990585948,
@@ -10498,7 +10498,7 @@
       "change": 200,
       "changePercent": 0.7207207207207207,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:56.518Z",
+      "lastUpdated": "2026-01-23T13:48:48.303Z",
       "fundamentals": {
         "per": 26,
         "pbr": 0.6,
@@ -10596,7 +10596,7 @@
       "change": -5000,
       "changePercent": -1.1990407673860912,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:56.397Z",
+      "lastUpdated": "2026-01-23T13:48:48.190Z",
       "fundamentals": {
         "per": 33,
         "pbr": 1.3,
@@ -10694,7 +10694,7 @@
       "change": 11500,
       "changePercent": 3.1207598371777476,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:57.892Z",
+      "lastUpdated": "2026-01-23T13:48:49.366Z",
       "fundamentals": {
         "per": 36,
         "pbr": 1.6,
@@ -10792,7 +10792,7 @@
       "change": 21,
       "changePercent": 1.1075949367088607,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:57.838Z",
+      "lastUpdated": "2026-01-23T13:48:49.461Z",
       "fundamentals": {
         "per": 26,
         "pbr": 0.6,
@@ -10813,8 +10813,8 @@
         "macdLine": -23.270557871274605,
         "signalLine": -22.75623962605706,
         "histogram": -0.5143182452175452,
-        "volumeAvg20": 799347.45,
-        "volumeChange": -39.787035037141855,
+        "volumeAvg20": 799354.45,
+        "volumeChange": -39.78405949951239,
         "bollingerUpper": 2070.514987239346,
         "bollingerMiddle": 1944.15,
         "bollingerLower": 1817.7850127606544,
@@ -10890,7 +10890,7 @@
       "change": 10,
       "changePercent": 0.0554016620498615,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:57.779Z",
+      "lastUpdated": "2026-01-23T13:48:49.399Z",
       "fundamentals": {
         "per": 24,
         "pbr": 5.4,
@@ -10911,8 +10911,8 @@
         "macdLine": -190.6188811469874,
         "signalLine": -228.72164474909204,
         "histogram": 38.10276360210463,
-        "volumeAvg20": 184235.75,
-        "volumeChange": -17.601876942992885,
+        "volumeAvg20": 184490.8,
+        "volumeChange": -17.162807034280295,
         "bollingerUpper": 18860.55562462014,
         "bollingerMiddle": 18078.5,
         "bollingerLower": 17296.44437537986,
@@ -10988,7 +10988,7 @@
       "change": 800,
       "changePercent": 0.41450777202072536,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:57.739Z",
+      "lastUpdated": "2026-01-23T13:48:49.382Z",
       "fundamentals": {
         "per": 38,
         "pbr": 1.8,
@@ -11009,8 +11009,8 @@
         "macdLine": 5326.9907368141285,
         "signalLine": 3383.1609753525736,
         "histogram": 1943.8297614615549,
-        "volumeAvg20": 90799,
-        "volumeChange": 13.45961959933479,
+        "volumeAvg20": 90875.8,
+        "volumeChange": 13.701777590953798,
         "bollingerUpper": 194636.4566717366,
         "bollingerMiddle": 177070,
         "bollingerLower": 159503.5433282634,
@@ -11086,7 +11086,7 @@
       "change": 1150,
       "changePercent": 5.032822757111598,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:57.924Z",
+      "lastUpdated": "2026-01-23T13:48:49.427Z",
       "fundamentals": {
         "per": 34,
         "pbr": 1.4,
@@ -11107,8 +11107,8 @@
         "macdLine": 553.8841048655886,
         "signalLine": 336.52555857973374,
         "histogram": 217.35854628585486,
-        "volumeAvg20": 872567.95,
-        "volumeChange": 18.819720573051086,
+        "volumeAvg20": 869241.15,
+        "volumeChange": 17.74357438094135,
         "bollingerUpper": 23486.49933881856,
         "bollingerMiddle": 21785,
         "bollingerLower": 20083.50066118144,
@@ -11184,7 +11184,7 @@
       "change": 150,
       "changePercent": 0.7194244604316548,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:57.921Z",
+      "lastUpdated": "2026-01-23T13:48:49.514Z",
       "fundamentals": {
         "per": 19,
         "pbr": 4.9,
@@ -11282,7 +11282,7 @@
       "change": 1300,
       "changePercent": 2.218430034129693,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:57.845Z",
+      "lastUpdated": "2026-01-23T13:48:49.555Z",
       "fundamentals": {
         "per": 23,
         "pbr": 5.3,
@@ -11380,7 +11380,7 @@
       "change": 2500,
       "changePercent": 1.5188335358444713,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:57.891Z",
+      "lastUpdated": "2026-01-23T13:48:49.396Z",
       "fundamentals": {
         "per": 39,
         "pbr": 1.9,
@@ -11401,8 +11401,8 @@
         "macdLine": -2602.6284619526996,
         "signalLine": -2174.2144478407918,
         "histogram": -428.4140141119078,
-        "volumeAvg20": 38209.4,
-        "volumeChange": 9.763566033489138,
+        "volumeAvg20": 38109.9,
+        "volumeChange": 9.005796394112812,
         "bollingerUpper": 177397.2749625164,
         "bollingerMiddle": 168385,
         "bollingerLower": 159372.7250374836,
@@ -11478,7 +11478,7 @@
       "change": -6000,
       "changePercent": -2.1201413427561837,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:57.763Z",
+      "lastUpdated": "2026-01-23T13:48:49.449Z",
       "fundamentals": {
         "per": 25,
         "pbr": 0.5,
@@ -11499,8 +11499,8 @@
         "macdLine": 3479.0286840228946,
         "signalLine": 4007.7164138159424,
         "histogram": -528.6877297930478,
-        "volumeAvg20": 163191.95,
-        "volumeChange": 1.8361506189490242,
+        "volumeAvg20": 162765.9,
+        "volumeChange": 1.0556879542951056,
         "bollingerUpper": 289301.0376952147,
         "bollingerMiddle": 276050,
         "bollingerLower": 262798.9623047853,
@@ -11576,7 +11576,7 @@
       "change": -1000,
       "changePercent": -0.1890359168241966,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:59.165Z",
+      "lastUpdated": "2026-01-23T13:48:50.724Z",
       "fundamentals": {
         "per": 42,
         "pbr": 2.2,
@@ -11597,8 +11597,8 @@
         "macdLine": 32418.232694410428,
         "signalLine": 34395.66826232251,
         "histogram": -1977.4355679120854,
-        "volumeAvg20": 164229.4,
-        "volumeChange": -23.414443455313112,
+        "volumeAvg20": 163985.45,
+        "volumeChange": -23.89556512483273,
         "bollingerUpper": 615643.0887527674,
         "bollingerMiddle": 505500,
         "bollingerLower": 395356.9112472326,
@@ -11674,7 +11674,7 @@
       "change": 1000,
       "changePercent": 0.48426150121065376,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:59.161Z",
+      "lastUpdated": "2026-01-23T13:48:50.660Z",
       "fundamentals": {
         "per": 34,
         "pbr": 1.4,
@@ -11695,8 +11695,8 @@
         "macdLine": 6124.551968863467,
         "signalLine": 7086.955677271851,
         "histogram": -962.4037084083839,
-        "volumeAvg20": 770592.7,
-        "volumeChange": 8.466457053122879,
+        "volumeAvg20": 770658.35,
+        "volumeChange": 8.491291893483018,
         "bollingerUpper": 234981.68576585627,
         "bollingerMiddle": 207130,
         "bollingerLower": 179278.31423414373,
@@ -11772,7 +11772,7 @@
       "change": 1500,
       "changePercent": 5.802707930367505,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:59.185Z",
+      "lastUpdated": "2026-01-23T13:48:50.695Z",
       "fundamentals": {
         "per": 24,
         "pbr": 5.4,
@@ -11793,8 +11793,8 @@
         "macdLine": -20.21404345639894,
         "signalLine": -9.502446057391747,
         "histogram": -10.711597399007193,
-        "volumeAvg20": 208339.85,
-        "volumeChange": -15.619215430941328,
+        "volumeAvg20": 208096.45,
+        "volumeChange": -15.988379426943611,
         "bollingerUpper": 28824.671695397188,
         "bollingerMiddle": 26350,
         "bollingerLower": 23875.328304602812,
@@ -11870,7 +11870,7 @@
       "change": 1550,
       "changePercent": 4.353932584269663,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:59.102Z",
+      "lastUpdated": "2026-01-23T13:48:50.642Z",
       "fundamentals": {
         "per": 5,
         "pbr": 2.5,
@@ -11891,8 +11891,8 @@
         "macdLine": -551.0385390167503,
         "signalLine": -683.7322287775688,
         "histogram": 132.69368976081853,
-        "volumeAvg20": 62944.75,
-        "volumeChange": 64.33078215419079,
+        "volumeAvg20": 63044.75,
+        "volumeChange": 64.70459475214035,
         "bollingerUpper": 38652.731961016776,
         "bollingerMiddle": 36295,
         "bollingerLower": 33937.268038983224,
@@ -11968,7 +11968,7 @@
       "change": 1990,
       "changePercent": 11.173498034811903,
       "currency": "KRW",
-      "lastUpdated": "2026-01-23T08:33:59.171Z",
+      "lastUpdated": "2026-01-23T13:48:50.674Z",
       "fundamentals": {
         "per": 31,
         "pbr": 1.1,
@@ -11989,8 +11989,8 @@
         "macdLine": -111.79742829245151,
         "signalLine": -230.48434065131667,
         "histogram": 118.68691235886516,
-        "volumeAvg20": 129070.1,
-        "volumeChange": 67.69135531776917,
+        "volumeAvg20": 128673.95,
+        "volumeChange": 66.9761439669801,
         "bollingerUpper": 19686.650325800718,
         "bollingerMiddle": 18186.5,
         "bollingerLower": 16686.349674199282,
@@ -12066,7 +12066,7 @@
       "change": 1.5199926757812534,
       "changePercent": 0.8291471825511129,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:33:59.155Z",
+      "lastUpdated": "2026-01-23T13:48:50.766Z",
       "fundamentals": {
         "per": 25,
         "pbr": 0.5,
@@ -12164,7 +12164,7 @@
       "change": -3.309987792968741,
       "changePercent": -1.0066873223404431,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:33:59.150Z",
+      "lastUpdated": "2026-01-23T13:48:50.707Z",
       "fundamentals": {
         "per": 29,
         "pbr": 0.9,
@@ -12262,7 +12262,7 @@
       "change": 3.9299969482421773,
       "changePercent": 1.5732573659848572,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:33:59.006Z",
+      "lastUpdated": "2026-01-23T13:48:50.612Z",
       "fundamentals": {
         "per": 18,
         "pbr": 1.8,
@@ -12360,7 +12360,7 @@
       "change": 0.07000000000000028,
       "changePercent": 0.12903225806451665,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:33:59.163Z",
+      "lastUpdated": "2026-01-23T13:48:50.697Z",
       "fundamentals": {
         "per": 30,
         "pbr": 1,
@@ -12458,7 +12458,7 @@
       "change": 0.5799963378906341,
       "changePercent": 0.2983366735071338,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:33:59.290Z",
+      "lastUpdated": "2026-01-23T13:48:50.833Z",
       "fundamentals": {
         "per": 18,
         "pbr": 0.8,
@@ -12556,7 +12556,7 @@
       "change": 1.4300048828125114,
       "changePercent": 0.9145008169507396,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:00.526Z",
+      "lastUpdated": "2026-01-23T13:48:52.039Z",
       "fundamentals": {
         "per": 32,
         "pbr": 1.2,
@@ -12654,7 +12654,7 @@
       "change": -6.454990234374975,
       "changePercent": -1.9846852872315512,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:00.557Z",
+      "lastUpdated": "2026-01-23T13:48:52.089Z",
       "fundamentals": {
         "per": 19,
         "pbr": 4.9,
@@ -12752,7 +12752,7 @@
       "change": 8.470014648437484,
       "changePercent": 2.176766201665267,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:00.589Z",
+      "lastUpdated": "2026-01-23T13:48:51.994Z",
       "fundamentals": {
         "per": 10,
         "pbr": 2,
@@ -12850,7 +12850,7 @@
       "change": 3.549998779296857,
       "changePercent": 1.1640485179156246,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:00.446Z",
+      "lastUpdated": "2026-01-23T13:48:51.998Z",
       "fundamentals": {
         "per": 14,
         "pbr": 1.4,
@@ -12948,7 +12948,7 @@
       "change": -7.689999389648449,
       "changePercent": -3.367047335784962,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:00.475Z",
+      "lastUpdated": "2026-01-23T13:48:51.976Z",
       "fundamentals": {
         "per": 41,
         "pbr": 2.1,
@@ -13046,7 +13046,7 @@
       "change": -12.480012207031223,
       "changePercent": -2.39103590672607,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:00.536Z",
+      "lastUpdated": "2026-01-23T13:48:51.961Z",
       "fundamentals": {
         "per": 12,
         "pbr": 3.2,
@@ -13144,7 +13144,7 @@
       "change": -20,
       "changePercent": -1.3157894736842104,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:00.538Z",
+      "lastUpdated": "2026-01-23T13:48:51.951Z",
       "fundamentals": {
         "per": 11,
         "pbr": 4.1,
@@ -13242,7 +13242,7 @@
       "change": 3.25000366210935,
       "changePercent": 1.0355606997300266,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:00.387Z",
+      "lastUpdated": "2026-01-23T13:48:51.901Z",
       "fundamentals": {
         "per": 24,
         "pbr": 5.4,
@@ -13340,7 +13340,7 @@
       "change": 0.5499969482421818,
       "changePercent": 0.6662591494967489,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:00.717Z",
+      "lastUpdated": "2026-01-23T13:48:52.082Z",
       "fundamentals": {
         "per": 9,
         "pbr": 2.9,
@@ -13438,7 +13438,7 @@
       "change": 3.029998779296875,
       "changePercent": 1.2964225412764867,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:00.393Z",
+      "lastUpdated": "2026-01-23T13:48:51.992Z",
       "fundamentals": {
         "per": 7,
         "pbr": 2.7,
@@ -13536,7 +13536,7 @@
       "change": -0.06000106811523409,
       "changePercent": -0.09504366719476985,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:01.899Z",
+      "lastUpdated": "2026-01-23T13:48:53.194Z",
       "fundamentals": {
         "per": 5,
         "pbr": 1.5,
@@ -13634,7 +13634,7 @@
       "change": 1.7399462890625728,
       "changePercent": 0.1618660007742668,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:01.864Z",
+      "lastUpdated": "2026-01-23T13:48:53.178Z",
       "fundamentals": {
         "per": 14,
         "pbr": 3.4,
@@ -13732,7 +13732,7 @@
       "change": 0.7000061035156193,
       "changePercent": 0.2826594471099466,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:02.020Z",
+      "lastUpdated": "2026-01-23T13:48:53.258Z",
       "fundamentals": {
         "per": 14,
         "pbr": 4.4,
@@ -13830,7 +13830,7 @@
       "change": 7.030014648437486,
       "changePercent": 1.5829445138173255,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:01.925Z",
+      "lastUpdated": "2026-01-23T13:48:53.219Z",
       "fundamentals": {
         "per": 42,
         "pbr": 2.2,
@@ -13928,7 +13928,7 @@
       "change": 2.1599951171875205,
       "changePercent": 0.6577730327881407,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:01.976Z",
+      "lastUpdated": "2026-01-23T13:48:53.208Z",
       "fundamentals": {
         "per": 24,
         "pbr": 3.4,
@@ -14026,7 +14026,7 @@
       "change": 2.459995117187475,
       "changePercent": 0.7491306049725416,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:02.004Z",
+      "lastUpdated": "2026-01-23T13:48:53.366Z",
       "fundamentals": {
         "per": 28,
         "pbr": 0.8,
@@ -14124,7 +14124,7 @@
       "change": 34.669978027343745,
       "changePercent": 5.656156484034183,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:01.854Z",
+      "lastUpdated": "2026-01-23T13:48:53.252Z",
       "fundamentals": {
         "per": 23,
         "pbr": 5.3,
@@ -14222,7 +14222,7 @@
       "change": 4.299995117187507,
       "changePercent": 2.4729669866788395,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:01.835Z",
+      "lastUpdated": "2026-01-23T13:48:53.398Z",
       "fundamentals": {
         "per": 32,
         "pbr": 1.2,
@@ -14320,7 +14320,7 @@
       "change": 0.6399975585937483,
       "changePercent": 0.8684998471843381,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:01.838Z",
+      "lastUpdated": "2026-01-23T13:48:53.183Z",
       "fundamentals": {
         "per": 24,
         "pbr": 5.4,
@@ -14418,7 +14418,7 @@
       "change": 6.509998168945316,
       "changePercent": 2.937989942751653,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:01.973Z",
+      "lastUpdated": "2026-01-23T13:48:53.152Z",
       "fundamentals": {
         "per": 34,
         "pbr": 3.4,
@@ -14516,7 +14516,7 @@
       "change": 4.36999877929685,
       "changePercent": 1.5567108721480591,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:03.159Z",
+      "lastUpdated": "2026-01-23T13:48:54.713Z",
       "fundamentals": {
         "per": 18,
         "pbr": 1.8,
@@ -14614,7 +14614,7 @@
       "change": 5.499989013671893,
       "changePercent": 1.869282129050887,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:03.239Z",
+      "lastUpdated": "2026-01-23T13:48:54.566Z",
       "fundamentals": {
         "per": 36,
         "pbr": 2.6,
@@ -14712,7 +14712,7 @@
       "change": -2.870008544921859,
       "changePercent": -0.9645790355916294,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:03.446Z",
+      "lastUpdated": "2026-01-23T13:48:54.640Z",
       "fundamentals": {
         "per": 24,
         "pbr": 2.4,
@@ -14810,7 +14810,7 @@
       "change": 22.770017089843805,
       "changePercent": 4.337807252756284,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:03.262Z",
+      "lastUpdated": "2026-01-23T13:48:54.497Z",
       "fundamentals": {
         "per": 8,
         "pbr": 2.8,
@@ -14908,7 +14908,7 @@
       "change": 3.2599969482421898,
       "changePercent": 2.60175328718514,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:03.168Z",
+      "lastUpdated": "2026-01-23T13:48:54.458Z",
       "fundamentals": {
         "per": 12,
         "pbr": 5.2,
@@ -15006,7 +15006,7 @@
       "change": 0.7999987792968852,
       "changePercent": 0.4408435410346032,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:03.143Z",
+      "lastUpdated": "2026-01-23T13:48:54.542Z",
       "fundamentals": {
         "per": 38,
         "pbr": 1.8,
@@ -15104,7 +15104,7 @@
       "change": 7.889995117187482,
       "changePercent": 1.7695332894017424,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:03.124Z",
+      "lastUpdated": "2026-01-23T13:48:54.580Z",
       "fundamentals": {
         "per": 32,
         "pbr": 1.2,
@@ -15202,7 +15202,7 @@
       "change": 1.8700000000000045,
       "changePercent": 2.4686468646864745,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:03.099Z",
+      "lastUpdated": "2026-01-23T13:48:54.484Z",
       "fundamentals": {
         "per": 44,
         "pbr": 2.4,
@@ -15300,7 +15300,7 @@
       "change": 0.2999993133544905,
       "changePercent": 1.5360947404350482,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:03.305Z",
+      "lastUpdated": "2026-01-23T13:48:54.635Z",
       "fundamentals": {
         "per": 41,
         "pbr": 4.1,
@@ -15398,7 +15398,7 @@
       "change": 0.33999954223632756,
       "changePercent": 1.617504923082672,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:03.129Z",
+      "lastUpdated": "2026-01-23T13:48:54.485Z",
       "fundamentals": {
         "per": 29,
         "pbr": 2.9,
@@ -15496,7 +15496,7 @@
       "change": 3.909997863769533,
       "changePercent": 3.452231847096861,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:04.707Z",
+      "lastUpdated": "2026-01-23T13:48:55.876Z",
       "fundamentals": {
         "per": 17,
         "pbr": 4.7,
@@ -15594,7 +15594,7 @@
       "change": -0.9700024414062511,
       "changePercent": -0.44764522150418234,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:04.579Z",
+      "lastUpdated": "2026-01-23T13:48:55.894Z",
       "fundamentals": {
         "per": 44,
         "pbr": 2.4,
@@ -15692,7 +15692,7 @@
       "change": 0.5800012207031244,
       "changePercent": 0.690231142602401,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:04.658Z",
+      "lastUpdated": "2026-01-23T13:48:55.785Z",
       "fundamentals": {
         "per": 34,
         "pbr": 1.4,
@@ -15790,7 +15790,7 @@
       "change": 4.6799975585937545,
       "changePercent": 2.01342174730595,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:04.625Z",
+      "lastUpdated": "2026-01-23T13:48:55.871Z",
       "fundamentals": {
         "per": 5,
         "pbr": 1.5,
@@ -15888,7 +15888,7 @@
       "change": 0.7600033569335949,
       "changePercent": 0.8126640122050749,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:04.717Z",
+      "lastUpdated": "2026-01-23T13:48:55.920Z",
       "fundamentals": {
         "per": 42,
         "pbr": 4.2,
@@ -15986,7 +15986,7 @@
       "change": 3.0300024414062534,
       "changePercent": 1.309931465733,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:04.664Z",
+      "lastUpdated": "2026-01-23T13:48:55.778Z",
       "fundamentals": {
         "per": 38,
         "pbr": 1.8,
@@ -16084,7 +16084,7 @@
       "change": 17.919997558593764,
       "changePercent": 4.153531767381137,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:04.632Z",
+      "lastUpdated": "2026-01-23T13:48:55.833Z",
       "fundamentals": {
         "per": 36,
         "pbr": 1.6,
@@ -16182,7 +16182,7 @@
       "change": -3.6100146484375273,
       "changePercent": -0.9385437060512529,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:04.694Z",
+      "lastUpdated": "2026-01-23T13:48:55.872Z",
       "fundamentals": {
         "per": 28,
         "pbr": 4.8,
@@ -16280,7 +16280,7 @@
       "change": 0.3399975585937227,
       "changePercent": 0.11122298926308277,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:04.711Z",
+      "lastUpdated": "2026-01-23T13:48:55.900Z",
       "fundamentals": {
         "per": 20,
         "pbr": 2,
@@ -16378,7 +16378,7 @@
       "change": 0.04999633789061875,
       "changePercent": 0.0764353081967194,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:04.590Z",
+      "lastUpdated": "2026-01-23T13:48:55.862Z",
       "fundamentals": {
         "per": 30,
         "pbr": 3,
@@ -16476,7 +16476,7 @@
       "change": -2.1599853515625114,
       "changePercent": -0.7794686102062299,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:06.015Z",
+      "lastUpdated": "2026-01-23T13:48:57.104Z",
       "fundamentals": {
         "per": 10,
         "pbr": 5,
@@ -16574,7 +16574,7 @@
       "change": -0.600000305175783,
       "changePercent": -0.6222133187565473,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:05.909Z",
+      "lastUpdated": "2026-01-23T13:48:57.010Z",
       "fundamentals": {
         "per": 10,
         "pbr": 3,
@@ -16672,7 +16672,7 @@
       "change": -2.4300061035156375,
       "changePercent": -1.5591953855308973,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:06.048Z",
+      "lastUpdated": "2026-01-23T13:48:57.182Z",
       "fundamentals": {
         "per": 14,
         "pbr": 5.4,
@@ -16770,7 +16770,7 @@
       "change": -12.709863281250364,
       "changePercent": -0.24614298170802928,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:05.803Z",
+      "lastUpdated": "2026-01-23T13:48:57.077Z",
       "fundamentals": {
         "per": 18,
         "pbr": 4.8,
@@ -16868,7 +16868,7 @@
       "change": 1.110002441406266,
       "changePercent": 0.34626979344276215,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:05.864Z",
+      "lastUpdated": "2026-01-23T13:48:57.086Z",
       "fundamentals": {
         "per": 32,
         "pbr": 3.2,
@@ -16966,7 +16966,7 @@
       "change": 0.10000122070312045,
       "changePercent": 0.10123630485818504,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:05.815Z",
+      "lastUpdated": "2026-01-23T13:48:56.987Z",
       "fundamentals": {
         "per": 14,
         "pbr": 3.4,
@@ -17064,7 +17064,7 @@
       "change": 26.95006835937511,
       "changePercent": 0.733998302170444,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:05.906Z",
+      "lastUpdated": "2026-01-23T13:48:57.007Z",
       "fundamentals": {
         "per": 42,
         "pbr": 4.2,
@@ -17162,7 +17162,7 @@
       "change": 0.20999969482421932,
       "changePercent": 0.25948312619836855,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:05.973Z",
+      "lastUpdated": "2026-01-23T13:48:57.031Z",
       "fundamentals": {
         "per": 36,
         "pbr": 0.6,
@@ -17260,7 +17260,7 @@
       "change": -0.06000045776367102,
       "changePercent": -0.43573315736414614,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:05.976Z",
+      "lastUpdated": "2026-01-23T13:48:57.181Z",
       "fundamentals": {
         "per": 38,
         "pbr": 2.8,
@@ -17358,7 +17358,7 @@
       "change": -0.18000122070312585,
       "changePercent": -0.44204620654973964,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:05.799Z",
+      "lastUpdated": "2026-01-23T13:48:56.976Z",
       "fundamentals": {
         "per": 23,
         "pbr": 2.3,
@@ -17456,7 +17456,7 @@
       "change": -5.310007324218759,
       "changePercent": -2.7610269977095996,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:07.304Z",
+      "lastUpdated": "2026-01-23T13:48:58.332Z",
       "fundamentals": {
         "per": 16,
         "pbr": 3.6,
@@ -17554,7 +17554,7 @@
       "change": -2.3700006103515534,
       "changePercent": -1.4989568029869376,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:07.229Z",
+      "lastUpdated": "2026-01-23T13:48:58.384Z",
       "fundamentals": {
         "per": 21,
         "pbr": 2.1,
@@ -17652,7 +17652,7 @@
       "change": -3.2900000000000063,
       "changePercent": -2.7881355932203444,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:07.276Z",
+      "lastUpdated": "2026-01-23T13:48:58.419Z",
       "fundamentals": {
         "per": 31,
         "pbr": 3.1,
@@ -17750,7 +17750,7 @@
       "change": -0.8800036621093739,
       "changePercent": -0.5699136333388467,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:07.169Z",
+      "lastUpdated": "2026-01-23T13:48:58.514Z",
       "fundamentals": {
         "per": 19,
         "pbr": 0.9,
@@ -17848,7 +17848,7 @@
       "change": 1.0600003051757767,
       "changePercent": 1.1419955921793479,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:07.247Z",
+      "lastUpdated": "2026-01-23T13:48:58.338Z",
       "fundamentals": {
         "per": 17,
         "pbr": 4.7,
@@ -17946,7 +17946,7 @@
       "change": -1.8100122070312636,
       "changePercent": -0.2648346147783773,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:07.251Z",
+      "lastUpdated": "2026-01-23T13:48:58.349Z",
       "fundamentals": {
         "per": 38,
         "pbr": 1.8,
@@ -18044,7 +18044,7 @@
       "change": 6.409986572265609,
       "changePercent": 1.606835043744126,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:07.200Z",
+      "lastUpdated": "2026-01-23T13:48:58.536Z",
       "fundamentals": {
         "per": 6,
         "pbr": 4.6,
@@ -18142,7 +18142,7 @@
       "change": 0.08000976562499318,
       "changePercent": 0.029995414468858395,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:07.226Z",
+      "lastUpdated": "2026-01-23T13:48:58.464Z",
       "fundamentals": {
         "per": 42,
         "pbr": 2.2,
@@ -18240,7 +18240,7 @@
       "change": 1.5499926757812545,
       "changePercent": 0.7576832479282769,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:07.173Z",
+      "lastUpdated": "2026-01-23T13:48:58.287Z",
       "fundamentals": {
         "per": 36,
         "pbr": 1.6,
@@ -18338,7 +18338,7 @@
       "change": 0.5000024414062523,
       "changePercent": 0.7512056186091244,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:07.210Z",
+      "lastUpdated": "2026-01-23T13:48:58.376Z",
       "fundamentals": {
         "per": 29,
         "pbr": 2.9,
@@ -18436,7 +18436,7 @@
       "change": -0.32000244140624545,
       "changePercent": -0.313912530647798,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:08.498Z",
+      "lastUpdated": "2026-01-23T13:48:59.596Z",
       "fundamentals": {
         "per": 7,
         "pbr": 3.7,
@@ -18534,7 +18534,7 @@
       "change": -2.200001220703129,
       "changePercent": -1.6926992383167627,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:08.562Z",
+      "lastUpdated": "2026-01-23T13:48:59.793Z",
       "fundamentals": {
         "per": 37,
         "pbr": 3.7,
@@ -18632,7 +18632,7 @@
       "change": -34.4399999999996,
       "changePercent": -0.441722512585367,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:08.427Z",
+      "lastUpdated": "2026-01-23T13:48:59.634Z",
       "fundamentals": {
         "per": 14,
         "pbr": 5.4,
@@ -18730,7 +18730,7 @@
       "change": 0.340001525878904,
       "changePercent": 0.5704723734624524,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:08.461Z",
+      "lastUpdated": "2026-01-23T13:48:59.755Z",
       "fundamentals": {
         "per": 13,
         "pbr": 5.3,
@@ -18828,7 +18828,7 @@
       "change": 8.100002441406275,
       "changePercent": 2.9827671653512073,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:08.463Z",
+      "lastUpdated": "2026-01-23T13:48:59.805Z",
       "fundamentals": {
         "per": 34,
         "pbr": 1.4,
@@ -18926,7 +18926,7 @@
       "change": 1.5899914550781205,
       "changePercent": 0.5264174977142618,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:08.483Z",
+      "lastUpdated": "2026-01-23T13:48:59.714Z",
       "fundamentals": {
         "per": 39,
         "pbr": 3.9,
@@ -19024,7 +19024,7 @@
       "change": 1.0800012207031386,
       "changePercent": 0.33202201941593146,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:08.596Z",
+      "lastUpdated": "2026-01-23T13:48:59.787Z",
       "fundamentals": {
         "per": 14,
         "pbr": 4.4,
@@ -19122,7 +19122,7 @@
       "change": 5.289992675781264,
       "changePercent": 1.0027091385675175,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:08.481Z",
+      "lastUpdated": "2026-01-23T13:48:59.649Z",
       "fundamentals": {
         "per": 30,
         "pbr": 5,
@@ -19220,7 +19220,7 @@
       "change": 0.3800003051757841,
       "changePercent": 0.7297874157920463,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:08.597Z",
+      "lastUpdated": "2026-01-23T13:48:59.742Z",
       "fundamentals": {
         "per": 6,
         "pbr": 0.6,
@@ -19318,7 +19318,7 @@
       "change": 1.919997253417975,
       "changePercent": 2.2294440225086696,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:09.783Z",
+      "lastUpdated": "2026-01-23T13:49:01.173Z",
       "fundamentals": {
         "per": 32,
         "pbr": 3.2,
@@ -19416,7 +19416,7 @@
       "change": 1.6399902343749773,
       "changePercent": 0.17208531049724254,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:09.852Z",
+      "lastUpdated": "2026-01-23T13:49:01.058Z",
       "fundamentals": {
         "per": 42,
         "pbr": 1.2,
@@ -19514,7 +19514,7 @@
       "change": -0.27000732421873863,
       "changePercent": -0.14728742822991775,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:09.867Z",
+      "lastUpdated": "2026-01-23T13:49:00.958Z",
       "fundamentals": {
         "per": 8,
         "pbr": 1.8,
@@ -19612,7 +19612,7 @@
       "change": 8.640026855468705,
       "changePercent": 1.6266336494293236,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:09.980Z",
+      "lastUpdated": "2026-01-23T13:49:00.964Z",
       "fundamentals": {
         "per": 35,
         "pbr": 1.5,
@@ -19710,7 +19710,7 @@
       "change": 11.870024414062527,
       "changePercent": 1.052447104757514,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:09.745Z",
+      "lastUpdated": "2026-01-23T13:49:00.962Z",
       "fundamentals": {
         "per": 25,
         "pbr": 2.5,
@@ -19808,7 +19808,7 @@
       "change": 1.799999389648434,
       "changePercent": 1.5808882662914612,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:09.878Z",
+      "lastUpdated": "2026-01-23T13:49:01.077Z",
       "fundamentals": {
         "per": 35,
         "pbr": 2.5,
@@ -19906,7 +19906,7 @@
       "change": 8.410014648437482,
       "changePercent": 2.3386488114938384,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:09.809Z",
+      "lastUpdated": "2026-01-23T13:49:00.981Z",
       "fundamentals": {
         "per": 41,
         "pbr": 4.1,
@@ -20004,7 +20004,7 @@
       "change": 2.2599990844726534,
       "changePercent": 2.220256473273994,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:09.827Z",
+      "lastUpdated": "2026-01-23T13:49:01.034Z",
       "fundamentals": {
         "per": 37,
         "pbr": 1.7,
@@ -20102,7 +20102,7 @@
       "change": 0.9399890136718909,
       "changePercent": 0.31335054978537613,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:09.832Z",
+      "lastUpdated": "2026-01-23T13:49:01.074Z",
       "fundamentals": {
         "per": 21,
         "pbr": 4.1,
@@ -20200,7 +20200,7 @@
       "change": 3.9199999999999875,
       "changePercent": 1.9310344827586146,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:09.850Z",
+      "lastUpdated": "2026-01-23T13:49:01.115Z",
       "fundamentals": {
         "per": 41,
         "pbr": 4.1,
@@ -20298,7 +20298,7 @@
       "change": 3.0200073242187386,
       "changePercent": 1.6807699506467089,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:11.262Z",
+      "lastUpdated": "2026-01-23T13:49:02.327Z",
       "fundamentals": {
         "per": 29,
         "pbr": 2.9,
@@ -20396,7 +20396,7 @@
       "change": 2.4500061035156193,
       "changePercent": 1.4252508379907078,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:11.216Z",
+      "lastUpdated": "2026-01-23T13:49:02.395Z",
       "fundamentals": {
         "per": 17,
         "pbr": 1.7,
@@ -20494,7 +20494,7 @@
       "change": 2.3199926757812364,
       "changePercent": 0.8313299942282615,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:11.135Z",
+      "lastUpdated": "2026-01-23T13:49:02.301Z",
       "fundamentals": {
         "per": 21,
         "pbr": 2.1,
@@ -20592,7 +20592,7 @@
       "change": 3.1999902343749795,
       "changePercent": 0.9616510820001626,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:11.152Z",
+      "lastUpdated": "2026-01-23T13:49:02.361Z",
       "fundamentals": {
         "per": 30,
         "pbr": 3,
@@ -20690,7 +20690,7 @@
       "change": 0.7099987792968747,
       "changePercent": 1.2799689267572634,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:11.248Z",
+      "lastUpdated": "2026-01-23T13:49:02.438Z",
       "fundamentals": {
         "per": 42,
         "pbr": 4.2,
@@ -20788,7 +20788,7 @@
       "change": -3.4900054931640625,
       "changePercent": -1.5477428746924509,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:11.183Z",
+      "lastUpdated": "2026-01-23T13:49:02.435Z",
       "fundamentals": {
         "per": 33,
         "pbr": 3.3,
@@ -20886,7 +20886,7 @@
       "change": 0.2799995422363253,
       "changePercent": 0.5597751692800438,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:11.329Z",
+      "lastUpdated": "2026-01-23T13:49:02.350Z",
       "fundamentals": {
         "per": 29,
         "pbr": 2.9,
@@ -20984,7 +20984,7 @@
       "change": 0.4200006103515648,
       "changePercent": 0.584226754649328,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:11.143Z",
+      "lastUpdated": "2026-01-23T13:49:02.403Z",
       "fundamentals": {
         "per": 17,
         "pbr": 1.7,
@@ -21082,7 +21082,7 @@
       "change": -0.25999755859375284,
       "changePercent": -0.2394966511061524,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:11.136Z",
+      "lastUpdated": "2026-01-23T13:49:02.372Z",
       "fundamentals": {
         "per": 19,
         "pbr": 1.9,
@@ -21180,7 +21180,7 @@
       "change": 0.32000152587890796,
       "changePercent": 0.41775656952136725,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:11.119Z",
+      "lastUpdated": "2026-01-23T13:49:02.354Z",
       "fundamentals": {
         "per": 38,
         "pbr": 3.8,
@@ -21278,7 +21278,7 @@
       "change": -0.7199978637695352,
       "changePercent": -0.6575923626059217,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:12.581Z",
+      "lastUpdated": "2026-01-23T13:49:03.647Z",
       "fundamentals": {
         "per": 15,
         "pbr": 0.5,
@@ -21376,7 +21376,7 @@
       "change": 5.830006103515643,
       "changePercent": 2.138274797001863,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:12.668Z",
+      "lastUpdated": "2026-01-23T13:49:03.741Z",
       "fundamentals": {
         "per": 20,
         "pbr": 1,
@@ -21474,7 +21474,7 @@
       "change": 1.6199963378906261,
       "changePercent": 0.8365157013614097,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:12.559Z",
+      "lastUpdated": "2026-01-23T13:49:03.626Z",
       "fundamentals": {
         "per": 25,
         "pbr": 2.5,
@@ -21572,7 +21572,7 @@
       "change": 4.060005493164056,
       "changePercent": 1.757502095020358,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:12.538Z",
+      "lastUpdated": "2026-01-23T13:49:03.567Z",
       "fundamentals": {
         "per": 24,
         "pbr": 2.4,
@@ -21670,7 +21670,7 @@
       "change": 1.260000610351561,
       "changePercent": 2.2544294580631714,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:12.429Z",
+      "lastUpdated": "2026-01-23T13:49:03.639Z",
       "fundamentals": {
         "per": 13,
         "pbr": 3.3,
@@ -21768,7 +21768,7 @@
       "change": 8.85998046875011,
       "changePercent": 0.8214942985111082,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:12.694Z",
+      "lastUpdated": "2026-01-23T13:49:03.770Z",
       "fundamentals": {
         "per": 9,
         "pbr": 4.9,
@@ -21866,7 +21866,7 @@
       "change": 6.720000000000027,
       "changePercent": 1.9324227174694544,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:12.471Z",
+      "lastUpdated": "2026-01-23T13:49:03.598Z",
       "fundamentals": {
         "per": 43,
         "pbr": 4.3,
@@ -21964,7 +21964,7 @@
       "change": 0.4800054931640716,
       "changePercent": 0.22017591177409093,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:12.608Z",
+      "lastUpdated": "2026-01-23T13:49:03.659Z",
       "fundamentals": {
         "per": 34,
         "pbr": 3.4,
@@ -22062,7 +22062,7 @@
       "change": -1.9300006103515557,
       "changePercent": -1.7370179099537753,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:12.676Z",
+      "lastUpdated": "2026-01-23T13:49:03.852Z",
       "fundamentals": {
         "per": 42,
         "pbr": 4.2,
@@ -22160,7 +22160,7 @@
       "change": 1.9600061035156386,
       "changePercent": 0.9067805500167158,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:12.524Z",
+      "lastUpdated": "2026-01-23T13:49:03.544Z",
       "fundamentals": {
         "per": 11,
         "pbr": 4.1,
@@ -22258,7 +22258,7 @@
       "change": 0.21000061035156392,
       "changePercent": 0.8111263626971276,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:14.052Z",
+      "lastUpdated": "2026-01-23T13:49:05.062Z",
       "fundamentals": {
         "per": 27,
         "pbr": 2.7,
@@ -22356,7 +22356,7 @@
       "change": 3.1500122070312955,
       "changePercent": 0.4950514328873768,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:14.010Z",
+      "lastUpdated": "2026-01-23T13:49:04.995Z",
       "fundamentals": {
         "per": 8,
         "pbr": 4.8,
@@ -22454,7 +22454,7 @@
       "change": -12.120003356933594,
       "changePercent": -10.038932344846602,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:14.026Z",
+      "lastUpdated": "2026-01-23T13:49:04.997Z",
       "fundamentals": {
         "per": 23,
         "pbr": 2.3,
@@ -22552,7 +22552,7 @@
       "change": -1.9700030517578,
       "changePercent": -0.8138826799917669,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:13.844Z",
+      "lastUpdated": "2026-01-23T13:49:05.133Z",
       "fundamentals": {
         "per": 30,
         "pbr": 3,
@@ -22650,7 +22650,7 @@
       "change": 3.469993896484368,
       "changePercent": 1.0098934327256592,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:13.942Z",
+      "lastUpdated": "2026-01-23T13:49:04.981Z",
       "fundamentals": {
         "per": 19,
         "pbr": 4.9,
@@ -22748,7 +22748,7 @@
       "change": 0.4399999999999977,
       "changePercent": 0.8073394495412802,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:14.018Z",
+      "lastUpdated": "2026-01-23T13:49:05.161Z",
       "fundamentals": {
         "per": 40,
         "pbr": 4,
@@ -22846,7 +22846,7 @@
       "change": 1.0499990844726597,
       "changePercent": 1.0469628825280968,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:13.947Z",
+      "lastUpdated": "2026-01-23T13:49:05.026Z",
       "fundamentals": {
         "per": 37,
         "pbr": 3.7,
@@ -22944,7 +22944,7 @@
       "change": 2.1199975585936954,
       "changePercent": 0.40481917712967874,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:13.912Z",
+      "lastUpdated": "2026-01-23T13:49:04.912Z",
       "fundamentals": {
         "per": 37,
         "pbr": 1.7,
@@ -23042,7 +23042,7 @@
       "change": 2.029999389648424,
       "changePercent": 1.5723022074601911,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:13.819Z",
+      "lastUpdated": "2026-01-23T13:49:04.935Z",
       "fundamentals": {
         "per": 16,
         "pbr": 4.6,
@@ -23140,7 +23140,7 @@
       "change": 6.209985351562523,
       "changePercent": 1.346659399379356,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:13.796Z",
+      "lastUpdated": "2026-01-23T13:49:04.921Z",
       "fundamentals": {
         "per": 28,
         "pbr": 4.8,
@@ -23238,7 +23238,7 @@
       "change": 1.1900021362304756,
       "changePercent": 1.460304537275673,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:15.283Z",
+      "lastUpdated": "2026-01-23T13:49:06.392Z",
       "fundamentals": {
         "per": 44,
         "pbr": 4.4,
@@ -23336,7 +23336,7 @@
       "change": -4.270002441406234,
       "changePercent": -1.1765036680120682,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:15.218Z",
+      "lastUpdated": "2026-01-23T13:49:06.379Z",
       "fundamentals": {
         "per": 15,
         "pbr": 0.5,
@@ -23434,7 +23434,7 @@
       "change": 2.359995117187509,
       "changePercent": 0.6380434427471191,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:15.235Z",
+      "lastUpdated": "2026-01-23T13:49:06.273Z",
       "fundamentals": {
         "per": 39,
         "pbr": 3.9,
@@ -23532,7 +23532,7 @@
       "change": 5.479996337890611,
       "changePercent": 1.9933782928561776,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:15.225Z",
+      "lastUpdated": "2026-01-23T13:49:06.356Z",
       "fundamentals": {
         "per": 28,
         "pbr": 4.8,
@@ -23630,7 +23630,7 @@
       "change": 6.179982910156241,
       "changePercent": 0.8247344653504343,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:15.256Z",
+      "lastUpdated": "2026-01-23T13:49:06.331Z",
       "fundamentals": {
         "per": 28,
         "pbr": 0.8,
@@ -23728,7 +23728,7 @@
       "change": -0.41999908447265,
       "changePercent": -0.4579643317690968,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:15.233Z",
+      "lastUpdated": "2026-01-23T13:49:06.277Z",
       "fundamentals": {
         "per": 5,
         "pbr": 4.5,
@@ -23826,7 +23826,7 @@
       "change": -0.6800018310546818,
       "changePercent": -0.5436535186281488,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:15.316Z",
+      "lastUpdated": "2026-01-23T13:49:06.351Z",
       "fundamentals": {
         "per": 25,
         "pbr": 1.5,
@@ -23924,7 +23924,7 @@
       "change": 0.899997558593725,
       "changePercent": 0.19336489211776006,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:15.171Z",
+      "lastUpdated": "2026-01-23T13:49:06.374Z",
       "fundamentals": {
         "per": 12,
         "pbr": 1.2,
@@ -24022,7 +24022,7 @@
       "change": -6.2000000000000455,
       "changePercent": -0.7531126632250283,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:15.236Z",
+      "lastUpdated": "2026-01-23T13:49:06.350Z",
       "fundamentals": {
         "per": 27,
         "pbr": 2.7,
@@ -24120,7 +24120,7 @@
       "change": -0.13999267578125796,
       "changePercent": -0.06789828341947655,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:15.280Z",
+      "lastUpdated": "2026-01-23T13:49:06.453Z",
       "fundamentals": {
         "per": 30,
         "pbr": 3,
@@ -24218,7 +24218,7 @@
       "change": -0.6999993896484398,
       "changePercent": -0.8221745297939804,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:16.514Z",
+      "lastUpdated": "2026-01-23T13:49:07.639Z",
       "fundamentals": {
         "per": 44,
         "pbr": 1.4,
@@ -24316,7 +24316,7 @@
       "change": 2.059998626708982,
       "changePercent": 4.135712848652096,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:16.547Z",
+      "lastUpdated": "2026-01-23T13:49:07.565Z",
       "fundamentals": {
         "per": 30,
         "pbr": 1,
@@ -24414,7 +24414,7 @@
       "change": -4.3800134277343545,
       "changePercent": -1.6182115529778718,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:16.535Z",
+      "lastUpdated": "2026-01-23T13:49:07.634Z",
       "fundamentals": {
         "per": 42,
         "pbr": 4.2,
@@ -24512,7 +24512,7 @@
       "change": 1.8099993896484392,
       "changePercent": 2.510053216375385,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:16.480Z",
+      "lastUpdated": "2026-01-23T13:49:07.511Z",
       "fundamentals": {
         "per": 28,
         "pbr": 0.8,
@@ -24610,7 +24610,7 @@
       "change": -2.3499938964843636,
       "changePercent": -0.9734854829748144,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:16.389Z",
+      "lastUpdated": "2026-01-23T13:49:07.589Z",
       "fundamentals": {
         "per": 8,
         "pbr": 4.8,
@@ -24708,7 +24708,7 @@
       "change": -1.8200006103515562,
       "changePercent": -2.132146904097896,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:16.387Z",
+      "lastUpdated": "2026-01-23T13:49:07.615Z",
       "fundamentals": {
         "per": 40,
         "pbr": 2,
@@ -24806,7 +24806,7 @@
       "change": 0.019997558593743747,
       "changePercent": 0.01766724813359347,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:16.761Z",
+      "lastUpdated": "2026-01-23T13:49:07.655Z",
       "fundamentals": {
         "per": 32,
         "pbr": 3.2,
@@ -24904,7 +24904,7 @@
       "change": 0.3400006103515629,
       "changePercent": 1.1768799499296232,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:16.561Z",
+      "lastUpdated": "2026-01-23T13:49:07.674Z",
       "fundamentals": {
         "per": 7,
         "pbr": 1.7,
@@ -25002,7 +25002,7 @@
       "change": 0.2399983215332,
       "changePercent": 0.6116164915071872,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:16.505Z",
+      "lastUpdated": "2026-01-23T13:49:07.731Z",
       "fundamentals": {
         "per": 24,
         "pbr": 3.4,
@@ -25100,7 +25100,7 @@
       "change": 0.0799999999999983,
       "changePercent": 0.3404255319148864,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:16.505Z",
+      "lastUpdated": "2026-01-23T13:49:07.792Z",
       "fundamentals": {
         "per": 12,
         "pbr": 4.2,
@@ -25198,7 +25198,7 @@
       "change": 1.7899938964843614,
       "changePercent": 0.9749421770036021,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:18.007Z",
+      "lastUpdated": "2026-01-23T13:49:08.887Z",
       "fundamentals": {
         "per": 17,
         "pbr": 3.7,
@@ -25296,7 +25296,7 @@
       "change": 5.3000048828124875,
       "changePercent": 2.8286305283285547,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:17.943Z",
+      "lastUpdated": "2026-01-23T13:49:09.005Z",
       "fundamentals": {
         "per": 33,
         "pbr": 1.3,
@@ -25394,7 +25394,7 @@
       "change": 0.23000610351562045,
       "changePercent": 0.11266525123299616,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:17.908Z",
+      "lastUpdated": "2026-01-23T13:49:08.908Z",
       "fundamentals": {
         "per": 22,
         "pbr": 4.2,
@@ -25492,7 +25492,7 @@
       "change": -0.17000068664550838,
       "changePercent": -0.5958663952121225,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:17.913Z",
+      "lastUpdated": "2026-01-23T13:49:08.938Z",
       "fundamentals": {
         "per": 29,
         "pbr": 2.9,
@@ -25590,7 +25590,7 @@
       "change": 2.870004272460932,
       "changePercent": 1.2047199445628682,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:17.944Z",
+      "lastUpdated": "2026-01-23T13:49:08.877Z",
       "fundamentals": {
         "per": 22,
         "pbr": 4.2,
@@ -25688,7 +25688,7 @@
       "change": -1.5700067138672011,
       "changePercent": -1.123761104015012,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:17.836Z",
+      "lastUpdated": "2026-01-23T13:49:08.950Z",
       "fundamentals": {
         "per": 19,
         "pbr": 0.9,
@@ -25786,7 +25786,7 @@
       "change": 0.6599981689453074,
       "changePercent": 0.8399060238816095,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:18.032Z",
+      "lastUpdated": "2026-01-23T13:49:09.067Z",
       "fundamentals": {
         "per": 31,
         "pbr": 3.1,
@@ -25884,7 +25884,7 @@
       "change": 0.5050006103515621,
       "changePercent": 1.6282463978384312,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:17.933Z",
+      "lastUpdated": "2026-01-23T13:49:08.874Z",
       "fundamentals": {
         "per": 28,
         "pbr": 0.8,
@@ -25982,7 +25982,7 @@
       "change": 0,
       "changePercent": 0,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:17.931Z",
+      "lastUpdated": "2026-01-23T13:49:08.959Z",
       "fundamentals": {
         "per": 32,
         "pbr": 3.2,
@@ -26080,7 +26080,7 @@
       "change": -0.44000122070312386,
       "changePercent": -0.6720653925449834,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:19.224Z",
+      "lastUpdated": "2026-01-23T13:49:10.206Z",
       "fundamentals": {
         "per": 5,
         "pbr": 4.5,
@@ -26178,7 +26178,7 @@
       "change": -0.3699969482421892,
       "changePercent": -0.5089366764425088,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:19.194Z",
+      "lastUpdated": "2026-01-23T13:49:10.242Z",
       "fundamentals": {
         "per": 30,
         "pbr": 1,
@@ -26276,7 +26276,7 @@
       "change": 0.6999999999999993,
       "changePercent": 2.314049586776857,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:19.239Z",
+      "lastUpdated": "2026-01-23T13:49:10.280Z",
       "fundamentals": {
         "per": 16,
         "pbr": 0.6,
@@ -26374,7 +26374,7 @@
       "change": 0.6000008392333989,
       "changePercent": 2.296214536946032,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:19.267Z",
+      "lastUpdated": "2026-01-23T13:49:10.214Z",
       "fundamentals": {
         "per": 41,
         "pbr": 2.1,
@@ -26472,7 +26472,7 @@
       "change": -1.5300006103515642,
       "changePercent": -1.2818369659248092,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:19.354Z",
+      "lastUpdated": "2026-01-23T13:49:10.392Z",
       "fundamentals": {
         "per": 16,
         "pbr": 0.6,
@@ -26570,7 +26570,7 @@
       "change": 3.870002441406257,
       "changePercent": 2.6495977722125854,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:19.299Z",
+      "lastUpdated": "2026-01-23T13:49:10.401Z",
       "fundamentals": {
         "per": 39,
         "pbr": 0.9,
@@ -26668,7 +26668,7 @@
       "change": -6.689985351562541,
       "changePercent": -0.6806651457246555,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:19.183Z",
+      "lastUpdated": "2026-01-23T13:49:10.282Z",
       "fundamentals": {
         "per": 41,
         "pbr": 2.1,
@@ -26766,7 +26766,7 @@
       "change": -0.1400021362304642,
       "changePercent": -0.1944204028290464,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:19.412Z",
+      "lastUpdated": "2026-01-23T13:49:10.405Z",
       "fundamentals": {
         "per": 42,
         "pbr": 1.2,
@@ -26864,7 +26864,7 @@
       "change": -2.340005493164057,
       "changePercent": -1.5946609006179076,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:19.390Z",
+      "lastUpdated": "2026-01-23T13:49:10.343Z",
       "fundamentals": {
         "per": 37,
         "pbr": 3.7,
@@ -26962,7 +26962,7 @@
       "change": 1.2400024414062614,
       "changePercent": 0.7345550970557049,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:19.302Z",
+      "lastUpdated": "2026-01-23T13:49:10.223Z",
       "fundamentals": {
         "per": 5,
         "pbr": 1.5,
@@ -27060,7 +27060,7 @@
       "change": -0.05000183105468636,
       "changePercent": -0.08186285127002749,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:20.739Z",
+      "lastUpdated": "2026-01-23T13:49:11.743Z",
       "fundamentals": {
         "per": 44,
         "pbr": 1.4,
@@ -27158,7 +27158,7 @@
       "change": 0.23000152587890454,
       "changePercent": 0.4010488788115515,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:20.748Z",
+      "lastUpdated": "2026-01-23T13:49:11.638Z",
       "fundamentals": {
         "per": 39,
         "pbr": 1.9,
@@ -27256,7 +27256,7 @@
       "change": 1.0799966430664085,
       "changePercent": 1.2746330700788657,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:20.717Z",
+      "lastUpdated": "2026-01-23T13:49:12.201Z",
       "fundamentals": {
         "per": 31,
         "pbr": 5.1,
@@ -27354,7 +27354,7 @@
       "change": 0.45999908447265625,
       "changePercent": 0.43379769945409247,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:20.648Z",
+      "lastUpdated": "2026-01-23T13:49:11.648Z",
       "fundamentals": {
         "per": 7,
         "pbr": 4.7,
@@ -27452,7 +27452,7 @@
       "change": 2.1700033569335915,
       "changePercent": 2.169569515861427,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:20.596Z",
+      "lastUpdated": "2026-01-23T13:49:11.715Z",
       "fundamentals": {
         "per": 26,
         "pbr": 2.6,
@@ -27550,7 +27550,7 @@
       "change": 0.5100004577636739,
       "changePercent": 1.1596190611004744,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:20.703Z",
+      "lastUpdated": "2026-01-23T13:49:11.757Z",
       "fundamentals": {
         "per": 35,
         "pbr": 3.5,
@@ -27648,7 +27648,7 @@
       "change": -2.660004882812501,
       "changePercent": -1.6281091953207136,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:20.618Z",
+      "lastUpdated": "2026-01-23T13:49:11.559Z",
       "fundamentals": {
         "per": 25,
         "pbr": 1.5,
@@ -27746,7 +27746,7 @@
       "change": -0.09000030517577784,
       "changePercent": -0.11698986717633315,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:20.595Z",
+      "lastUpdated": "2026-01-23T13:49:11.574Z",
       "fundamentals": {
         "per": 29,
         "pbr": 1.9,
@@ -27844,7 +27844,7 @@
       "change": -0.15000076293945241,
       "changePercent": -0.5415189848663914,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:20.540Z",
+      "lastUpdated": "2026-01-23T13:49:11.609Z",
       "fundamentals": {
         "per": 31,
         "pbr": 3.1,
@@ -27942,7 +27942,7 @@
       "change": -0.579996948242183,
       "changePercent": -0.8567163580311541,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:20.624Z",
+      "lastUpdated": "2026-01-23T13:49:11.582Z",
       "fundamentals": {
         "per": 18,
         "pbr": 1.8,
@@ -28040,7 +28040,7 @@
       "change": -5.420007324218744,
       "changePercent": -2.764322497961808,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:21.913Z",
+      "lastUpdated": "2026-01-23T13:49:13.447Z",
       "fundamentals": {
         "per": 12,
         "pbr": 5.2,
@@ -28138,7 +28138,7 @@
       "change": 0,
       "changePercent": 0,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:21.926Z",
+      "lastUpdated": "2026-01-23T13:49:13.393Z",
       "fundamentals": {
         "per": 43,
         "pbr": 3.3,
@@ -28236,7 +28236,7 @@
       "change": 0.3200003814697254,
       "changePercent": 1.42857315588973,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:21.889Z",
+      "lastUpdated": "2026-01-23T13:49:13.339Z",
       "fundamentals": {
         "per": 22,
         "pbr": 2.2,
@@ -28334,7 +28334,7 @@
       "change": 1.6199972534179636,
       "changePercent": 1.374393158283811,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:21.940Z",
+      "lastUpdated": "2026-01-23T13:49:13.462Z",
       "fundamentals": {
         "per": 33,
         "pbr": 5.3,
@@ -28432,7 +28432,7 @@
       "change": -0.7099984741210932,
       "changePercent": -0.8700961855364061,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:21.822Z",
+      "lastUpdated": "2026-01-23T13:49:13.266Z",
       "fundamentals": {
         "per": 10,
         "pbr": 3,
@@ -28530,7 +28530,7 @@
       "change": -2.5600036621093807,
       "changePercent": -1.7396055982625176,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:21.864Z",
+      "lastUpdated": "2026-01-23T13:49:13.338Z",
       "fundamentals": {
         "per": 27,
         "pbr": 4.7,
@@ -28628,7 +28628,7 @@
       "change": -6.150002441406244,
       "changePercent": -4.626148885559768,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:21.872Z",
+      "lastUpdated": "2026-01-23T13:49:13.436Z",
       "fundamentals": {
         "per": 38,
         "pbr": 1.8,
@@ -28726,7 +28726,7 @@
       "change": -1.269998168945314,
       "changePercent": -1.9868557655283627,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:21.959Z",
+      "lastUpdated": "2026-01-23T13:49:13.445Z",
       "fundamentals": {
         "per": 5,
         "pbr": 1.5,
@@ -28824,7 +28824,7 @@
       "change": 7.680019531249968,
       "changePercent": 1.3100693903626386,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:22.069Z",
+      "lastUpdated": "2026-01-23T13:49:13.586Z",
       "fundamentals": {
         "per": 5,
         "pbr": 4.5,
@@ -28922,7 +28922,7 @@
       "change": -1.1599999999999966,
       "changePercent": -0.587341772151897,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:23.314Z",
+      "lastUpdated": "2026-01-23T13:49:14.985Z",
       "fundamentals": {
         "per": 22,
         "pbr": 1.2,
@@ -29020,7 +29020,7 @@
       "change": 6.280026855468805,
       "changePercent": 0.9455593696403284,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:23.244Z",
+      "lastUpdated": "2026-01-23T13:49:14.858Z",
       "fundamentals": {
         "per": 32,
         "pbr": 3.2,
@@ -29118,7 +29118,7 @@
       "change": 1.050001220703109,
       "changePercent": 0.28784506393356074,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:23.401Z",
+      "lastUpdated": "2026-01-23T13:49:14.904Z",
       "fundamentals": {
         "per": 27,
         "pbr": 4.7,
@@ -29216,7 +29216,7 @@
       "change": 1.3399926757812466,
       "changePercent": 0.5358470174489699,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:23.410Z",
+      "lastUpdated": "2026-01-23T13:49:14.808Z",
       "fundamentals": {
         "per": 19,
         "pbr": 3.9,
@@ -29314,7 +29314,7 @@
       "change": 7.94000244140625,
       "changePercent": 2.2828563000316398,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:23.335Z",
+      "lastUpdated": "2026-01-23T13:49:14.747Z",
       "fundamentals": {
         "per": 44,
         "pbr": 4.4,
@@ -29412,7 +29412,7 @@
       "change": -23.5,
       "changePercent": -7.378335949764521,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:23.440Z",
+      "lastUpdated": "2026-01-23T13:49:14.921Z",
       "fundamentals": {
         "per": 28,
         "pbr": 4.8,
@@ -29510,7 +29510,7 @@
       "change": 3.029995117187468,
       "changePercent": 0.46949008247282964,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:23.342Z",
+      "lastUpdated": "2026-01-23T13:49:14.924Z",
       "fundamentals": {
         "per": 24,
         "pbr": 2.4,
@@ -29608,7 +29608,7 @@
       "change": 3.3700018310546795,
       "changePercent": 1.5376200480035331,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:23.340Z",
+      "lastUpdated": "2026-01-23T13:49:15.029Z",
       "fundamentals": {
         "per": 37,
         "pbr": 3.7,
@@ -29706,7 +29706,7 @@
       "change": 1.980000610351567,
       "changePercent": 0.8631590808753093,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:23.274Z",
+      "lastUpdated": "2026-01-23T13:49:14.886Z",
       "fundamentals": {
         "per": 11,
         "pbr": 5.1,
@@ -29804,7 +29804,7 @@
       "change": 0.8199966430664034,
       "changePercent": 0.7558965871049567,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:23.226Z",
+      "lastUpdated": "2026-01-23T13:49:14.734Z",
       "fundamentals": {
         "per": 16,
         "pbr": 0.6,
@@ -29902,7 +29902,7 @@
       "change": -7.1300097656250045,
       "changePercent": -1.3465297414832504,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:24.731Z",
+      "lastUpdated": "2026-01-23T13:49:16.346Z",
       "fundamentals": {
         "per": 25,
         "pbr": 4.5,
@@ -30000,7 +30000,7 @@
       "change": -3.9199914550781045,
       "changePercent": -1.1598980808943333,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:24.742Z",
+      "lastUpdated": "2026-01-23T13:49:16.348Z",
       "fundamentals": {
         "per": 39,
         "pbr": 3.9,
@@ -30098,7 +30098,7 @@
       "change": 2.865009765625018,
       "changePercent": 1.1148332131582743,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:24.776Z",
+      "lastUpdated": "2026-01-23T13:49:16.350Z",
       "fundamentals": {
         "per": 21,
         "pbr": 2.1,
@@ -30196,7 +30196,7 @@
       "change": -0.2500024414062523,
       "changePercent": -0.09617697894059456,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:24.676Z",
+      "lastUpdated": "2026-01-23T13:49:16.215Z",
       "fundamentals": {
         "per": 12,
         "pbr": 5.2,
@@ -30294,7 +30294,7 @@
       "change": 2.5099945068359375,
       "changePercent": 1.1082142460858806,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:24.606Z",
+      "lastUpdated": "2026-01-23T13:49:16.274Z",
       "fundamentals": {
         "per": 12,
         "pbr": 2.2,
@@ -30392,7 +30392,7 @@
       "change": -0.7499987792968739,
       "changePercent": -2.0531037622753234,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:24.740Z",
+      "lastUpdated": "2026-01-23T13:49:16.265Z",
       "fundamentals": {
         "per": 6,
         "pbr": 4.6,
@@ -30490,7 +30490,7 @@
       "change": -0.020006103515640916,
       "changePercent": -0.006920132512372725,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:24.639Z",
+      "lastUpdated": "2026-01-23T13:49:16.337Z",
       "fundamentals": {
         "per": 36,
         "pbr": 3.6,
@@ -30588,7 +30588,7 @@
       "change": 0.6899926757812409,
       "changePercent": 0.4613175382719364,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:24.654Z",
+      "lastUpdated": "2026-01-23T13:49:16.253Z",
       "fundamentals": {
         "per": 36,
         "pbr": 3.6,
@@ -30686,7 +30686,7 @@
       "change": 2.8599877929687523,
       "changePercent": 0.931743827734319,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:24.553Z",
+      "lastUpdated": "2026-01-23T13:49:16.279Z",
       "fundamentals": {
         "per": 34,
         "pbr": 3.4,
@@ -30784,7 +30784,7 @@
       "change": 0.2999978637695335,
       "changePercent": 0.2433862230814886,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:24.637Z",
+      "lastUpdated": "2026-01-23T13:49:16.320Z",
       "fundamentals": {
         "per": 22,
         "pbr": 5.2,
@@ -30882,7 +30882,7 @@
       "change": -5.1999865722656295,
       "changePercent": -1.3153534386178118,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:26.115Z",
+      "lastUpdated": "2026-01-23T13:49:17.613Z",
       "fundamentals": {
         "per": 16,
         "pbr": 2.6,
@@ -30980,7 +30980,7 @@
       "change": -6.019978027343768,
       "changePercent": -0.6368392945312314,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:26.023Z",
+      "lastUpdated": "2026-01-23T13:49:17.638Z",
       "fundamentals": {
         "per": 40,
         "pbr": 1,
@@ -31078,7 +31078,7 @@
       "change": -2.340003662109382,
       "changePercent": -1.197484068500182,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:25.949Z",
+      "lastUpdated": "2026-01-23T13:49:17.516Z",
       "fundamentals": {
         "per": 27,
         "pbr": 0.7,
@@ -31176,7 +31176,7 @@
       "change": -0.30000167846679915,
       "changePercent": -0.5195733802319579,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:25.872Z",
+      "lastUpdated": "2026-01-23T13:49:17.533Z",
       "fundamentals": {
         "per": 24,
         "pbr": 5.4,
@@ -31274,7 +31274,7 @@
       "change": -0.9799978637695261,
       "changePercent": -0.848556482722875,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:25.990Z",
+      "lastUpdated": "2026-01-23T13:49:17.544Z",
       "fundamentals": {
         "per": 22,
         "pbr": 2.2,
@@ -31372,7 +31372,7 @@
       "change": 8.05004394531261,
       "changePercent": 0.7604568648092497,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:25.966Z",
+      "lastUpdated": "2026-01-23T13:49:17.755Z",
       "fundamentals": {
         "per": 13,
         "pbr": 5.3,
@@ -31470,7 +31470,7 @@
       "change": 1.4600067138671875,
       "changePercent": 0.6813228613609126,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:25.929Z",
+      "lastUpdated": "2026-01-23T13:49:17.569Z",
       "fundamentals": {
         "per": 44,
         "pbr": 4.4,
@@ -31568,7 +31568,7 @@
       "change": -0.149993896484375,
       "changePercent": -0.08407729911213346,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:25.898Z",
+      "lastUpdated": "2026-01-23T13:49:17.574Z",
       "fundamentals": {
         "per": 21,
         "pbr": 5.1,
@@ -31666,7 +31666,7 @@
       "change": 0.16999938964843864,
       "changePercent": 0.3810791018213773,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:25.962Z",
+      "lastUpdated": "2026-01-23T13:49:17.503Z",
       "fundamentals": {
         "per": 30,
         "pbr": 1,
@@ -31764,7 +31764,7 @@
       "change": 1.910003662109375,
       "changePercent": 0.8818522066594798,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:25.866Z",
+      "lastUpdated": "2026-01-23T13:49:17.446Z",
       "fundamentals": {
         "per": 14,
         "pbr": 3.4,
@@ -31862,7 +31862,7 @@
       "change": 0.029999389648423858,
       "changePercent": 0.02245295225760191,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:27.538Z",
+      "lastUpdated": "2026-01-23T13:49:18.992Z",
       "fundamentals": {
         "per": 12,
         "pbr": 5.2,
@@ -31960,7 +31960,7 @@
       "change": -0.06999572753906591,
       "changePercent": -0.04198148463546359,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:27.353Z",
+      "lastUpdated": "2026-01-23T13:49:19.064Z",
       "fundamentals": {
         "per": 9,
         "pbr": 4.9,
@@ -32058,7 +32058,7 @@
       "change": -0.2700015258789108,
       "changePercent": -0.2779223073990251,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:27.319Z",
+      "lastUpdated": "2026-01-23T13:49:19.049Z",
       "fundamentals": {
         "per": 34,
         "pbr": 3.4,
@@ -32156,7 +32156,7 @@
       "change": -1.7300030517578193,
       "changePercent": -1.6011133761182017,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:27.271Z",
+      "lastUpdated": "2026-01-23T13:49:18.971Z",
       "fundamentals": {
         "per": 27,
         "pbr": 2.7,
@@ -32254,7 +32254,7 @@
       "change": 0.7999995422363284,
       "changePercent": 1.6488036576436609,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:27.342Z",
+      "lastUpdated": "2026-01-23T13:49:19.007Z",
       "fundamentals": {
         "per": 33,
         "pbr": 3.3,
@@ -32352,7 +32352,7 @@
       "change": -1.7199957275390716,
       "changePercent": -0.9691208975345861,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:27.244Z",
+      "lastUpdated": "2026-01-23T13:49:18.932Z",
       "fundamentals": {
         "per": 32,
         "pbr": 3.2,
@@ -32450,7 +32450,7 @@
       "change": 0.2900006103515693,
       "changePercent": 0.20474485427932274,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:27.309Z",
+      "lastUpdated": "2026-01-23T13:49:18.844Z",
       "fundamentals": {
         "per": 19,
         "pbr": 0.9,
@@ -32548,7 +32548,7 @@
       "change": -1.3000024414062636,
       "changePercent": -0.6907925099852341,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:27.308Z",
+      "lastUpdated": "2026-01-23T13:49:18.963Z",
       "fundamentals": {
         "per": 9,
         "pbr": 4.9,
@@ -32646,7 +32646,7 @@
       "change": 0.5399996948242176,
       "changePercent": 0.8547003675465006,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:27.291Z",
+      "lastUpdated": "2026-01-23T13:49:18.985Z",
       "fundamentals": {
         "per": 38,
         "pbr": 3.8,
@@ -32744,7 +32744,7 @@
       "change": 2.7400003051757835,
       "changePercent": 3.6138226275445726,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:28.797Z",
+      "lastUpdated": "2026-01-23T13:49:20.327Z",
       "fundamentals": {
         "per": 31,
         "pbr": 3.1,
@@ -32842,7 +32842,7 @@
       "change": 1.1100000762939466,
       "changePercent": 3.8838351268617135,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:28.651Z",
+      "lastUpdated": "2026-01-23T13:49:20.181Z",
       "fundamentals": {
         "per": 33,
         "pbr": 3.3,
@@ -32940,7 +32940,7 @@
       "change": 0.35999938964843636,
       "changePercent": 1.0791348413127098,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:28.866Z",
+      "lastUpdated": "2026-01-23T13:49:20.338Z",
       "fundamentals": {
         "per": 21,
         "pbr": 2.1,
@@ -33038,7 +33038,7 @@
       "change": -0.35999832153320455,
       "changePercent": -0.827392175179746,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:28.804Z",
+      "lastUpdated": "2026-01-23T13:49:20.349Z",
       "fundamentals": {
         "per": 24,
         "pbr": 1.4,
@@ -33136,7 +33136,7 @@
       "change": 0.22999999999999687,
       "changePercent": 0.6092715231787997,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:28.737Z",
+      "lastUpdated": "2026-01-23T13:49:20.200Z",
       "fundamentals": {
         "per": 40,
         "pbr": 4,
@@ -33234,7 +33234,7 @@
       "change": -1.1500000000000057,
       "changePercent": -0.7516339869281083,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:28.632Z",
+      "lastUpdated": "2026-01-23T13:49:20.248Z",
       "fundamentals": {
         "per": 12,
         "pbr": 4.2,
@@ -33332,7 +33332,7 @@
       "change": 0.8699998474121102,
       "changePercent": 1.623436919079944,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:28.726Z",
+      "lastUpdated": "2026-01-23T13:49:20.332Z",
       "fundamentals": {
         "per": 31,
         "pbr": 3.1,
@@ -33430,7 +33430,7 @@
       "change": 1.400002441406258,
       "changePercent": 0.7366107857465641,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:28.684Z",
+      "lastUpdated": "2026-01-23T13:49:20.171Z",
       "fundamentals": {
         "per": 5,
         "pbr": 2.5,
@@ -33528,7 +33528,7 @@
       "change": -0.990000915527343,
       "changePercent": -3.7302218589907383,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:28.705Z",
+      "lastUpdated": "2026-01-23T13:49:20.240Z",
       "fundamentals": {
         "per": 18,
         "pbr": 1.8,
@@ -33626,7 +33626,7 @@
       "change": 6.289993896484361,
       "changePercent": 1.431658998316338,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:30.123Z",
+      "lastUpdated": "2026-01-23T13:49:21.521Z",
       "fundamentals": {
         "per": 35,
         "pbr": 3.5,
@@ -33724,7 +33724,7 @@
       "change": 0.9300146484375205,
       "changePercent": 0.3534699176068338,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:30.118Z",
+      "lastUpdated": "2026-01-23T13:49:21.605Z",
       "fundamentals": {
         "per": 21,
         "pbr": 2.1,
@@ -33822,7 +33822,7 @@
       "change": -5.6799975585937545,
       "changePercent": -1.5941168076990884,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:30.107Z",
+      "lastUpdated": "2026-01-23T13:49:21.524Z",
       "fundamentals": {
         "per": 10,
         "pbr": 5,
@@ -33920,7 +33920,7 @@
       "change": 1.6200146484375182,
       "changePercent": 0.5788661235018797,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:30.179Z",
+      "lastUpdated": "2026-01-23T13:49:21.616Z",
       "fundamentals": {
         "per": 20,
         "pbr": 2,
@@ -34018,7 +34018,7 @@
       "change": -1.730001831054686,
       "changePercent": -2.855730899248418,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:30.059Z",
+      "lastUpdated": "2026-01-23T13:49:21.567Z",
       "fundamentals": {
         "per": 33,
         "pbr": 3.3,
@@ -34116,7 +34116,7 @@
       "change": 0.04000427246094773,
       "changePercent": 0.02219623448331198,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:30.138Z",
+      "lastUpdated": "2026-01-23T13:49:21.495Z",
       "fundamentals": {
         "per": 40,
         "pbr": 4,
@@ -34214,7 +34214,7 @@
       "change": 2.7799963378906227,
       "changePercent": 2.337899463690343,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:30.078Z",
+      "lastUpdated": "2026-01-23T13:49:21.797Z",
       "fundamentals": {
         "per": 32,
         "pbr": 3.2,
@@ -34312,7 +34312,7 @@
       "change": 0.4099989318847648,
       "changePercent": 0.945133521875633,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:30.114Z",
+      "lastUpdated": "2026-01-23T13:49:21.641Z",
       "fundamentals": {
         "per": 24,
         "pbr": 4.4,
@@ -34410,7 +34410,7 @@
       "change": -0.07999984741211108,
       "changePercent": -0.2815904535085675,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:29.998Z",
+      "lastUpdated": "2026-01-23T13:49:21.507Z",
       "fundamentals": {
         "per": 42,
         "pbr": 4.2,
@@ -34508,7 +34508,7 @@
       "change": 1.3699990844726528,
       "changePercent": 1.217344120603816,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:30.137Z",
+      "lastUpdated": "2026-01-23T13:49:21.597Z",
       "fundamentals": {
         "per": 39,
         "pbr": 3.9,
@@ -34606,7 +34606,7 @@
       "change": 0.07999664306640852,
       "changePercent": 0.11191471643747315,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:31.371Z",
+      "lastUpdated": "2026-01-23T13:49:22.873Z",
       "fundamentals": {
         "per": 30,
         "pbr": 1,
@@ -34704,7 +34704,7 @@
       "change": 4.259990234374982,
       "changePercent": 1.4246982024829598,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:31.344Z",
+      "lastUpdated": "2026-01-23T13:49:23.087Z",
       "fundamentals": {
         "per": 38,
         "pbr": 3.8,
@@ -34802,7 +34802,7 @@
       "change": 10.92998535156255,
       "changePercent": 1.7047735442867178,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:31.492Z",
+      "lastUpdated": "2026-01-23T13:49:22.956Z",
       "fundamentals": {
         "per": 38,
         "pbr": 3.8,
@@ -34900,7 +34900,7 @@
       "change": 8.260002441406243,
       "changePercent": 4.5873611870500755,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:31.507Z",
+      "lastUpdated": "2026-01-23T13:49:22.933Z",
       "fundamentals": {
         "per": 15,
         "pbr": 1.5,
@@ -34998,7 +34998,7 @@
       "change": 0.8599969482421841,
       "changePercent": 1.2061667762032193,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:31.436Z",
+      "lastUpdated": "2026-01-23T13:49:23.056Z",
       "fundamentals": {
         "per": 21,
         "pbr": 2.1,
@@ -35096,7 +35096,7 @@
       "change": -0.2799996948242196,
       "changePercent": -0.5403313324453493,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:31.296Z",
+      "lastUpdated": "2026-01-23T13:49:22.900Z",
       "fundamentals": {
         "per": 39,
         "pbr": 3.9,
@@ -35194,7 +35194,7 @@
       "change": -1.0200018310546852,
       "changePercent": -0.5672033702212541,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:31.386Z",
+      "lastUpdated": "2026-01-23T13:49:23.183Z",
       "fundamentals": {
         "per": 39,
         "pbr": 1.9,
@@ -35292,7 +35292,7 @@
       "change": -1.240000000000009,
       "changePercent": -0.5636363636363678,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:31.323Z",
+      "lastUpdated": "2026-01-23T13:49:22.906Z",
       "fundamentals": {
         "per": 34,
         "pbr": 3.4,
@@ -35390,7 +35390,7 @@
       "change": -0.9500009155273403,
       "changePercent": -2.220146985747342,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:31.537Z",
+      "lastUpdated": "2026-01-23T13:49:23.028Z",
       "fundamentals": {
         "per": 41,
         "pbr": 1.1,
@@ -35488,7 +35488,7 @@
       "change": -2.6300006103515585,
       "changePercent": -2.863053116565283,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:31.298Z",
+      "lastUpdated": "2026-01-23T13:49:22.897Z",
       "fundamentals": {
         "per": 25,
         "pbr": 4.5,
@@ -35586,7 +35586,7 @@
       "change": 1.2200015258788994,
       "changePercent": 1.4549809756471643,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:32.869Z",
+      "lastUpdated": "2026-01-23T13:49:24.484Z",
       "fundamentals": {
         "per": 24,
         "pbr": 2.4,
@@ -35684,7 +35684,7 @@
       "change": -1.6400015258789011,
       "changePercent": -1.8395978663027093,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:32.754Z",
+      "lastUpdated": "2026-01-23T13:49:24.411Z",
       "fundamentals": {
         "per": 10,
         "pbr": 2,
@@ -35782,7 +35782,7 @@
       "change": -1.6600027465820375,
       "changePercent": -1.390636431588395,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:32.808Z",
+      "lastUpdated": "2026-01-23T13:49:24.393Z",
       "fundamentals": {
         "per": 36,
         "pbr": 3.6,
@@ -35880,7 +35880,7 @@
       "change": -7.019995117187477,
       "changePercent": -2.3847522619935653,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:32.651Z",
+      "lastUpdated": "2026-01-23T13:49:24.278Z",
       "fundamentals": {
         "per": 15,
         "pbr": 1.5,
@@ -35978,7 +35978,7 @@
       "change": -0.23000335693359375,
       "changePercent": -0.26750796458889164,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:32.716Z",
+      "lastUpdated": "2026-01-23T13:49:24.377Z",
       "fundamentals": {
         "per": 42,
         "pbr": 4.2,
@@ -36076,7 +36076,7 @@
       "change": -1.800003356933587,
       "changePercent": -1.5128620828272075,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:32.839Z",
+      "lastUpdated": "2026-01-23T13:49:24.498Z",
       "fundamentals": {
         "per": 22,
         "pbr": 2.2,
@@ -36174,7 +36174,7 @@
       "change": -0.9899981689453128,
       "changePercent": -1.625079118025936,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:32.701Z",
+      "lastUpdated": "2026-01-23T13:49:24.446Z",
       "fundamentals": {
         "per": 36,
         "pbr": 2.6,
@@ -36272,7 +36272,7 @@
       "change": -0.07000007629394567,
       "changePercent": -0.46143754740868,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:32.790Z",
+      "lastUpdated": "2026-01-23T13:49:24.354Z",
       "fundamentals": {
         "per": 26,
         "pbr": 2.6,
@@ -36370,7 +36370,7 @@
       "change": -0.3999999999999986,
       "changePercent": -0.8888888888888857,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:32.809Z",
+      "lastUpdated": "2026-01-23T13:49:24.399Z",
       "fundamentals": {
         "per": 32,
         "pbr": 3.2,
@@ -36468,7 +36468,7 @@
       "change": -0.6500021362304693,
       "changePercent": -0.8495649171112334,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:32.743Z",
+      "lastUpdated": "2026-01-23T13:49:24.391Z",
       "fundamentals": {
         "per": 41,
         "pbr": 4.1,
@@ -36566,7 +36566,7 @@
       "change": -0.6599963378906182,
       "changePercent": -0.6355897160695385,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:34.312Z",
+      "lastUpdated": "2026-01-23T13:49:25.751Z",
       "fundamentals": {
         "per": 25,
         "pbr": 4.5,
@@ -36664,7 +36664,7 @@
       "change": 0.3200018310546895,
       "changePercent": 0.5296289982662795,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:34.177Z",
+      "lastUpdated": "2026-01-23T13:49:25.770Z",
       "fundamentals": {
         "per": 38,
         "pbr": 3.8,
@@ -36762,7 +36762,7 @@
       "change": -0.16999664306641193,
       "changePercent": -0.1552197299826837,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:34.111Z",
+      "lastUpdated": "2026-01-23T13:49:25.665Z",
       "fundamentals": {
         "per": 31,
         "pbr": 3.1,
@@ -36860,7 +36860,7 @@
       "change": 0.5699945068359398,
       "changePercent": 0.4351435093768936,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:34.092Z",
+      "lastUpdated": "2026-01-23T13:49:25.607Z",
       "fundamentals": {
         "per": 35,
         "pbr": 3.5,
@@ -36958,7 +36958,7 @@
       "change": -0.9299972534179659,
       "changePercent": -1.3028821647558047,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:34.158Z",
+      "lastUpdated": "2026-01-23T13:49:25.725Z",
       "fundamentals": {
         "per": 40,
         "pbr": 1,
@@ -37056,7 +37056,7 @@
       "change": -1.8800073242187523,
       "changePercent": -1.371567245759223,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:34.146Z",
+      "lastUpdated": "2026-01-23T13:49:25.764Z",
       "fundamentals": {
         "per": 29,
         "pbr": 2.9,
@@ -37154,7 +37154,7 @@
       "change": -0.5500003051757787,
       "changePercent": -1.4792907494925809,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:34.100Z",
+      "lastUpdated": "2026-01-23T13:49:25.742Z",
       "fundamentals": {
         "per": 44,
         "pbr": 4.4,
@@ -37252,7 +37252,7 @@
       "change": -0.31999893188476847,
       "changePercent": -0.6755307981849606,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:33.998Z",
+      "lastUpdated": "2026-01-23T13:49:25.655Z",
       "fundamentals": {
         "per": 27,
         "pbr": 4.7,
@@ -37350,7 +37350,7 @@
       "change": -1.229997253417963,
       "changePercent": -1.18121318146639,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:34.002Z",
+      "lastUpdated": "2026-01-23T13:49:25.806Z",
       "fundamentals": {
         "per": 11,
         "pbr": 1.1,
@@ -37448,7 +37448,7 @@
       "change": -2.1900033569335875,
       "changePercent": -2.2876875380104837,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:34.171Z",
+      "lastUpdated": "2026-01-23T13:49:25.697Z",
       "fundamentals": {
         "per": 43,
         "pbr": 4.3,
@@ -37546,7 +37546,7 @@
       "change": -4.469999389648436,
       "changePercent": -3.4085705432764213,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:35.468Z",
+      "lastUpdated": "2026-01-23T13:49:26.925Z",
       "fundamentals": {
         "per": 32,
         "pbr": 3.2,
@@ -37644,7 +37644,7 @@
       "change": -1.2199981689453239,
       "changePercent": -0.684738273268932,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:35.538Z",
+      "lastUpdated": "2026-01-23T13:49:27.017Z",
       "fundamentals": {
         "per": 34,
         "pbr": 3.4,
@@ -37742,7 +37742,7 @@
       "change": -2.719980468750009,
       "changePercent": -0.341929468438315,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:35.521Z",
+      "lastUpdated": "2026-01-23T13:49:26.943Z",
       "fundamentals": {
         "per": 39,
         "pbr": 1.9,
@@ -37840,7 +37840,7 @@
       "change": -0.9799981689453148,
       "changePercent": -1.1242379138817549,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:35.437Z",
+      "lastUpdated": "2026-01-23T13:49:26.894Z",
       "fundamentals": {
         "per": 15,
         "pbr": 1.5,
@@ -37938,7 +37938,7 @@
       "change": -2.120012207031266,
       "changePercent": -0.7343304874926616,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:35.671Z",
+      "lastUpdated": "2026-01-23T13:49:26.997Z",
       "fundamentals": {
         "per": 36,
         "pbr": 3.6,
@@ -38036,7 +38036,7 @@
       "change": -0.06999816894531818,
       "changePercent": -0.03780211137738052,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:35.461Z",
+      "lastUpdated": "2026-01-23T13:49:26.963Z",
       "fundamentals": {
         "per": 42,
         "pbr": 4.2,
@@ -38134,7 +38134,7 @@
       "change": -0.9400009155273423,
       "changePercent": -1.5212832199378192,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:35.518Z",
+      "lastUpdated": "2026-01-23T13:49:26.977Z",
       "fundamentals": {
         "per": 7,
         "pbr": 3.7,
@@ -38232,7 +38232,7 @@
       "change": -4.039999999999992,
       "changePercent": -2.172043010752684,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:35.575Z",
+      "lastUpdated": "2026-01-23T13:49:26.976Z",
       "fundamentals": {
         "per": 36,
         "pbr": 1.6,
@@ -38330,7 +38330,7 @@
       "change": -0.28999999999999204,
       "changePercent": -0.18238993710691323,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:35.435Z",
+      "lastUpdated": "2026-01-23T13:49:26.926Z",
       "fundamentals": {
         "per": 34,
         "pbr": 3.4,
@@ -38428,7 +38428,7 @@
       "change": -0.18000083923339716,
       "changePercent": -0.6344759742991289,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:35.450Z",
+      "lastUpdated": "2026-01-23T13:49:26.891Z",
       "fundamentals": {
         "per": 27,
         "pbr": 0.7,
@@ -38526,7 +38526,7 @@
       "change": -3.2000067138671966,
       "changePercent": -1.7881127591728212,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:36.854Z",
+      "lastUpdated": "2026-01-23T13:49:28.302Z",
       "fundamentals": {
         "per": 25,
         "pbr": 2.5,
@@ -38624,7 +38624,7 @@
       "change": -0.3899984741210929,
       "changePercent": -0.6356943501565101,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:36.961Z",
+      "lastUpdated": "2026-01-23T13:49:28.258Z",
       "fundamentals": {
         "per": 40,
         "pbr": 4,
@@ -38722,7 +38722,7 @@
       "change": -0.840004882812508,
       "changePercent": -0.45130009175112595,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:36.863Z",
+      "lastUpdated": "2026-01-23T13:49:28.137Z",
       "fundamentals": {
         "per": 9,
         "pbr": 3.9,
@@ -38820,7 +38820,7 @@
       "change": -0.2799996948242196,
       "changePercent": -1.0343542592568093,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:36.943Z",
+      "lastUpdated": "2026-01-23T13:49:28.226Z",
       "fundamentals": {
         "per": 24,
         "pbr": 3.4,
@@ -38918,7 +38918,7 @@
       "change": -0.3600007629394497,
       "changePercent": -0.6159123323189247,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:36.817Z",
+      "lastUpdated": "2026-01-23T13:49:28.303Z",
       "fundamentals": {
         "per": 24,
         "pbr": 2.4,
@@ -39016,7 +39016,7 @@
       "change": -1.6599981689453216,
       "changePercent": -1.1415198664882236,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:36.942Z",
+      "lastUpdated": "2026-01-23T13:49:28.136Z",
       "fundamentals": {
         "per": 7,
         "pbr": 4.7,
@@ -39114,7 +39114,7 @@
       "change": -0.7200048828125034,
       "changePercent": -0.5318399001652816,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:36.952Z",
+      "lastUpdated": "2026-01-23T13:49:28.181Z",
       "fundamentals": {
         "per": 15,
         "pbr": 1.5,
@@ -39212,7 +39212,7 @@
       "change": -1.1999987792968767,
       "changePercent": -1.5428115172666819,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:36.895Z",
+      "lastUpdated": "2026-01-23T13:49:28.188Z",
       "fundamentals": {
         "per": 20,
         "pbr": 1,
@@ -39310,7 +39310,7 @@
       "change": 0.040002441406244316,
       "changePercent": 0.04264198107590694,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:36.802Z",
+      "lastUpdated": "2026-01-23T13:49:28.165Z",
       "fundamentals": {
         "per": 40,
         "pbr": 4,
@@ -39408,7 +39408,7 @@
       "change": -0.119993286132825,
       "changePercent": -0.07046408530371139,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:36.745Z",
+      "lastUpdated": "2026-01-23T13:49:28.172Z",
       "fundamentals": {
         "per": 12,
         "pbr": 4.2,
@@ -39506,7 +39506,7 @@
       "change": -3.7899926757812636,
       "changePercent": -1.670115365136459,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:38.193Z",
+      "lastUpdated": "2026-01-23T13:49:29.367Z",
       "fundamentals": {
         "per": 25,
         "pbr": 0.5,
@@ -39604,7 +39604,7 @@
       "change": -2.8299975585937602,
       "changePercent": -1.7276097923031155,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:38.029Z",
+      "lastUpdated": "2026-01-23T13:49:29.390Z",
       "fundamentals": {
         "per": 14,
         "pbr": 3.4,
@@ -39702,7 +39702,7 @@
       "change": -0.27000041961670007,
       "changePercent": -2.5568220538621946,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:38.113Z",
+      "lastUpdated": "2026-01-23T13:49:29.385Z",
       "fundamentals": {
         "per": 17,
         "pbr": 4.7,
@@ -39800,7 +39800,7 @@
       "change": -0.1700000000000017,
       "changePercent": -0.9855072463768214,
       "currency": "USD",
-      "lastUpdated": "2026-01-23T08:34:38.128Z",
+      "lastUpdated": "2026-01-23T13:49:29.384Z",
       "fundamentals": {
         "per": 6,
         "pbr": 2.6,
